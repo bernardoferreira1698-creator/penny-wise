@@ -28,6 +28,19 @@
     return promessaBD;
   }
 
+  /* Fecha a ligação ao IndexedDB antes de sair para outra página, a
+     seguir a uma gravação grande (ex.: importação do Excel). Sem
+     isto, a ligação desta página por vezes ainda andava a demorar a
+     fechar quando a página seguinte abria a sua própria ligação, e os
+     dados acabados de guardar apareciam em branco até a app ser
+     reaberta de raiz. */
+  function fechar() {
+    if (!promessaBD) return Promise.resolve();
+    return promessaBD.then(function (bd) { bd.close(); }).then(function () {
+      promessaBD = null;
+    }, function () { promessaBD = null; });
+  }
+
   function comLoja(modo, fazer) {
     return abrir().then(function (bd) {
       return new Promise(function (resolve, reject) {
@@ -266,6 +279,7 @@
     pendentes: pendentes, inserirDoServidor: inserirDoServidor,
     ultimosMovimentos: ultimosMovimentos, categoriasMaisUsadas: categoriasMaisUsadas,
     sugerirDescricoes: sugerirDescricoes, ultimaCategoriaPara: ultimaCategoriaPara,
-    calcularMesReferencia: calcularMesReferencia, primeiroMesComDados: primeiroMesComDados
+    calcularMesReferencia: calcularMesReferencia, primeiroMesComDados: primeiroMesComDados,
+    fechar: fechar
   };
 })();

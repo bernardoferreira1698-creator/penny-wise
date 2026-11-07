@@ -296,7 +296,9 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       if (avisos.length) PennyAvisos.adicionar(avisos);
-      window.location.href = 'inicio.html';
+      return (window.PennyDB.fechar ? window.PennyDB.fechar() : Promise.resolve()).then(function () {
+        window.location.href = 'inicio.html';
+      });
     }).catch(function (e) {
       console.error('Erro a guardar os movimentos importados:', e);
       botaoImportar.disabled = false;
