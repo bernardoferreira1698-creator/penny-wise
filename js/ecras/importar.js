@@ -10,6 +10,16 @@ document.addEventListener('DOMContentLoaded', function () {
   var erro = document.getElementById('erro-importacao');
   var nomeFicheiroEl = document.getElementById('nome-ficheiro');
   var resumoFicheiroEl = document.getElementById('resumo-ficheiro');
+  var botaoComecarDoZero = document.getElementById('botao-comecar-do-zero');
+
+  /* Quem está a começar a gerir as finanças pela primeira vez não tem
+     nenhum Excel para importar — não deve ser obrigado a arranjar um
+     só para poder usar a app. */
+  if (botaoComecarDoZero) {
+    botaoComecarDoZero.addEventListener('click', function () {
+      window.location.href = 'inicio.html';
+    });
+  }
 
   function mostrarErro(mensagem) {
     nomeFicheiroEl.textContent = 'Escolher ficheiro .xlsx';

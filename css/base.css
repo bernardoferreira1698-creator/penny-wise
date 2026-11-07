@@ -88,10 +88,10 @@ svg { display: block; }
   gap: 14px;
 }
 
-/* 128px + a zona de segurança do aparelho: cobre a folga da barra
-   flutuante (16px + 72px de altura) mais uns 40px de respiro, para
-   nunca tapar a última linha. Mesma lógica adaptável do .nav-bottom. */
-.app__content--nav { padding-bottom: calc(128px + env(safe-area-inset-bottom)); }
+/* 144px: cobre a folga da barra flutuante (50px do fundo + 72px de
+   altura) mais uns 20px de respiro, para nunca tapar a última linha.
+   Valor fixo de propósito — ver nota junto de .nav-bottom. */
+.app__content--nav { padding-bottom: 144px; }
 .app__content--cta { padding-bottom: 100px; }
 
 /* ---------- Tipografia ---------- */
@@ -279,13 +279,14 @@ html[data-modo="claro"] .bar-track { background: rgba(0,0,0,0.08); }
   max-width: 480px; margin: 0 auto;
 }
 
-/* 16px de folga acima da zona de segurança do aparelho (a barra de
-   gestos do iPhone, por exemplo) — dá uns 50px livres no fundo em
-   aparelhos com essa barra, e adapta-se sozinho a cada modelo, sem
-   valores fixos em pixéis. */
+/* Valor fixo em pixéis, de propósito: o equivalente com
+   env(safe-area-inset-bottom) mostrou-se inconsistente entre ecrãs
+   na app instalada no ecrã principal do iPhone (a pílula aparecia em
+   posições diferentes consoante o ecrã). Um número fixo comporta-se
+   sempre da mesma forma, em qualquer ecrã e em qualquer momento. */
 .nav-bottom {
   position: fixed; left: 50%; transform: translateX(-50%);
-  bottom: calc(16px + env(safe-area-inset-bottom)); width: calc(100% - 48px); max-width: 432px;
+  bottom: 50px; width: calc(100% - 48px); max-width: 432px;
   height: 72px; border-radius: 36px;
   background: var(--nav); border: 1px solid rgba(255,255,255,0.1);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,0.5);
@@ -460,8 +461,7 @@ html[data-modo="claro"] .pal-btn { background: rgba(0,0,0,0.03); border-color: r
 }
 .sheet-opcao.is-selecionada .sheet-check { background: var(--prim-solid); border-color: var(--prim-solid); }
 .sheet-rodape {
-  flex: none; display: flex; gap: 10px;
-  padding: 14px 20px calc(28px + env(safe-area-inset-bottom));
+  flex: none; display: flex; gap: 10px; padding: 14px 20px 50px;
   border-top: 1px solid var(--sheet-linha);
 }
 .sheet-botao {
