@@ -43,19 +43,18 @@
     var lista = listar();
     var aviso = lista.find(function (a) { return a.id === id; });
     guardarLista(lista.filter(function (a) { return a.id !== id; }));
-    if (!aviso || !aviso.movimentoId || !window.PennyDB) return;
+    if (!aviso || !aviso.movimentoId || !window.PennyDB) return Promise.resolve();
 
     if (aviso.tipo === 'categoria-por-confirmar') {
-      window.PennyDB.obter(aviso.movimentoId).then(function (m) {
+      return window.PennyDB.obter(aviso.movimentoId).then(function (m) {
         if (!m || !m._correcaoAplicada) return;
         return window.PennyDB.atualizar(aviso.movimentoId, {
           categoria: m._correcaoAplicada.categoria, periodicidade: m._correcaoAplicada.periodicidade,
           nota: m._correcaoAplicada.nota || '', incompleto: false
         });
       });
-    } else {
-      window.PennyDB.apagar(aviso.movimentoId);
     }
+    return window.PennyDB.apagar(aviso.movimentoId);
   }
 
   /* Quando o movimento ligado a um aviso é guardado com sucesso

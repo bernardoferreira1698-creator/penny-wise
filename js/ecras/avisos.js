@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', function () {
   lista.addEventListener('click', function (evento) {
     var botao = evento.target.closest('.aviso-card__dispensar');
     if (!botao) return;
-    PennyAvisos.remover(botao.getAttribute('data-id'));
-    render();
+    botao.disabled = true;
+    PennyAvisos.remover(botao.getAttribute('data-id')).then(render);
   });
 
   render();

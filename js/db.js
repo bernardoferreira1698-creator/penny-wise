@@ -41,15 +41,41 @@
     }, function () { promessaBD = null; });
   }
 
+  /* Quantas gravações (readwrite) estão a meio neste preciso momento.
+     js/nav.js usa isto para nunca mudar de ecrã a meio de uma
+     gravação por terminar (ver aguardarEscritas): nalguns sítios da
+     app uma ação (ex.: dispensar um Aviso) já parece concluída no
+     ecrã antes de a gravação real no IndexedDB ter terminado — sem
+     esperar por ela, sair do ecrã nesse instante podia fazer a
+     página seguinte ler os dados ainda sem essa alteração. */
+  var escritasAtivas = 0;
+
   function comLoja(modo, fazer) {
+    if (modo === 'readwrite') escritasAtivas++;
     return abrir().then(function (bd) {
       return new Promise(function (resolve, reject) {
         var tx = bd.transaction(LOJA, modo);
         var loja = tx.objectStore(LOJA);
         var resultado = fazer(loja);
-        tx.oncomplete = function () { resolve(resultado); };
-        tx.onerror = function () { reject(tx.error); };
+        tx.oncomplete = function () { if (modo === 'readwrite') escritasAtivas--; resolve(resultado); };
+        tx.onerror = function () { if (modo === 'readwrite') escritasAtivas--; reject(tx.error); };
       });
+    }, function (erro) {
+      if (modo === 'readwrite') escritasAtivas--;
+      throw erro;
+    });
+  }
+
+  /* Resolve assim que não houver nenhuma gravação a meio (no máximo
+     1,5s de espera, para nunca prender a navegação indefinidamente
+     se algo correr mal). */
+  function aguardarEscritas() {
+    if (!escritasAtivas) return Promise.resolve();
+    return new Promise(function (resolve) {
+      var tempoLimite = setTimeout(function () { clearInterval(intervalo); resolve(); }, 1500);
+      var intervalo = setInterval(function () {
+        if (!escritasAtivas) { clearInterval(intervalo); clearTimeout(tempoLimite); resolve(); }
+      }, 20);
     });
   }
 
@@ -280,6 +306,6 @@
     ultimosMovimentos: ultimosMovimentos, categoriasMaisUsadas: categoriasMaisUsadas,
     sugerirDescricoes: sugerirDescricoes, ultimaCategoriaPara: ultimaCategoriaPara,
     calcularMesReferencia: calcularMesReferencia, primeiroMesComDados: primeiroMesComDados,
-    fechar: fechar
+    fechar: fechar, aguardarEscritas: aguardarEscritas
   };
 })();

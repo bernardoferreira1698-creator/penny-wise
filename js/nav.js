@@ -27,6 +27,18 @@
       path + '</svg>';
   }
 
+  /* Nalguns ecrãs, uma ação (ex.: dispensar um Aviso) já parece
+     concluída antes de a gravação real no IndexedDB ter terminado.
+     Sem isto, tocar logo a seguir num destes links podia mudar de
+     ecrã a meio dessa gravação, e a página seguinte lia os dados
+     ainda sem essa alteração. Todos os links desta barra passam por
+     aqui, por isso esperam sempre primeiro — no máximo 1,5s. */
+  function navegarComEsperaDeEscritas(evento, href) {
+    if (!window.PennyDB || !window.PennyDB.aguardarEscritas) return;
+    evento.preventDefault();
+    window.PennyDB.aguardarEscritas().then(function () { window.location.href = href; });
+  }
+
   /* A classe nav-bottom e a faixa app__nav-footer já vêm no HTML (não
      à espera deste script); aqui só se preenche o conteúdo (ícones). */
   function mountBottomNav(ativo) {
@@ -43,12 +55,16 @@
       var fecho = ativoAgora ? '</button>' : '</a>';
       return abertura + svg(item.icon, 1.6) + (ativoAgora ? '<span class="nav-item__dot"></span>' : '') + fecho;
     }).join('');
+    el.querySelectorAll('a[href]').forEach(function (link) {
+      link.addEventListener('click', function (evento) { navegarComEsperaDeEscritas(evento, link.getAttribute('href')); });
+    });
   }
 
   function mountBackButton(rotulo, href) {
     var el = document.getElementById('app-back');
     if (!el) return;
     el.innerHTML = '<a class="pill-link" href="' + href + '">' + svg(ICONS.voltar, 1.8) + rotulo + '</a>';
+    el.querySelector('a[href]').addEventListener('click', function (evento) { navegarComEsperaDeEscritas(evento, href); });
   }
 
   window.PennyNav = { mountBottomNav: mountBottomNav, mountBackButton: mountBackButton };
