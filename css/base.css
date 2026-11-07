@@ -281,7 +281,16 @@ html[data-modo="claro"] .bar-track { background: rgba(0,0,0,0.08); }
   background: linear-gradient(to top, var(--bg) 55%, var(--bg0));
   pointer-events: none; z-index: 2;
   max-width: 480px; margin: 0 auto;
+  animation: pw-nav-entrada .25s ease .25s both;
 }
+
+/* O WebKit do iPhone, ao abrir cada ecrã (app instalada), por vezes
+   só estabiliza a altura real do ecrã um instante depois do primeiro
+   desenho — e isso faz os elementos fixos "deslizarem" até ao sítio
+   certo em vez de já lá nascerem. Não há como evitar esse instante,
+   mas dá para escondê-lo: a barra só aparece (com um esbatimento
+   suave) depois de, na prática, já estar sempre estabilizada. */
+@keyframes pw-nav-entrada { from { opacity: 0 } to { opacity: 1 } }
 
 /* Valor fixo em pixéis, de propósito: o equivalente com
    env(safe-area-inset-bottom) mostrou-se inconsistente entre ecrãs
@@ -296,6 +305,7 @@ html[data-modo="claro"] .bar-track { background: rgba(0,0,0,0.08); }
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,0.5);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 14px; z-index: 3;
+  animation: pw-nav-entrada .25s ease .25s both;
 }
 .nav-item {
   width: 48px; height: 44px; border: 0; background: transparent;
