@@ -1,0 +1,485 @@
+/* Penny Wise: estilos partilhados por todos os ecrãs.
+   As cores vêm sempre de variáveis CSS definidas em tokens.css
+   (conforme a paleta e o modo escolhidos). Nada de cores fixas aqui,
+   exceto as transparências neutras de bordas/separadores. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Garante que o atributo "hidden" funciona mesmo em elementos cuja
+   classe define "display" (ex.: .sheet-fundo usa display:flex), já
+   que uma regra de autor vence sempre a folha de estilos do browser. */
+[hidden] { display: none !important; }
+
+html, body { margin: 0; padding: 0; }
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter Tight', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+a { color: inherit; text-decoration: none; }
+button {
+  font-family: inherit; color: inherit; cursor: pointer;
+  /* Sem isto, o Safari por vezes mostra o aspeto nativo do botão
+     (rebordo, fundo em relevo) por cima dos nossos estilos, por
+     exemplo ao voltar a uma página pelo histórico. */
+  appearance: none; -webkit-appearance: none; outline-offset: 2px;
+}
+input, textarea { font-family: inherit; color: inherit; }
+input::placeholder { color: var(--muted); opacity: .8; }
+svg { display: block; }
+
+/* ---------- Esqueleto da página ---------- */
+
+.app {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app--claro-fixo {
+  /* O ecrã de Registo é sempre claro, nos dois modos */
+  background: var(--light-bg);
+  color: var(--ink);
+}
+
+.app__blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+
+.blob { position: absolute; border-radius: 50%; filter: blur(30px); }
+
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: .16;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 0;
+}
+.app--claro-fixo .grain { mix-blend-mode: multiply; opacity: .12; }
+
+.app__content {
+  position: relative;
+  z-index: 1;
+  padding: 56px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.app__content--nav { padding-bottom: 130px; }
+.app__content--cta { padding-bottom: 100px; }
+
+/* ---------- Tipografia ---------- */
+
+.display {
+  margin: 4px 0 0;
+  font-size: 38px;
+  line-height: 1.04;
+  letter-spacing: -1.5px;
+  font-weight: 500;
+}
+.display--xl { font-size: 44px; line-height: 1.02; letter-spacing: -1.8px; }
+.display--huge { font-size: 50px; line-height: 1; letter-spacing: -2px; }
+.muted { color: var(--muted); }
+.muted2 { color: var(--muted2); }
+.warn-text { color: var(--warn); }
+
+.eyebrow { font-size: 13px; font-weight: 500; color: var(--muted); padding: 4px 4px 0; }
+
+/* ---------- Topo / chips ---------- */
+
+.topbar { display: flex; align-items: center; justify-content: space-between; }
+
+.pill-link {
+  height: 44px;
+  padding: 0 16px 0 10px;
+  border-radius: 999px;
+  background: var(--glass);
+  border: 1px solid var(--linha);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo__coin {
+  width: 30px; height: 30px; border-radius: 15px;
+  background: var(--coin);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; color: var(--bg);
+}
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 999px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: var(--muted2);
+}
+html[data-modo="claro"] .chip { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); }
+.chip--warn { background: var(--warn-tint); border-color: var(--warn-line); color: var(--warn); }
+
+.dot { width: 8px; height: 8px; border-radius: 4px; background: var(--dot); flex: none; }
+
+/* ---------- Superfícies de vidro ---------- */
+
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--linha);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+  border-radius: 28px;
+}
+html[data-modo="claro"] .glass { box-shadow: inset 0 1px 0 rgba(255,255,255,0.4); }
+
+.glass--pill { border-radius: 999px; }
+
+.glass-rows { display: flex; flex-direction: column; padding: 2px 20px; }
+.glass-rows__row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 11px 0; gap: 12px; min-height: 44px;
+  border-bottom: 1px solid var(--linha);
+  text-decoration: none; color: inherit; background: none; border-left: 0; border-right: 0; border-top: 0;
+  width: 100%; text-align: left;
+}
+.glass-rows__row:last-child { border-bottom: 0; }
+.glass-rows__label { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.glass-rows__title { font-size: 15px; font-weight: 500; }
+.glass-rows__sub { font-size: 12px; color: var(--muted2); }
+.glass-rows__value { font-size: 15px; font-weight: 500; white-space: nowrap; }
+.glass-rows__chevron { display: flex; align-items: center; gap: 8px; flex: none; }
+
+/* ---------- Cartão claro de destaque ---------- */
+
+.card-light {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--card);
+  color: var(--ink);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.card-light__blob {
+  position: absolute; width: 230px; height: 200px; border-radius: 50%;
+  background: var(--blob-card); filter: blur(18px); opacity: .78; pointer-events: none;
+}
+/* O blob é "position: absolute" (um elemento posicionado); sem isto,
+   um elemento posicionado pinta sempre por cima de texto estático,
+   mesmo vindo antes no HTML. Tornar o texto "position: relative"
+   torna-o também posicionado e, por ficar depois no HTML, garante que
+   fica por cima do blob, como é suposto. */
+.card-light__topo,
+.card-light__eyebrow,
+.card-light__text,
+.card-light__byline { position: relative; }
+
+.card-light__topo { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.card-light__eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .5px; color: var(--card-muted2); }
+.card-light__text { margin: 0; font-size: 20px; line-height: 1.22; font-weight: 500; letter-spacing: -0.3px; }
+.card-light__text .dim { color: var(--card-muted); }
+.card-light__byline { font-size: 12px; color: var(--card-muted2); }
+.card-light__guardar {
+  width: 32px; height: 32px; border: 0; border-radius: 16px; background: rgba(0,0,0,0.06);
+  display: flex; align-items: center; justify-content: center; flex: none; cursor: pointer;
+}
+
+/* ---------- Botões ---------- */
+
+.btn {
+  font-family: inherit; border: 0; border-radius: 999px; cursor: pointer;
+  font-size: 15px; font-weight: 500;
+}
+.btn-solid {
+  background: var(--btn); color: var(--bg);
+  height: 56px; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 600; border: 0; border-radius: 999px; text-decoration: none; cursor: pointer;
+}
+.btn-outline {
+  height: 52px; border-radius: 999px; border: 1px solid var(--warn-line); color: var(--warn);
+  display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500;
+  background: transparent; text-decoration: none;
+}
+.btn-dashed {
+  height: 60px; border-radius: 999px; border: 1px dashed rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 15px; font-weight: 500; text-decoration: none; color: inherit; background: none;
+}
+html[data-modo="claro"] .btn-dashed { border-color: rgba(0,0,0,0.25); }
+
+.tabs {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  gap: 4px; background: var(--glass); border: 1px solid var(--linha);
+  border-radius: 999px; padding: 4px;
+}
+.tabs__item {
+  font-family: inherit; height: 40px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 500;
+  background: transparent; color: var(--muted); text-decoration: none; display: flex; align-items: center; justify-content: center;
+}
+.tabs__item.is-active { background: var(--text); color: var(--bg); }
+
+.seletor-mes {
+  height: 72px; border-radius: 999px; background: var(--glass); border: 1px solid var(--linha);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; padding: 0 12px;
+}
+.seletor-mes button { width: 44px; height: 44px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: var(--text); }
+
+/* ---------- Barras / progresso ---------- */
+
+.bar-track { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; }
+html[data-modo="claro"] .bar-track { background: rgba(0,0,0,0.08); }
+.bar-fill { height: 100%; border-radius: 3px; background: var(--bar-h2); transition: width .7s cubic-bezier(.16,.8,.3,1); }
+.bar-fill--ok { background: var(--text); }
+
+/* Linha "categoria + valor" com barra de progresso por baixo, usada
+   em Análise do mês, Orçamentos e no resumo de Orçamentos do Início. */
+.cat-item { display: flex; flex-direction: column; gap: 6px; }
+.cat-item__linha { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 15px; }
+.cat-item__linha > span:first-child { font-weight: 700; }
+
+/* ---------- Navegação inferior flutuante ---------- */
+
+.nav-fade {
+  position: fixed; left: 0; right: 0; bottom: 0; height: 178px;
+  background: linear-gradient(to top, var(--bg) 55%, var(--bg0));
+  pointer-events: none; z-index: 2;
+  max-width: 480px; margin: 0 auto;
+}
+
+/* bottom: 76px (em vez de 28px) deixa livre o canto inferior direito,
+   onde o Netlify mostra sempre um emblema próprio (202x64px, encostado
+   ao canto, por cima de tudo) nos sites do plano gratuito — sem isto,
+   tapava o ícone mais à direita desta barra. */
+.nav-bottom {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: 76px; width: calc(100% - 48px); max-width: 432px;
+  height: 72px; border-radius: 36px;
+  background: var(--nav); border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 14px; z-index: 3;
+}
+.nav-item {
+  width: 48px; height: 44px; border: 0; background: transparent;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  color: var(--muted);
+}
+.nav-item.is-active { color: var(--text); }
+.nav-item__dot { width: 4px; height: 4px; border-radius: 2px; background: var(--dot); }
+.nav-add {
+  width: 58px; height: 58px; border-radius: 29px; background: var(--btn);
+  display: flex; align-items: center; justify-content: center; color: var(--bg);
+}
+
+/* ---------- Formulário (Registo) ---------- */
+
+.field {
+  height: 54px; border-radius: 999px; background: var(--ink);
+  display: flex; align-items: center; padding: 0 22px; gap: 10px; border: 0;
+  width: 100%; text-align: left;
+}
+.field--xl { height: 64px; padding: 0 24px; }
+.field__label { font-size: 13px; color: var(--muted); flex: none; }
+.field__input {
+  flex: 1; min-width: 0; border: 0; background: transparent; color: var(--text);
+  font-family: inherit; font-size: 16px; font-weight: 500; outline: none;
+}
+.field__value {
+  flex: 1; min-width: 0; text-align: right; border: 0; background: transparent; color: var(--text);
+  font-family: inherit; font-size: 32px; font-weight: 500; letter-spacing: -1px; outline: none;
+}
+.field__suffix { font-size: 22px; color: var(--muted); }
+.field-plain {
+  height: 50px; border-radius: 999px; border: 1px solid var(--line-light);
+  background: rgba(255,255,255,0.6); display: flex; align-items: center; padding: 0 22px; gap: 10px;
+}
+html[data-modo="escuro"] .app--claro-fixo .field-plain { background: rgba(255,255,255,0.6); }
+.field-plain__input {
+  flex: 1; min-width: 0; border: 0; background: transparent; color: var(--ink);
+  font-family: inherit; font-size: 15px; outline: none;
+}
+
+.suggestions { display: flex; gap: 6px; flex-wrap: wrap; }
+.suggestion {
+  font-family: inherit; font-size: 13px; font-weight: 500; padding: 7px 14px; min-height: 34px;
+  border-radius: 999px; border: 1px solid var(--line-light); background: rgba(255,255,255,0.6);
+  color: var(--ink);
+}
+
+.cat-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.cat-pill {
+  font-family: inherit; height: 40px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 500;
+  color: var(--ink); border: 1px solid var(--line-light); background: rgba(255,255,255,0.6);
+}
+.cat-pill.is-active { border: 0; background: var(--btn); }
+
+.seg {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px;
+  background: var(--ink); border-radius: 999px; padding: 4px;
+}
+.seg__item {
+  font-family: inherit; height: 40px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 500;
+  background: transparent; color: var(--muted);
+}
+.seg__item.is-active { background: var(--text); color: var(--ink); }
+
+.checkbox-pill {
+  height: 48px; display: flex; align-items: center; gap: 8px; padding: 0 16px;
+  border-radius: 999px; border: 1px solid var(--line-light); background: rgba(255,255,255,0.6);
+  font-size: 14px; font-weight: 500;
+}
+.checkbox-pill input { width: 18px; height: 18px; accent-color: var(--prim-solid); margin: 0; }
+
+.save-row {
+  margin-top: auto; height: 60px; border-radius: 999px; background: var(--ink); color: var(--text);
+  font-size: 17px; font-weight: 500; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 8px 0 26px; text-decoration: none;
+}
+.save-row__icon {
+  width: 44px; height: 44px; border-radius: 22px; background: var(--btn);
+  display: flex; align-items: center; justify-content: center; color: var(--ink);
+}
+
+/* ---------- Interruptores (toggles) ---------- */
+
+.switch {
+  width: 52px; height: 32px; border-radius: 16px; border: 0; padding: 3px; cursor: pointer;
+  display: flex; justify-content: flex-start; background: rgba(255,255,255,0.14); flex: none;
+}
+html[data-modo="claro"] .switch { background: rgba(0,0,0,0.12); }
+.switch.is-on { justify-content: flex-end; background: var(--btn); }
+.switch__knob { width: 26px; height: 26px; border-radius: 13px; background: var(--text); }
+.switch.is-on .switch__knob { background: var(--bg); }
+
+/* ---------- Grelhas e listas utilitárias ---------- */
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+.stack { display: flex; flex-direction: column; gap: 8px; }
+.stack--lg { gap: 14px; }
+
+.stat-pill {
+  border-radius: 22px; background: var(--glass); border: 1px solid var(--linha);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.stat-pill__label { font-size: 12px; color: var(--muted2); }
+.stat-pill__value { font-size: 21px; font-weight: 500; letter-spacing: -0.5px; }
+
+.split-pill {
+  border-radius: 999px; background: var(--glass); border: 1px solid var(--linha);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); padding: 16px 26px;
+  display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px;
+}
+.split-pill__item { display: flex; flex-direction: column; gap: 2px; }
+.split-pill__item + .split-pill__item { border-left: 1px solid var(--linha); padding-left: 16px; }
+
+/* ---------- Palette switcher (Definições) ---------- */
+
+.pal-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+.pal-btn {
+  font-family: inherit; height: 64px; border-radius: 20px; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  color: var(--text); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+}
+html[data-modo="claro"] .pal-btn { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.1); }
+.pal-btn.is-active { border: 2px solid var(--text); }
+.pal-btn__dot { width: 22px; height: 22px; border-radius: 11px; }
+.pal-btn__label { font-size: 13px; font-weight: 600; }
+
+/* ---------- Painéis de ação ("folhas") sempre claros ---------- */
+/* Usados em calendário, filtros e menus de edição: usam os tokens
+   --sheet-* (independentes do modo escuro/claro da página). */
+
+.sheet-fundo {
+  position: fixed; inset: 0; background: rgba(20,18,16,0.45); z-index: 30;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.sheet-corpo {
+  position: relative; background: var(--sheet-bg); color: var(--sheet-ink);
+  border-radius: 32px 32px 0 0; max-width: 480px; margin: 0 auto; width: 100%;
+  max-height: 82vh; display: flex; flex-direction: column; box-sizing: border-box;
+  overflow: hidden;
+}
+/* Cabeçalho (título + fechar) e rodapé (botões) ficam sempre visíveis;
+   só a lista do meio é que tem scroll, para não ser preciso percorrer
+   tudo para chegar ao botão "Guardar". */
+.sheet-cabecalho {
+  flex: none; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 22px 20px 4px;
+}
+.sheet-titulo { font-size: 20px; font-weight: 600; letter-spacing: -0.4px; }
+.sheet-fechar {
+  width: 32px; height: 32px; border-radius: 16px; border: 0; flex: none;
+  background: rgba(0,0,0,0.06); color: var(--sheet-ink);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.sheet-corpo-scroll { flex: 1 1 auto; overflow-y: auto; padding: 10px 20px; -webkit-overflow-scrolling: touch; }
+.sheet-opcao {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 13px 4px; border-bottom: 1px solid var(--sheet-linha); cursor: pointer; background: none; border-left: 0; border-right: 0; border-top: 0;
+  width: 100%; text-align: left; font-family: inherit; font-size: 15px; font-weight: 500; color: var(--sheet-ink);
+}
+.sheet-opcao:last-child { border-bottom: 0; }
+.sheet-check {
+  width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--sheet-muted); flex: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.sheet-opcao.is-selecionada .sheet-check { background: var(--prim-solid); border-color: var(--prim-solid); }
+/* 76px de folga em baixo (em vez de 28px), pela mesma razão do
+   .nav-bottom acima: o botão "Guardar" fica quase sempre à direita, e
+   essa é exatamente a zona onde o Netlify mostra o seu emblema. */
+.sheet-rodape {
+  flex: none; display: flex; gap: 10px; padding: 14px 20px 76px; border-top: 1px solid var(--sheet-linha);
+}
+.sheet-botao {
+  font-family: inherit; flex: 1; height: 50px; border-radius: 999px; font-size: 15px; font-weight: 500; cursor: pointer;
+}
+.sheet-botao--limpar { border: 1px solid var(--sheet-muted); background: transparent; color: var(--sheet-ink); }
+.sheet-botao--guardar { border: 0; background: var(--sheet-ink); color: var(--sheet-bg); }
+
+/* Conteúdo de folhas sem lista de seleção (ex.: edição de orçamento
+   ou de categoria), que também passam a ter o cabeçalho/rodapé fixos. */
+.sheet-corpo-conteudo { flex: 1 1 auto; overflow-y: auto; padding: 10px 20px; display: flex; flex-direction: column; gap: 14px; -webkit-overflow-scrolling: touch; }
+
+/* Segmentos dentro de uma folha: usam sempre os tokens --sheet-*,
+   para ficarem corretos seja qual for o modo escuro/claro da página
+   por baixo. O estado ativo usa a cor sólida da paleta (não preto),
+   com texto escuro para se ler bem em qualquer paleta. */
+.sheet-corpo .seg__item { color: var(--sheet-ink); }
+.sheet-corpo .seg__item.is-active { background: var(--prim-solid); color: var(--sheet-ink); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+@media (max-width: 380px) {
+  .display { font-size: 32px; }
+  .display--xl { font-size: 36px; }
+  .display--huge { font-size: 42px; }
+}
+
+/* ---------- Alerta flutuante (js/alerta.js) ---------- */
+
+.pw-alerta-flutuante {
+  position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+  padding: 24px; background: rgba(0,0,0,0.35); animation: pw-alerta-entrada .15s ease;
+}
+.pw-alerta-flutuante__cartao {
+  background: var(--sheet-bg); color: var(--sheet-ink); border-radius: 20px; padding: 18px 22px;
+  font-family: inherit; font-size: 14px; font-weight: 500; text-align: center; line-height: 1.4;
+  max-width: 320px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+@keyframes pw-alerta-entrada { from { opacity: 0 } to { opacity: 1 } }

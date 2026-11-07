@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    var modoPref = localStorage.getItem('pw_modo') || 'automatico';
+    var modo = modoPref === 'automatico'
+      ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'claro' : 'escuro')
+      : modoPref;
+    document.documentElement.setAttribute('data-paleta', pal);
+    document.documentElement.setAttribute('data-modo', modo);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+    document.documentElement.setAttribute('data-modo', 'escuro');
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF6A1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Avisos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .aviso-card { display:flex; gap:12px; padding:14px 0; align-items:flex-start; border-bottom:1px solid var(--linha) }
+  .glass-rows > .aviso-card:last-child { border-bottom:0 }
+  .aviso-card__icone { flex:none; margin-top:2px; color:var(--warn) }
+  .aviso-card__texto { display:flex; flex-direction:column; gap:2px; flex:1 }
+  .aviso-card__titulo { font-size:14px; font-weight:500; line-height:1.3 }
+  .aviso-card__sub { font-size:12px; color:var(--muted2) }
+  .aviso-card__dispensar {
+    flex:none; font-family:inherit; font-size:12px; font-weight:600; color:var(--muted);
+    background:none; border:0; text-decoration:underline; text-underline-offset:3px; cursor:pointer; padding:2px 0;
+  }
+  .aviso-card__editar {
+    flex:none; font-size:12px; font-weight:600; color:var(--prim-solid); text-decoration:none;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="app__blobs">
+    <span class="blob" style="top:-230px; right:-210px; width:440px; height:440px; background:var(--glow1); opacity:.8"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-av"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-av)"></rect></svg>
+
+  <div class="app__content">
+    <div class="topbar"><div id="app-back"></div></div>
+    <p class="display"><span class="muted">Por rever</span><br>Avisos</p>
+    <p class="muted2" style="font-size:13px; margin:0" id="aviso-resumo"></p>
+
+    <div class="glass glass-rows" id="lista-avisos"></div>
+    <p id="sem-avisos" class="muted" style="text-align:center; padding:24px 0" hidden>Sem avisos pendentes. Está tudo regularizado.</p>
+  </div>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="js/nav.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/ecras/avisos.js" defer></script>
+<script defer>document.addEventListener('DOMContentLoaded', function () { PennyNav.mountBackButton('Mais', 'mais.html'); });</script>
+</body>
+</html>

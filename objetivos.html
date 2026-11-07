@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    var modoPref = localStorage.getItem('pw_modo') || 'automatico';
+    var modo = modoPref === 'automatico'
+      ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'claro' : 'escuro')
+      : modoPref;
+    document.documentElement.setAttribute('data-paleta', pal);
+    document.documentElement.setAttribute('data-modo', modo);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+    document.documentElement.setAttribute('data-modo', 'escuro');
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF6A1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Objetivos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  [hidden] { display:none !important }
+  .sheet-campo-texto {
+    height:54px; border-radius:999px; background:rgba(0,0,0,0.05); display:flex; align-items:center; padding:0 20px;
+  }
+  .sheet-campo-texto input, .sheet-campo-texto select {
+    flex:1; border:0; background:transparent; font-family:inherit; font-size:15px; font-weight:500; color:var(--sheet-ink); outline:none;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="app__blobs">
+    <span class="blob" style="top:-230px; right:-210px; width:440px; height:440px; background:var(--glow1); opacity:.8"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-ob"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-ob)"></rect></svg>
+
+  <div class="app__content">
+    <div class="topbar"><div id="app-back"></div></div>
+
+    <p class="display" id="frase-objetivos"></p>
+    <a href="#" id="btn-transferir" class="btn-solid">Transferir para um objetivo</a>
+
+    <span class="eyebrow">Os teus objetivos</span>
+    <div id="lista-objetivos" style="display:flex; flex-direction:column; gap:14px"></div>
+    <p id="sem-objetivos" class="muted" style="text-align:center; padding:12px 0; font-size:14px" hidden>Ainda não tens nenhum objetivo.</p>
+
+    <a href="#" id="btn-novo-objetivo" class="btn-dashed">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14 M5 12h14"/></svg>
+      Novo objetivo, por exemplo Férias 2027
+    </a>
+
+    <div class="glass" style="padding:18px 20px; display:flex; flex-direction:column; gap:8px">
+      <span class="muted" style="font-size:12px">Dave Ramsey · The Total Money Makeover</span>
+      <span style="font-size:18px; line-height:1.25; font-weight:500"><span class="muted">Um fundo de emergência transforma</span> um imprevisto num incómodo.</span>
+    </div>
+  </div>
+
+  <div id="sheet-transferir" class="sheet-fundo" hidden>
+    <div class="sheet-corpo">
+      <div class="sheet-cabecalho">
+        <span class="sheet-titulo">Transferir para um objetivo</span>
+        <button type="button" class="sheet-fechar" id="btn-x-transferir" aria-label="Fechar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12 M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="sheet-corpo-conteudo">
+        <div class="sheet-campo-texto"><select id="campo-objetivo-transferencia"></select></div>
+        <div class="sheet-campo-texto"><input id="campo-valor-transferencia" type="text" inputmode="decimal" placeholder="Valor (€)"></div>
+        <div class="sheet-campo-texto"><input id="campo-data-transferencia" type="date"></div>
+      </div>
+      <div class="sheet-rodape">
+        <button type="button" class="sheet-botao sheet-botao--limpar" id="btn-fechar-transferir">Fechar</button>
+        <button type="button" class="sheet-botao sheet-botao--guardar" id="btn-guardar-transferir">Transferir</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="sheet-editar-objetivo" class="sheet-fundo" hidden>
+    <div class="sheet-corpo">
+      <div class="sheet-cabecalho">
+        <span class="sheet-titulo" id="titulo-editar-objetivo">Novo objetivo</span>
+        <button type="button" class="sheet-fechar" id="btn-x-objetivo" aria-label="Fechar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12 M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="sheet-corpo-conteudo">
+        <div class="sheet-campo-texto"><input id="campo-nome-objetivo" type="text" placeholder="Nome do objetivo"></div>
+        <div class="sheet-campo-texto"><input id="campo-valor-objetivo" type="text" inputmode="decimal" placeholder="Valor alvo (€)"></div>
+        <span style="font-size:13px; font-weight:500; color:var(--sheet-muted)">Data alvo (opcional)</span>
+        <div class="sheet-campo-texto"><input id="campo-data-objetivo" type="month"></div>
+      </div>
+      <div class="sheet-rodape">
+        <button type="button" class="sheet-botao sheet-botao--limpar" id="btn-apagar-objetivo" hidden>Apagar</button>
+        <button type="button" class="sheet-botao sheet-botao--guardar" id="btn-guardar-objetivo">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="js/nav.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/objetivos.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/dados-mock.js" defer></script>
+<script src="js/moeda.js" defer></script>
+<script src="js/ecras/objetivos.js" defer></script>
+<script defer>document.addEventListener('DOMContentLoaded', function () { PennyNav.mountBackButton('Mais', 'mais.html'); });</script>
+</body>
+</html>

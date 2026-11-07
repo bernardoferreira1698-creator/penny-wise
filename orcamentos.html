@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    var modoPref = localStorage.getItem('pw_modo') || 'automatico';
+    var modo = modoPref === 'automatico'
+      ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'claro' : 'escuro')
+      : modoPref;
+    document.documentElement.setAttribute('data-paleta', pal);
+    document.documentElement.setAttribute('data-modo', modo);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+    document.documentElement.setAttribute('data-modo', 'escuro');
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF6A1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Orçamentos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .orc-item { display:flex; flex-direction:column; gap:7px; padding:12px 0; border-bottom:1px solid var(--linha); width:100%; text-align:left; background:none; border-left:0; border-right:0; border-top:0; font-family:inherit; cursor:pointer; color:inherit }
+  .glass-rows > .orc-item:last-child { border-bottom:0 }
+  .orc-item__linha { display:flex; justify-content:space-between; align-items:baseline; font-size:15px }
+  .sheet-campo {
+    height:58px; border-radius:999px; background:rgba(0,0,0,0.05); display:flex; align-items:center; padding:0 20px; gap:10px;
+  }
+  .sheet-campo input { flex:1; min-width:0; border:0; background:transparent; font-family:inherit; font-size:18px; font-weight:500; color:var(--sheet-ink); outline:none; text-align:right }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="app__blobs">
+    <span class="blob" style="top:-230px; right:-210px; width:440px; height:440px; background:var(--glow1); opacity:.8"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-or"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-or)"></rect></svg>
+
+  <div class="app__content">
+    <div class="topbar"><div id="app-back"></div></div>
+    <p class="display"><span class="muted">Orçamentos de</span><br><span id="mes-orcamentos">outubro</span></p>
+    <div class="chips" id="chips-orcamentos"></div>
+
+    <div class="glass glass-rows" id="lista-orcamentos"></div>
+  </div>
+
+  <div id="sheet-editar-orcamento" class="sheet-fundo" hidden>
+    <div class="sheet-corpo">
+      <div class="sheet-cabecalho">
+        <span class="sheet-titulo" id="editar-orcamento-titulo">Categoria</span>
+        <button type="button" class="sheet-fechar" id="btn-fechar-orcamento" aria-label="Fechar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12 M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="sheet-corpo-conteudo">
+        <div class="seg" id="seg-tipo-orcamento" style="background:rgba(0,0,0,0.05)">
+          <button type="button" class="seg__item is-active" data-tipo="valor">Valor</button>
+          <button type="button" class="seg__item" data-tipo="percentagem">% do rendimento</button>
+        </div>
+        <div class="sheet-campo">
+          <input id="valor-orcamento" inputmode="decimal" type="text" placeholder="0">
+          <span id="sufixo-orcamento" style="color:var(--sheet-muted); font-weight:600">€</span>
+        </div>
+        <span class="muted" style="color:var(--sheet-muted); font-size:12px" id="sugestao-orcamento"></span>
+      </div>
+      <div class="sheet-rodape">
+        <button type="button" class="sheet-botao sheet-botao--limpar" id="btn-repor-orcamento">Repor sugestão</button>
+        <button type="button" class="sheet-botao sheet-botao--guardar" id="btn-guardar-orcamento">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="js/nav.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/dados-mock.js" defer></script>
+<script src="js/moeda.js" defer></script>
+<script src="js/ecras/orcamentos.js" defer></script>
+<script defer>document.addEventListener('DOMContentLoaded', function () { PennyNav.mountBackButton('Mais', 'mais.html'); });</script>
+</body>
+</html>

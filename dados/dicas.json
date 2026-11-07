@@ -1,0 +1,1515 @@
+[
+ {
+  "id": "d001",
+  "texto": "Paga-te a ti primeiro: guarda pelo menos 10% de tudo o que ganhas antes de pagar qualquer outra coisa.",
+  "autor": "George S. Clason",
+  "livro": "O Homem Mais Rico da Babilónia",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_baixa",
+   "geral"
+  ]
+ },
+ {
+  "id": "d002",
+  "texto": "Não confundas desejos com necessidades. As despesas \"necessárias\" crescem até ao tamanho do rendimento, se deixares.",
+  "autor": "George S. Clason",
+  "livro": "O Homem Mais Rico da Babilónia",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d003",
+  "texto": "O dinheiro guardado deve trabalhar para ti, não ficar parado para sempre na conta à ordem.",
+  "autor": "George S. Clason",
+  "livro": "O Homem Mais Rico da Babilónia",
+  "tema": "longo-prazo",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d004",
+  "texto": "Protege o que poupaste: desconfia de promessas de ganhos rápidos.",
+  "autor": "George S. Clason",
+  "livro": "O Homem Mais Rico da Babilónia",
+  "tema": "longo-prazo",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d005",
+  "texto": "A casa deve servir-te, não esmagar o orçamento. Vê quanto do rendimento vai para a habitação.",
+  "autor": "George S. Clason",
+  "livro": "O Homem Mais Rico da Babilónia",
+  "tema": "orcamento",
+  "gatilhos": [
+   "cat:Habitação"
+  ]
+ },
+ {
+  "id": "d006",
+  "texto": "Pensa hoje no rendimento de que vais precisar daqui a muitos anos.",
+  "autor": "George S. Clason",
+  "livro": "O Homem Mais Rico da Babilónia",
+  "tema": "longo-prazo",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d007",
+  "texto": "Aprender mais é a forma mais fiável de vir a ganhar mais.",
+  "autor": "George S. Clason",
+  "livro": "O Homem Mais Rico da Babilónia",
+  "tema": "rendimento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d008",
+  "texto": "Um orçamento não é uma prisão: é o mapa que te deixa gastar no que importa sem culpa.",
+  "autor": "George S. Clason",
+  "livro": "O Homem Mais Rico da Babilónia",
+  "tema": "orcamento",
+  "gatilhos": [
+   "orcamento_80"
+  ]
+ },
+ {
+  "id": "d009",
+  "texto": "Os 10% começam pequenos, mas crescem como uma árvore. O importante é começar este mês.",
+  "autor": "George S. Clason",
+  "livro": "O Homem Mais Rico da Babilónia",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_baixa"
+  ]
+ },
+ {
+  "id": "d010",
+  "texto": "Quem vive com 90% do que ganha raramente sente a diferença ao fim de poucas semanas.",
+  "autor": "George S. Clason",
+  "livro": "O Homem Mais Rico da Babilónia",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_baixa"
+  ]
+ },
+ {
+  "id": "d011",
+  "texto": "Um ativo põe dinheiro no teu bolso; um passivo tira. Antes de comprar, pergunta em qual dos dois estás a gastar.",
+  "autor": "Robert Kiyosaki",
+  "livro": "Pai Rico, Pai Pobre",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d012",
+  "texto": "Perceber para onde vai o teu dinheiro vale mais do que um aumento. Já estás a dar esse passo.",
+  "autor": "Robert Kiyosaki",
+  "livro": "Pai Rico, Pai Pobre",
+  "tema": "mentalidade",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d013",
+  "texto": "Primeiro compra o que te faz crescer; os luxos vêm com o que sobra, não o contrário.",
+  "autor": "Robert Kiyosaki",
+  "livro": "Pai Rico, Pai Pobre",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d014",
+  "texto": "Troca o \"não posso pagar isto\" por \"como é que posso pagar isto?\". A pergunta muda o problema.",
+  "autor": "Robert Kiyosaki",
+  "livro": "Pai Rico, Pai Pobre",
+  "tema": "mentalidade",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d015",
+  "texto": "Cuidado com as despesas que sobem sempre que o rendimento sobe.",
+  "autor": "Robert Kiyosaki",
+  "livro": "Pai Rico, Pai Pobre",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d016",
+  "texto": "O maior risco é não saber o que estás a fazer. Aprende antes de investir.",
+  "autor": "Robert Kiyosaki",
+  "livro": "Pai Rico, Pai Pobre",
+  "tema": "longo-prazo",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d017",
+  "texto": "Trabalha para aprender, não só para ganhar.",
+  "autor": "Robert Kiyosaki",
+  "livro": "Pai Rico, Pai Pobre",
+  "tema": "rendimento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d018",
+  "texto": "Um aumento só te deixa mais rico se as despesas não subirem com ele.",
+  "autor": "Robert Kiyosaki",
+  "livro": "Pai Rico, Pai Pobre",
+  "tema": "rendimento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d019",
+  "texto": "Conhece os números do teu mês tão bem como conheces o teu ordenado.",
+  "autor": "Robert Kiyosaki",
+  "livro": "Pai Rico, Pai Pobre",
+  "tema": "mentalidade",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d020",
+  "texto": "Divide o rendimento em \"frascos\" com função própria: necessidades, liberdade financeira, formação, poupança a longo prazo, diversão e dar.",
+  "autor": "T. Harv Eker",
+  "livro": "Os Segredos da Mente Milionária",
+  "tema": "orcamento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d021",
+  "texto": "Ter um valor para diversão faz parte do plano: gastar sem culpa ajuda a cumpri-lo.",
+  "autor": "T. Harv Eker",
+  "livro": "Os Segredos da Mente Milionária",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d022",
+  "texto": "A forma como geres pouco dinheiro é a forma como vais gerir muito. Começa pelos trocos.",
+  "autor": "T. Harv Eker",
+  "livro": "Os Segredos da Mente Milionária",
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "pequenos_gastos"
+  ]
+ },
+ {
+  "id": "d023",
+  "texto": "Pensa no que queres construir, não só no que queres evitar.",
+  "autor": "T. Harv Eker",
+  "livro": "Os Segredos da Mente Milionária",
+  "tema": "mentalidade",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d024",
+  "texto": "Celebra as pequenas vitórias: cada mês com poupança é um hábito a ganhar forma.",
+  "autor": "T. Harv Eker",
+  "livro": "Os Segredos da Mente Milionária",
+  "tema": "habitos",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d025",
+  "texto": "O rendimento raramente cresce além do teu desenvolvimento pessoal.",
+  "autor": "T. Harv Eker",
+  "livro": "Os Segredos da Mente Milionária",
+  "tema": "rendimento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d026",
+  "texto": "Muitas vezes não falta dinheiro, falta um plano para ele.",
+  "autor": "T. Harv Eker",
+  "livro": "Os Segredos da Mente Milionária",
+  "tema": "orcamento",
+  "gatilhos": [
+   "mes_negativo"
+  ]
+ },
+ {
+  "id": "d027",
+  "texto": "Pensa em \"e\" em vez de \"ou\": podes aproveitar a vida e poupar ao mesmo tempo.",
+  "autor": "T. Harv Eker",
+  "livro": "Os Segredos da Mente Milionária",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d028",
+  "texto": "Dá-te um valor fixo para gastar livremente. O resto tem destino.",
+  "autor": "T. Harv Eker",
+  "livro": "Os Segredos da Mente Milionária",
+  "tema": "orcamento",
+  "gatilhos": [
+   "orcamento_80"
+  ]
+ },
+ {
+  "id": "d029",
+  "texto": "O hábito de gerir vem antes da quantia. Gere bem mesmo quando parece pouco.",
+  "autor": "T. Harv Eker",
+  "livro": "Os Segredos da Mente Milionária",
+  "tema": "habitos",
+  "gatilhos": [
+   "poupanca_baixa"
+  ]
+ },
+ {
+  "id": "d030",
+  "texto": "Poupar não precisa de um objetivo concreto: a poupança compra-te opções e tranquilidade.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d031",
+  "texto": "A riqueza é o que não se vê: o carro que não compraste, a roupa de que não precisaste.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "cat:Roupa"
+  ]
+ },
+ {
+  "id": "d032",
+  "texto": "Mais vale um plano razoável que consegues cumprir do que um plano perfeito que abandonas.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "habitos",
+  "gatilhos": [
+   "mes_negativo"
+  ]
+ },
+ {
+  "id": "d033",
+  "texto": "A margem de segurança é a parte mais importante de qualquer plano.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "inesperadas"
+  ]
+ },
+ {
+  "id": "d034",
+  "texto": "O tempo é a força mais poderosa: pouco durante muitos anos vale mais do que muito durante pouco tempo.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "longo-prazo",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d035",
+  "texto": "Ninguém repara nas tuas coisas tanto quanto pensas.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "cat:Roupa"
+  ]
+ },
+ {
+  "id": "d036",
+  "texto": "Gastar para impressionar os outros é a forma mais rápida de ter menos.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d037",
+  "texto": "Define o que é \"suficiente\" para ti. Sem esse limite, a meta muda sempre de lugar.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "mentalidade",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d038",
+  "texto": "Controlar o teu próprio tempo é o maior dividendo que o dinheiro pode pagar.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d039",
+  "texto": "Os imprevistos não são exceções: acontecem todos os anos. Planeia para eles.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "inesperadas"
+  ]
+ },
+ {
+  "id": "d040",
+  "texto": "Um mês mau não define o teu ano. O que conta é a tendência.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "mentalidade",
+  "gatilhos": [
+   "mes_negativo"
+  ]
+ },
+ {
+  "id": "d041",
+  "texto": "A poupança é a parte que controlas; o rendimento e os mercados nem sempre.",
+  "autor": "Morgan Housel",
+  "livro": "A Psicologia do Dinheiro",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_baixa"
+  ]
+ },
+ {
+  "id": "d042",
+  "texto": "Gasta sem culpa no que adoras e corta sem dó no que não te faz falta.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d043",
+  "texto": "Divide o mês em quatro partes: custos fixos, poupança, investimento e dinheiro livre.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "orcamento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d044",
+  "texto": "Automatiza: a poupança deve sair no dia em que o ordenado entra, sem teres de decidir.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_baixa"
+  ]
+ },
+ {
+  "id": "d045",
+  "texto": "Começa pelas grandes vitórias, como casa, transporte e refeições fora, antes de cortar cafés.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "orcamento",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d046",
+  "texto": "Comer fora é uma ótima despesa quando a escolhes de propósito. Fica cara quando acontece por defeito.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "cat:Restaurantes"
+  ]
+ },
+ {
+  "id": "d047",
+  "texto": "Revê as subscrições uma vez por mês e cancela as que não usaste.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "subscricoes",
+  "gatilhos": [
+   "cat:Serviços",
+   "servicos_subir"
+  ]
+ },
+ {
+  "id": "d048",
+  "texto": "Um telefonema a negociar o tarifário pode poupar-te dinheiro todos os meses.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "subscricoes",
+  "gatilhos": [
+   "cat:Serviços"
+  ]
+ },
+ {
+  "id": "d049",
+  "texto": "Define um valor para saídas e aproveita-o sem pensar duas vezes.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "cat:Saídas à Noite"
+  ]
+ },
+ {
+  "id": "d050",
+  "texto": "Uma \"vida rica\" é diferente para cada pessoa. Escreve o que é a tua.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d051",
+  "texto": "Começar com pouco é melhor do que esperar pelo momento perfeito.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_baixa"
+  ]
+ },
+ {
+  "id": "d052",
+  "texto": "Junta as compras grandes num objetivo próprio em vez de as pagares de surpresa.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "inesperadas"
+  ]
+ },
+ {
+  "id": "d053",
+  "texto": "Escolhe uma categoria por mês para melhorar, em vez de tentar mudar tudo de uma vez.",
+  "autor": "Ramit Sethi",
+  "livro": "I Will Teach You to Be Rich",
+  "tema": "habitos",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d054",
+  "texto": "Regra 50/30/20: 50% para necessidades, 30% para desejos e 20% para poupar.",
+  "autor": "Elizabeth Warren",
+  "livro": "All Your Worth",
+  "tema": "orcamento",
+  "gatilhos": [
+   "geral",
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d055",
+  "texto": "Se as necessidades passam de metade do rendimento, o problema está nas despesas fixas, não nos cafés.",
+  "autor": "Elizabeth Warren",
+  "livro": "All Your Worth",
+  "tema": "orcamento",
+  "gatilhos": [
+   "cat:Habitação"
+  ]
+ },
+ {
+  "id": "d056",
+  "texto": "Os desejos merecem espaço no orçamento; só não podem ficar com a parte da poupança.",
+  "autor": "Elizabeth Warren",
+  "livro": "All Your Worth",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "orcamento_80"
+  ]
+ },
+ {
+  "id": "d057",
+  "texto": "Procura equilíbrio, não perfeição: um mês fora da regra não estraga o ano.",
+  "autor": "Elizabeth Warren",
+  "livro": "All Your Worth",
+  "tema": "mentalidade",
+  "gatilhos": [
+   "mes_negativo"
+  ]
+ },
+ {
+  "id": "d058",
+  "texto": "Calcula primeiro as tuas necessidades: o resto do plano depende disso.",
+  "autor": "Elizabeth Warren",
+  "livro": "All Your Worth",
+  "tema": "orcamento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d059",
+  "texto": "Poupar e pagar dívidas contam ambos para os 20%.",
+  "autor": "Elizabeth Warren",
+  "livro": "All Your Worth",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_baixa"
+  ]
+ },
+ {
+  "id": "d060",
+  "texto": "Despesas fixas altas tiram-te margem para os imprevistos.",
+  "autor": "Elizabeth Warren",
+  "livro": "All Your Worth",
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "inesperadas"
+  ]
+ },
+ {
+  "id": "d061",
+  "texto": "Muitos milionários vivem abaixo das suas possibilidades: gastam menos do que ganham, todos os meses.",
+  "autor": "Thomas J. Stanley e William D. Danko",
+  "livro": "O Milionário Mora ao Lado",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d062",
+  "texto": "Parecer rico e ser rico são coisas diferentes.",
+  "autor": "Thomas J. Stanley e William D. Danko",
+  "livro": "O Milionário Mora ao Lado",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "cat:Roupa"
+  ]
+ },
+ {
+  "id": "d063",
+  "texto": "Quem sabe quanto gasta em cada categoria tem mais controlo sobre o futuro.",
+  "autor": "Thomas J. Stanley e William D. Danko",
+  "livro": "O Milionário Mora ao Lado",
+  "tema": "orcamento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d064",
+  "texto": "Tempo investido a planear compensa mais do que procurar o próximo grande ganho.",
+  "autor": "Thomas J. Stanley e William D. Danko",
+  "livro": "O Milionário Mora ao Lado",
+  "tema": "habitos",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d065",
+  "texto": "Compra pelo valor, não pela marca.",
+  "autor": "Thomas J. Stanley e William D. Danko",
+  "livro": "O Milionário Mora ao Lado",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "cat:Supermercado",
+   "cat:Roupa"
+  ]
+ },
+ {
+  "id": "d066",
+  "texto": "Hábitos discretos, repetidos durante anos, constroem mais património do que um bom ordenado.",
+  "autor": "Thomas J. Stanley e William D. Danko",
+  "livro": "O Milionário Mora ao Lado",
+  "tema": "habitos",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d067",
+  "texto": "Não compitas com os outros no que compras.",
+  "autor": "Thomas J. Stanley e William D. Danko",
+  "livro": "O Milionário Mora ao Lado",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d068",
+  "texto": "Revê as despesas grandes com ainda mais cuidado do que as pequenas.",
+  "autor": "Thomas J. Stanley e William D. Danko",
+  "livro": "O Milionário Mora ao Lado",
+  "tema": "orcamento",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d069",
+  "texto": "Cada despesa custa horas da tua vida. Pergunta se este gasto valeu esse tempo.",
+  "autor": "Vicki Robin",
+  "livro": "Your Money or Your Life",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d070",
+  "texto": "Regista cada cêntimo: só se melhora o que se mede. Estás no caminho certo.",
+  "autor": "Vicki Robin",
+  "livro": "Your Money or Your Life",
+  "tema": "habitos",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d071",
+  "texto": "Pergunta a cada categoria se te trouxe satisfação à medida do que custou.",
+  "autor": "Vicki Robin",
+  "livro": "Your Money or Your Life",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d072",
+  "texto": "\"Suficiente\" é ter o que precisas e um pouco mais, sem excesso.",
+  "autor": "Vicki Robin",
+  "livro": "Your Money or Your Life",
+  "tema": "mentalidade",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d073",
+  "texto": "Ver a evolução de vários meses mostra padrões que um mês isolado esconde.",
+  "autor": "Vicki Robin",
+  "livro": "Your Money or Your Life",
+  "tema": "habitos",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d074",
+  "texto": "Gastar de acordo com os teus valores reduz o arrependimento.",
+  "autor": "Vicki Robin",
+  "livro": "Your Money or Your Life",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d075",
+  "texto": "Antes de comprar, espera um dia: muitos desejos desaparecem sozinhos.",
+  "autor": "Vicki Robin",
+  "livro": "Your Money or Your Life",
+  "tema": "compras-por-impulso",
+  "gatilhos": [
+   "cat:Diversos"
+  ]
+ },
+ {
+  "id": "d076",
+  "texto": "Pequenos gastos frequentes passam despercebidos. Olha para o total do mês.",
+  "autor": "Vicki Robin",
+  "livro": "Your Money or Your Life",
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "pequenos_gastos"
+  ]
+ },
+ {
+  "id": "d077",
+  "texto": "Começa por um fundo de emergência pequeno e depois aumenta-o até 3 a 6 meses de despesas.",
+  "autor": "Dave Ramsey",
+  "livro": "The Total Money Makeover",
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "inesperadas",
+   "geral"
+  ]
+ },
+ {
+  "id": "d078",
+  "texto": "Um fundo de emergência transforma um imprevisto num incómodo.",
+  "autor": "Dave Ramsey",
+  "livro": "The Total Money Makeover",
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "inesperadas"
+  ]
+ },
+ {
+  "id": "d079",
+  "texto": "Dá a cada euro uma função antes de o mês começar.",
+  "autor": "Dave Ramsey",
+  "livro": "The Total Money Makeover",
+  "tema": "orcamento",
+  "gatilhos": [
+   "mes_negativo",
+   "orcamento_80"
+  ]
+ },
+ {
+  "id": "d080",
+  "texto": "Paga primeiro as dívidas mais pequenas para ganhar embalo.",
+  "autor": "Dave Ramsey",
+  "livro": "The Total Money Makeover",
+  "tema": "mentalidade",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d081",
+  "texto": "Se não podes pagar a pronto, provavelmente não precisas disso agora.",
+  "autor": "Dave Ramsey",
+  "livro": "The Total Money Makeover",
+  "tema": "compras-por-impulso",
+  "gatilhos": [
+   "cat:Diversos"
+  ]
+ },
+ {
+  "id": "d082",
+  "texto": "Faz o orçamento do mês com quem partilhas despesas.",
+  "autor": "Dave Ramsey",
+  "livro": "The Total Money Makeover",
+  "tema": "orcamento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d083",
+  "texto": "Pagar em dinheiro físico nas categorias difíceis torna cada gasto mais visível.",
+  "autor": "Dave Ramsey",
+  "livro": "The Total Money Makeover",
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "cat:Saídas à Noite",
+   "cat:Restaurantes"
+  ]
+ },
+ {
+  "id": "d084",
+  "texto": "Viver hoje como poucos querem permite viver amanhã como poucos podem.",
+  "autor": "Dave Ramsey",
+  "livro": "The Total Money Makeover",
+  "tema": "longo-prazo",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d085",
+  "texto": "Um mês negativo pede um plano, não culpa. Revê as três maiores categorias.",
+  "autor": "Dave Ramsey",
+  "livro": "The Total Money Makeover",
+  "tema": "mentalidade",
+  "gatilhos": [
+   "mes_negativo"
+  ]
+ },
+ {
+  "id": "d086",
+  "texto": "Gasta menos do que ganhas e investe a diferença. O resto é pormenor.",
+  "autor": "JL Collins",
+  "livro": "The Simple Path to Wealth",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d087",
+  "texto": "Evita dívidas de consumo: são o contrário de investir.",
+  "autor": "JL Collins",
+  "livro": "The Simple Path to Wealth",
+  "tema": "compras-por-impulso",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d088",
+  "texto": "O dinheiro poupado compra liberdade para dizer não ao que não queres.",
+  "autor": "JL Collins",
+  "livro": "The Simple Path to Wealth",
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d089",
+  "texto": "Uma taxa de poupança alta é o caminho mais curto para a independência financeira.",
+  "autor": "JL Collins",
+  "livro": "The Simple Path to Wealth",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d090",
+  "texto": "Simples ganha a complicado: poucas regras, cumpridas sempre.",
+  "autor": "JL Collins",
+  "livro": "The Simple Path to Wealth",
+  "tema": "habitos",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d091",
+  "texto": "Não precisas de adivinhar o futuro para poupar bem.",
+  "autor": "JL Collins",
+  "livro": "The Simple Path to Wealth",
+  "tema": "longo-prazo",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d092",
+  "texto": "Poupar é importante, mas há experiências com prazo de validade. Guarda espaço para elas.",
+  "autor": "Bill Perkins",
+  "livro": "Die With Zero",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d093",
+  "texto": "O dinheiro vale mais quando o usas na altura certa da vida.",
+  "autor": "Bill Perkins",
+  "livro": "Die With Zero",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d094",
+  "texto": "Planeia as férias como um objetivo: a memória dura muito mais do que a despesa.",
+  "autor": "Bill Perkins",
+  "livro": "Die With Zero",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "cat:Férias"
+  ]
+ },
+ {
+  "id": "d095",
+  "texto": "Ter margem não serve só para emergências; também serve para oportunidades.",
+  "autor": "Bill Perkins",
+  "livro": "Die With Zero",
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d096",
+  "texto": "Pergunta-te que experiência queres viver este ano que o dinheiro te pode dar.",
+  "autor": "Bill Perkins",
+  "livro": "Die With Zero",
+  "tema": "aproveitar",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d097",
+  "texto": "Decide uma percentagem para poupar e automatiza-a: a decisão faz-se uma vez.",
+  "autor": "Tony Robbins",
+  "livro": "Money: Master the Game",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_baixa"
+  ]
+ },
+ {
+  "id": "d098",
+  "texto": "Sempre que o rendimento subir, aumenta a poupança em pelo menos 1%.",
+  "autor": "Tony Robbins",
+  "livro": "Money: Master the Game",
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d099",
+  "texto": "Sabe quanto precisas por mês para viver como queres.",
+  "autor": "Tony Robbins",
+  "livro": "Money: Master the Game",
+  "tema": "orcamento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d100",
+  "texto": "Comissões e custos escondidos comem resultados ao longo dos anos.",
+  "autor": "Tony Robbins",
+  "livro": "Money: Master the Game",
+  "tema": "subscricoes",
+  "gatilhos": [
+   "cat:Serviços"
+  ]
+ },
+ {
+  "id": "d101",
+  "texto": "A segurança financeira começa por ter as despesas essenciais cobertas por poupança.",
+  "autor": "Tony Robbins",
+  "livro": "Money: Master the Game",
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d102",
+  "texto": "Não poupes o que sobra depois de gastar; gasta o que sobra depois de poupar.",
+  "autor": "Warren Buffett",
+  "livro": null,
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "orcamento_80",
+   "poupanca_baixa"
+  ]
+ },
+ {
+  "id": "d103",
+  "texto": "Se compras o que não precisas, um dia vais ter de vender o que precisas.",
+  "autor": "Warren Buffett",
+  "livro": null,
+  "tema": "compras-por-impulso",
+  "gatilhos": [
+   "cat:Diversos"
+  ]
+ },
+ {
+  "id": "d104",
+  "texto": "O preço é o que pagas; o valor é o que recebes.",
+  "autor": "Warren Buffett",
+  "livro": null,
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d105",
+  "texto": "O melhor investimento és tu: o que aprendes rende a vida inteira.",
+  "autor": "Warren Buffett",
+  "livro": null,
+  "tema": "rendimento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d106",
+  "texto": "Mantém sempre uma reserva: nunca dependas de dinheiro emprestado para o essencial.",
+  "autor": "Warren Buffett",
+  "livro": null,
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "inesperadas"
+  ]
+ },
+ {
+  "id": "d107",
+  "texto": "Os hábitos parecem leves demais para se sentirem, até ficarem pesados demais para se largarem.",
+  "autor": "Warren Buffett",
+  "livro": null,
+  "tema": "habitos",
+  "gatilhos": [
+   "pequenos_gastos"
+  ]
+ },
+ {
+  "id": "d108",
+  "texto": "A primeira regra do efeito composto: nunca o interrompas sem necessidade.",
+  "autor": "Charlie Munger",
+  "livro": null,
+  "tema": "longo-prazo",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d109",
+  "texto": "Evitar erros grandes vale mais do que acertar em tudo.",
+  "autor": "Charlie Munger",
+  "livro": null,
+  "tema": "compras-por-impulso",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d110",
+  "texto": "Gastar menos do que ganhas é a base; o resto é paciência.",
+  "autor": "Charlie Munger",
+  "livro": null,
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d111",
+  "texto": "Poucas decisões bem tomadas valem mais do que muitas decisões rápidas.",
+  "autor": "John Bogle",
+  "livro": null,
+  "tema": "habitos",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d112",
+  "texto": "Os custos importam: cada euro em comissões é um euro que deixa de trabalhar para ti.",
+  "autor": "John Bogle",
+  "livro": null,
+  "tema": "subscricoes",
+  "gatilhos": [
+   "cat:Serviços"
+  ]
+ },
+ {
+  "id": "d113",
+  "texto": "Mantém o rumo: não mudes de plano por causa de um mês difícil.",
+  "autor": "John Bogle",
+  "livro": null,
+  "tema": "mentalidade",
+  "gatilhos": [
+   "mes_negativo"
+  ]
+ },
+ {
+  "id": "d114",
+  "texto": "O tempo é teu aliado; a pressa raramente é.",
+  "autor": "John Bogle",
+  "livro": null,
+  "tema": "longo-prazo",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d115",
+  "texto": "Planeia com margem de segurança, como se as coisas corressem um pouco pior do que esperas.",
+  "autor": "Benjamin Graham",
+  "livro": "O Investidor Inteligente",
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "inesperadas"
+  ]
+ },
+ {
+  "id": "d116",
+  "texto": "Controla as emoções antes de tentares controlar o dinheiro.",
+  "autor": "Benjamin Graham",
+  "livro": "O Investidor Inteligente",
+  "tema": "compras-por-impulso",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d117",
+  "texto": "Pessoas primeiro, depois dinheiro, depois coisas.",
+  "autor": "Suze Orman",
+  "livro": null,
+  "tema": "aproveitar",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d118",
+  "texto": "Antes de uma compra, pergunta se precisas dela ou se apenas a queres.",
+  "autor": "Suze Orman",
+  "livro": null,
+  "tema": "compras-por-impulso",
+  "gatilhos": [
+   "cat:Roupa",
+   "cat:Diversos"
+  ]
+ },
+ {
+  "id": "d119",
+  "texto": "O ideal é um fundo de emergência de 8 meses de despesas. Começa por 1.",
+  "autor": "Suze Orman",
+  "livro": null,
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "inesperadas"
+  ]
+ },
+ {
+  "id": "d120",
+  "texto": "O teu valor não está no que compras.",
+  "autor": "Suze Orman",
+  "livro": null,
+  "tema": "mentalidade",
+  "gatilhos": [
+   "cat:Roupa"
+  ]
+ },
+ {
+  "id": "d121",
+  "texto": "Uma pequena despesa repetida tem um custo anual surpreendente. Multiplica por 52 semanas antes de decidir.",
+  "autor": "Mr. Money Mustache",
+  "livro": null,
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "pequenos_gastos",
+   "cat:Tabaco"
+  ]
+ },
+ {
+  "id": "d122",
+  "texto": "Cozinhar mais em casa é das formas mais rápidas de baixar a despesa do mês.",
+  "autor": "Mr. Money Mustache",
+  "livro": null,
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "cat:Restaurantes"
+  ]
+ },
+ {
+  "id": "d123",
+  "texto": "Em distâncias curtas, andar a pé ou de bicicleta poupa dinheiro e faz bem.",
+  "autor": "Mr. Money Mustache",
+  "livro": null,
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "cat:Transportes",
+   "cat:Combustível"
+  ]
+ },
+ {
+  "id": "d124",
+  "texto": "Raramente a felicidade vem de mais compras; vem de mais tempo livre.",
+  "autor": "Mr. Money Mustache",
+  "livro": null,
+  "tema": "aproveitar",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d125",
+  "texto": "Experimenta uma semana sem uma despesa habitual e vê se sentes falta dela.",
+  "autor": "Mr. Money Mustache",
+  "livro": null,
+  "tema": "habitos",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d126",
+  "texto": "Compara tarifários de telemóvel e internet uma vez por ano: o mercado muda.",
+  "autor": "Pedro Andersson",
+  "livro": "Contas-Poupança",
+  "tema": "subscricoes",
+  "gatilhos": [
+   "cat:Serviços"
+  ]
+ },
+ {
+  "id": "d127",
+  "texto": "Faz a lista antes de ires ao supermercado e respeita-a.",
+  "autor": "Pedro Andersson",
+  "livro": "Contas-Poupança",
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "cat:Supermercado"
+  ]
+ },
+ {
+  "id": "d128",
+  "texto": "Nos produtos básicos, experimenta as marcas próprias do supermercado.",
+  "autor": "Pedro Andersson",
+  "livro": "Contas-Poupança",
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "cat:Supermercado"
+  ]
+ },
+ {
+  "id": "d129",
+  "texto": "Confirma se tens direito a benefícios e deduções no IRS: é dinheiro teu.",
+  "autor": "Pedro Andersson",
+  "livro": "Contas-Poupança",
+  "tema": "rendimento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d130",
+  "texto": "Revê os tarifários de eletricidade e gás: mudar pode poupar todos os meses.",
+  "autor": "Pedro Andersson",
+  "livro": "Contas-Poupança",
+  "tema": "subscricoes",
+  "gatilhos": [
+   "cat:Habitação"
+  ]
+ },
+ {
+  "id": "d131",
+  "texto": "Desconfia das prestações para coisas pequenas.",
+  "autor": "Pedro Andersson",
+  "livro": "Contas-Poupança",
+  "tema": "compras-por-impulso",
+  "gatilhos": [
+   "cat:Diversos"
+  ]
+ },
+ {
+  "id": "d132",
+  "texto": "Planear as refeições da semana reduz o desperdício e as idas ao supermercado.",
+  "autor": "Pedro Andersson",
+  "livro": "Contas-Poupança",
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "cat:Supermercado"
+  ]
+ },
+ {
+  "id": "d133",
+  "texto": "Pede sempre fatura com NIF: conta para o IRS.",
+  "autor": "Pedro Andersson",
+  "livro": "Contas-Poupança",
+  "tema": "rendimento",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d134",
+  "texto": "Regista as despesas no próprio dia: ao fim de uma semana já ninguém se lembra do café.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "habitos",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d135",
+  "texto": "Confirma os recorrentes no início do mês para começares com os números certos.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "habitos",
+  "gatilhos": [
+   "geral"
+  ]
+ },
+ {
+  "id": "d136",
+  "texto": "Se uma categoria sobe três meses seguidos, ajusta o orçamento ou o hábito.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "orcamento",
+  "gatilhos": [
+   "categoria_acima"
+  ]
+ },
+ {
+  "id": "d137",
+  "texto": "Marcar despesas como inesperadas mostra de quanto precisa o teu fundo de emergência.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "fundo-de-emergencia",
+  "gatilhos": [
+   "inesperadas"
+  ]
+ },
+ {
+  "id": "d138",
+  "texto": "Divide os pagamentos anuais por 12 para veres o custo real de cada mês.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "subscricoes",
+  "gatilhos": [
+   "cat:Serviços"
+  ]
+ },
+ {
+  "id": "d139",
+  "texto": "Combustível e portagens juntos dão o custo real das tuas deslocações.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "cat:Combustível",
+   "cat:Portagens"
+  ]
+ },
+ {
+  "id": "d140",
+  "texto": "Antes de uma saída, decide quanto queres gastar.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "cat:Saídas à Noite"
+  ]
+ },
+ {
+  "id": "d141",
+  "texto": "Um mês com saldo negativo é bom momento para rever recorrentes e orçamentos.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "orcamento",
+  "gatilhos": [
+   "mes_negativo"
+  ]
+ },
+ {
+  "id": "d142",
+  "texto": "A tua média dos últimos 3 meses é um bom ponto de partida para cada orçamento.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "orcamento",
+  "gatilhos": [
+   "orcamento_80"
+  ]
+ },
+ {
+  "id": "d143",
+  "texto": "Quando sobra mais do que o costume, decide logo para onde vai, antes que desapareça.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "pagar-te-primeiro",
+  "gatilhos": [
+   "poupanca_alta"
+  ]
+ },
+ {
+  "id": "d144",
+  "texto": "Prendas e aniversários repetem-se todos os anos: reserva um valor para eles.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "orcamento",
+  "gatilhos": [
+   "cat:Diversos"
+  ]
+ },
+ {
+  "id": "d145",
+  "texto": "Experimenta esperar 48 horas antes de comprar roupa que não estava planeada.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "compras-por-impulso",
+  "gatilhos": [
+   "cat:Roupa"
+  ]
+ },
+ {
+  "id": "d146",
+  "texto": "A saúde é uma despesa a proteger: não é aqui que deves cortar.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "gastar-com-consciencia",
+  "gatilhos": [
+   "cat:Saúde"
+  ]
+ },
+ {
+  "id": "d147",
+  "texto": "Pequenas compras online somam depressa. Revê-as no fim do mês.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "cat:Diversos",
+   "pequenos_gastos"
+  ]
+ },
+ {
+  "id": "d148",
+  "texto": "Um orçamento de férias criado com meses de antecedência torna a viagem mais tranquila.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "aproveitar",
+  "gatilhos": [
+   "cat:Férias"
+  ]
+ },
+ {
+  "id": "d149",
+  "texto": "Vai ao supermercado depois de comer: com fome, a conta tende a subir.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "cat:Supermercado"
+  ]
+ },
+ {
+  "id": "d150",
+  "texto": "Combustível mais barato a poucos quilómetros pode compensar se já passas por lá.",
+  "autor": "Penny Wise",
+  "livro": null,
+  "tema": "pequenos-gastos",
+  "gatilhos": [
+   "cat:Combustível"
+  ]
+ }
+]

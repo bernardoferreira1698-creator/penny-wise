@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    var modoPref = localStorage.getItem('pw_modo') || 'automatico';
+    var modo = modoPref === 'automatico'
+      ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'claro' : 'escuro')
+      : modoPref;
+    document.documentElement.setAttribute('data-paleta', pal);
+    document.documentElement.setAttribute('data-modo', modo);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+    document.documentElement.setAttribute('data-modo', 'escuro');
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF6A1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Início</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .mov-linha { border-radius:999px; background:var(--glass); border:1px solid var(--linha); padding:12px 22px; display:flex; justify-content:space-between; align-items:center }
+  .mov-linha__nome { display:flex; flex-direction:column; gap:1px }
+  .mov-linha__nome span:first-child { font-size:14px; font-weight:500 }
+  .mov-linha__nome span:last-child { font-size:12px; color:var(--muted2) }
+  .mov-linha__valor { font-size:15px; font-weight:500 }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="app__blobs">
+    <span class="blob" style="top:-230px; right:-210px; width:440px; height:440px; background:var(--glow1); opacity:.85"></span>
+    <span class="blob" style="top:300px; left:-220px; width:360px; height:360px; background:var(--glow2); filter:blur(20px)"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-in"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-in)"></rect></svg>
+
+  <div class="app__content app__content--nav">
+    <div class="topbar">
+      <div class="logo">
+        <div class="logo__coin">P</div>
+        <span style="font-size:14px; font-weight:500">Penny Wise</span>
+      </div>
+      <span class="muted2" style="font-size:14px" id="mes-atual">Outubro 2026</span>
+    </div>
+
+    <p class="display display--xl">
+      <span class="muted">Este mês</span><br>
+      <span class="muted">sobraram</span><br>
+      <span id="valor-sobra">113,50 €</span>
+    </p>
+
+    <div class="chips">
+      <span class="chip chip--warn" id="chip-percentagem">7% do rendimento</span>
+      <span class="chip" id="chip-variacao">−94% vs setembro</span>
+    </div>
+
+    <div class="split-pill">
+      <div class="split-pill__item">
+        <span class="stat-pill__label">Rendimento</span>
+        <span style="font-size:20px; font-weight:500; letter-spacing:-0.5px" id="valor-rendimento">1 560,00 €</span>
+      </div>
+      <div class="split-pill__item">
+        <span class="stat-pill__label">Despesas</span>
+        <span style="font-size:20px; font-weight:500; letter-spacing:-0.5px" id="valor-despesas">1 446,50 €</span>
+      </div>
+    </div>
+
+    <div class="card-light" id="cartao-dica-dia" hidden>
+      <span class="card-light__blob" style="right:-60px; bottom:-90px"></span>
+      <div class="card-light__topo">
+        <a href="dicas.html" style="text-decoration:none; color:inherit; flex:1">
+          <span class="card-light__eyebrow">Dica do dia</span>
+        </a>
+        <button type="button" class="card-light__guardar" id="btn-guardar-dica-dia" aria-label="Guardar dica">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--card-muted2)" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+        </button>
+      </div>
+      <a href="dicas.html" style="text-decoration:none; color:inherit">
+        <p class="card-light__text" id="texto-dica-dia"></p>
+        <span class="card-light__byline" id="byline-dica-dia"></span>
+      </a>
+    </div>
+
+    <div class="stack">
+      <div class="topbar">
+        <span style="font-size:15px; font-weight:500">Últimos movimentos</span>
+        <a href="movimentos.html" class="muted2" style="font-size:13px">Ver todos</a>
+      </div>
+      <div id="lista-ultimos-movimentos" class="stack"></div>
+    </div>
+
+    <div class="stack">
+      <div class="topbar">
+        <span style="font-size:15px; font-weight:500">Orçamentos</span>
+        <a href="orcamentos.html" class="muted2" style="font-size:13px">Ver todos</a>
+      </div>
+      <div class="glass" style="padding:16px 18px; display:flex; flex-direction:column; gap:14px" id="resumo-orcamentos"></div>
+    </div>
+  </div>
+
+  <div id="app-nav-fade"></div>
+  <div id="app-nav"></div>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="js/nav.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/dados-mock.js" defer></script>
+<script src="js/moeda.js" defer></script>
+<script src="js/dicas-engine.js" defer></script>
+<script src="js/ecras/inicio.js" defer></script>
+<script defer>document.addEventListener('DOMContentLoaded', function () { PennyNav.mountBottomNav('inicio'); });</script>
+</body>
+</html>
