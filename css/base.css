@@ -88,9 +88,10 @@ svg { display: block; }
   gap: 14px;
 }
 
-/* 168px para a barra flutuante (76px do fundo + 72px de altura) nunca
-   tapar a última linha, com alguma folga por baixo dela. */
-.app__content--nav { padding-bottom: 168px; }
+/* 128px + a zona de segurança do aparelho: cobre a folga da barra
+   flutuante (16px + 72px de altura) mais uns 40px de respiro, para
+   nunca tapar a última linha. Mesma lógica adaptável do .nav-bottom. */
+.app__content--nav { padding-bottom: calc(128px + env(safe-area-inset-bottom)); }
 .app__content--cta { padding-bottom: 100px; }
 
 /* ---------- Tipografia ---------- */
@@ -272,19 +273,19 @@ html[data-modo="claro"] .bar-track { background: rgba(0,0,0,0.08); }
 /* ---------- Navegação inferior flutuante ---------- */
 
 .nav-fade {
-  position: fixed; left: 0; right: 0; bottom: 0; height: 178px;
+  position: fixed; left: 0; right: 0; bottom: 0; height: 150px;
   background: linear-gradient(to top, var(--bg) 55%, var(--bg0));
   pointer-events: none; z-index: 2;
   max-width: 480px; margin: 0 auto;
 }
 
-/* bottom: 76px (em vez de 28px) deixa livre o canto inferior direito,
-   onde o Netlify mostra sempre um emblema próprio (202x64px, encostado
-   ao canto, por cima de tudo) nos sites do plano gratuito — sem isto,
-   tapava o ícone mais à direita desta barra. */
+/* 16px de folga acima da zona de segurança do aparelho (a barra de
+   gestos do iPhone, por exemplo) — dá uns 50px livres no fundo em
+   aparelhos com essa barra, e adapta-se sozinho a cada modelo, sem
+   valores fixos em pixéis. */
 .nav-bottom {
   position: fixed; left: 50%; transform: translateX(-50%);
-  bottom: 76px; width: calc(100% - 48px); max-width: 432px;
+  bottom: calc(16px + env(safe-area-inset-bottom)); width: calc(100% - 48px); max-width: 432px;
   height: 72px; border-radius: 36px;
   background: var(--nav); border: 1px solid rgba(255,255,255,0.1);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,0.5);
@@ -458,11 +459,10 @@ html[data-modo="claro"] .pal-btn { background: rgba(0,0,0,0.03); border-color: r
   display: flex; align-items: center; justify-content: center;
 }
 .sheet-opcao.is-selecionada .sheet-check { background: var(--prim-solid); border-color: var(--prim-solid); }
-/* 76px de folga em baixo (em vez de 28px), pela mesma razão do
-   .nav-bottom acima: o botão "Guardar" fica quase sempre à direita, e
-   essa é exatamente a zona onde o Netlify mostra o seu emblema. */
 .sheet-rodape {
-  flex: none; display: flex; gap: 10px; padding: 14px 20px 76px; border-top: 1px solid var(--sheet-linha);
+  flex: none; display: flex; gap: 10px;
+  padding: 14px 20px calc(28px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--sheet-linha);
 }
 .sheet-botao {
   font-family: inherit; flex: 1; height: 50px; border-radius: 999px; font-size: 15px; font-weight: 500; cursor: pointer;
