@@ -14,6 +14,28 @@ if ('serviceWorker' in navigator) {
 }
 
 
+/* Alguns ecrãs marcam o seu conteúdo principal com a classe
+   "pw-carregar" (invisível) enquanto esperam pelos dados reais do
+   IndexedDB, para nunca mostrar 0€ só por um instante antes do valor
+   a sério aparecer. window.pwPronto(n) devolve uma função a chamar
+   depois de cada um dos "n" blocos de dados desse ecrã estar pronto;
+   ao fim dos "n", o conteúdo aparece com um esbatimento suave. O
+   limite de 1,5s é só uma rede de segurança, para nunca ficar
+   invisível para sempre se algo correr mal. */
+window.pwPronto = function (vezes) {
+  var restantes = vezes;
+  var el = document.querySelector('.app__content');
+  return function () {
+    restantes--;
+    if (restantes <= 0 && el) el.classList.remove('pw-carregar');
+  };
+};
+window.addEventListener('load', function () {
+  setTimeout(function () {
+    document.querySelectorAll('.pw-carregar').forEach(function (el) { el.classList.remove('pw-carregar'); });
+  }, 1500);
+});
+
 (function () {
   var PAGINAS_PUBLICAS = ['entrar.html', 'index.html', ''];
   var pagina = window.location.pathname.split('/').pop();

@@ -111,5 +111,6 @@ document.addEventListener('DOMContentLoaded', function () {
   PennyDB.todos().then(function (movimentos) {
     detalhesMes = PennyCalculos.calcularMes(movimentos, ano, mes);
     render();
+    if (window.pwPronto) window.pwPronto(1)();
   });
 });

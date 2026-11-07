@@ -115,5 +115,6 @@ document.addEventListener('DOMContentLoaded', function () {
     TODOS_MOVIMENTOS = resultados[0];
     limiteAntigo = resultados[1];
     render();
+    if (window.pwPronto) window.pwPronto(1)();
   });
 });

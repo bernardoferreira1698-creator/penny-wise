@@ -161,5 +161,6 @@ document.addEventListener('DOMContentLoaded', function () {
     limiteAntigo = resultados[1];
     atualizarTitulo();
     render();
+    if (window.pwPronto) window.pwPronto(1)();
   });
 });

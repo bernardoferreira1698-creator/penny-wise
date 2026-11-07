@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var hoje = D.hoje();
   document.getElementById('mes-atual').textContent = D.mesAnoLabel(hoje.getFullYear(), hoje.getMonth());
+  var pronto = window.pwPronto ? window.pwPronto(2) : function () {};
 
   /* Cabeçalho ("Este mês sobraram X€", rendimento/despesas, % e
      variação), calculado a partir dos movimentos reais. */
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
       vazioOrcamentos.style.cssText = 'text-align:center; padding:12px 0; font-size:14px';
       vazioOrcamentos.textContent = 'Ainda não há despesas este mês.';
       container.appendChild(vazioOrcamentos);
+      pronto();
       return;
     }
 
@@ -61,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
       container.appendChild(linha);
     });
     PennyMoeda.animarBarras(container);
+    pronto();
   });
 
   /* Últimos movimentos (5 mais recentes). */
@@ -72,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
       vazio.style.cssText = 'text-align:center; padding:12px 0; font-size:14px';
       vazio.textContent = 'Ainda não há movimentos registados.';
       listaMovimentos.appendChild(vazio);
+      pronto();
       return;
     }
     lista.forEach(function (m) {
@@ -84,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
         '<span class="mov-linha__valor">' + PennyMoeda.formatar(m.valor) + '</span>';
       listaMovimentos.appendChild(linha);
     });
+    pronto();
   });
 
   /* Dica do dia: muda uma vez por dia, não repete em 30 dias, segue a

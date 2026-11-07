@@ -116,7 +116,15 @@ svg { display: block; }
   display: flex;
   flex-direction: column;
   gap: 14px;
+  transition: opacity .2s ease;
 }
+
+/* Enquanto os dados reais ainda não chegaram do IndexedDB, o conteúdo
+   fica invisível em vez de mostrar valores a 0€ só por um instante —
+   js/app.js tira esta classe assim que cada ecrã sinaliza que já tem
+   os dados, com um limite de segurança para nunca ficar invisível
+   para sempre (ver pwPronto). */
+.pw-carregar { opacity: 0; }
 
 .app__content--cta { padding-bottom: 100px; }
 

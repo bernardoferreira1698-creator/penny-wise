@@ -116,5 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     render(controlador.estado());
+    if (window.pwPronto) window.pwPronto(1)();
   });
 });

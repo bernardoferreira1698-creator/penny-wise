@@ -197,5 +197,6 @@ document.addEventListener('DOMContentLoaded', function () {
   PennyDB.todos().then(function (movimentos) {
     TODOS_MOVIMENTOS = movimentos;
     render();
+    if (window.pwPronto) window.pwPronto(1)();
   });
 });

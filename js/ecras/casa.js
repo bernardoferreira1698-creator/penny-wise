@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
       valoresAno.push(detalhesMes.temDados ? detalhesMes.total : null);
     }
     renderGrafico(valoresAno);
+    if (window.pwPronto) window.pwPronto(1)();
   });
 
   function renderGrafico(valoresAno) {
