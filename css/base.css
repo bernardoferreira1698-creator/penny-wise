@@ -141,6 +141,10 @@ svg { display: block; }
 .display--huge { font-size: 50px; line-height: 1; letter-spacing: -2px; }
 .muted { color: var(--muted); }
 .muted2 { color: var(--muted2); }
+/* Texto cinzento dentro de uma "folha" (sempre clara): usa os tokens
+   --sheet-*, não --muted2, que no modo escuro é claro a mais para se
+   ler sobre o fundo claro da folha. */
+.sheet-corpo .muted2 { color: var(--sheet-muted2); }
 .warn-text { color: var(--warn); }
 
 .eyebrow { font-size: 13px; font-weight: 500; color: var(--muted); padding: 4px 4px 0; }
