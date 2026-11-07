@@ -64,8 +64,14 @@ svg { display: block; }
    conteúdo. A barra deixa de estar "presa ao ecrã": é só mais um
    elemento normal, sempre no fundo, porque é o resto da página à
    volta dela que nunca se mexe. */
+/* "vh" (não "dvh"): o dvh tenta acompanhar a barra de ferramentas do
+   Safari em tempo real, e demora um instante a estabilizar ao abrir —
+   exatamente o que causava o deslize. Numa app instalada no ecrã
+   principal não há barra de ferramentas nenhuma para acompanhar, por
+   isso vh (sempre o tamanho máximo do ecrã, desde o primeiro instante)
+   é a opção certa aqui. */
 .app--com-nav {
-  height: 100dvh;
+  height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
