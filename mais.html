@@ -106,7 +106,39 @@
 
   <div id="app-nav-fade" class="nav-fade"></div>
   <div id="app-nav" class="nav-bottom"></div>
+
+  <div id="painel-diagnostico" style="position:fixed; top:0; left:0; right:0; z-index:99; background:#000; color:#0f0; font-family:monospace; font-size:11px; padding:6px; line-height:1.5; white-space:pre-wrap"></div>
 </div>
+<script>
+  (function () {
+    function atualizar() {
+      var el = document.getElementById('painel-diagnostico');
+      if (!el) return;
+      var app = document.querySelector('.app');
+      var nav = document.getElementById('app-nav');
+      var navRect = nav ? nav.getBoundingClientRect() : null;
+      var vv = window.visualViewport;
+      el.textContent =
+        'innerHeight=' + window.innerHeight +
+        ' vv.height=' + (vv ? Math.round(vv.height) : '-') +
+        ' vv.offsetTop=' + (vv ? Math.round(vv.offsetTop) : '-') +
+        '\napp.scrollHeight=' + (app ? app.scrollHeight : '-') +
+        ' doc.scrollHeight=' + document.documentElement.scrollHeight +
+        '\nnav.top=' + (navRect ? Math.round(navRect.top) : '-') +
+        ' nav.bottom=' + (navRect ? Math.round(navRect.bottom) : '-') +
+        ' dpr=' + window.devicePixelRatio;
+    }
+    atualizar();
+    window.addEventListener('resize', atualizar);
+    window.addEventListener('scroll', atualizar);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', atualizar);
+      window.visualViewport.addEventListener('scroll', atualizar);
+    }
+    setTimeout(atualizar, 500);
+    setTimeout(atualizar, 1500);
+  })();
+</script>
 <script src="js/paleta.js" defer></script>
 <script src="js/nav.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
