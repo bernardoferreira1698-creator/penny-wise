@@ -13,18 +13,26 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-/* Correção para um bug conhecido do Safari/iOS: ao abrir a página, a
-   barra de ferramentas do browser ainda não recolheu, o que faz os
-   elementos de posição fixa (navegação flutuante, fundo) nascerem
-   desalinhados até ao primeiro gesto de scroll do utilizador. Um
-   scroll impercetível e automático, já ao abrir, força o Safari a
-   corrigir a posição de imediato, sem depender desse gesto. */
-window.addEventListener('load', function () {
-  requestAnimationFrame(function () {
-    window.scrollTo(0, 1);
-    requestAnimationFrame(function () { window.scrollTo(0, 0); });
-  });
-});
+/* Correção para um bug conhecido do Safari/iOS: a barra de
+   ferramentas do browser, em baixo, pode estar "expandida" ou
+   "recolhida" consoante o scroll, e isso muda a zona realmente
+   visível do ecrã (a "visual viewport") sem mudar o tamanho da
+   página em si. Elementos de posição fixa (navegação flutuante,
+   fundo) ficam desalinhados sempre que há essa diferença — e em
+   ecrãs sem conteúdo suficiente para dar scroll, nunca corrigem
+   sozinhos. Aqui medimos essa diferença e compensamo-la sempre que
+   muda, em vez de depender de um gesto de scroll do utilizador. */
+if (window.visualViewport) {
+  var ajustarNavFixa = function () {
+    var vv = window.visualViewport;
+    var desvio = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    document.documentElement.style.setProperty('--desvio-barra-safari', desvio + 'px');
+  };
+  window.visualViewport.addEventListener('resize', ajustarNavFixa);
+  window.visualViewport.addEventListener('scroll', ajustarNavFixa);
+  window.addEventListener('load', ajustarNavFixa);
+  ajustarNavFixa();
+}
 
 (function () {
   var PAGINAS_PUBLICAS = ['entrar.html', 'index.html', ''];

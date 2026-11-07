@@ -8,7 +8,7 @@
    a cache do browser), para nunca mostrares uma versão antiga por
    engano. Só usa a cópia guardada quando não há rede. */
 
-var CACHE = 'penny-wise-v23';
+var CACHE = 'penny-wise-v24';
 
 var FICHEIROS_BASE = [
   'inicio.html',
