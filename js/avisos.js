@@ -34,14 +34,26 @@
     guardarLista(atual);
   }
 
-  /* Dispensar um aviso de movimento incompleto apaga também o
-     movimento (volta a ficar como estava antes de importar: por
-     fazer, não um rascunho a 0€ perdido na lista). */
+  /* Dispensar um aviso de movimento incompleto (sem valor) apaga
+     também o movimento: era só um rascunho a 0€, nada a perder. Já um
+     aviso de categoria por confirmar (ver js/importar-excel.js) tem um
+     valor real por trás — dispensá-lo só aceita a categoria que a
+     importação tinha sugerido em vez de apagar a despesa. */
   function remover(id) {
     var lista = listar();
     var aviso = lista.find(function (a) { return a.id === id; });
     guardarLista(lista.filter(function (a) { return a.id !== id; }));
-    if (aviso && aviso.movimentoId && window.PennyDB) {
+    if (!aviso || !aviso.movimentoId || !window.PennyDB) return;
+
+    if (aviso.tipo === 'categoria-por-confirmar') {
+      window.PennyDB.obter(aviso.movimentoId).then(function (m) {
+        if (!m || !m._correcaoAplicada) return;
+        return window.PennyDB.atualizar(aviso.movimentoId, {
+          categoria: m._correcaoAplicada.categoria, periodicidade: m._correcaoAplicada.periodicidade,
+          nota: m._correcaoAplicada.nota || '', incompleto: false
+        });
+      });
+    } else {
       window.PennyDB.apagar(aviso.movimentoId);
     }
   }

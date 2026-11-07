@@ -31,6 +31,45 @@ document.addEventListener('DOMContentLoaded', function () {
       '<div class="correcao__texto"><span class="correcao__titulo">' + titulo + '</span>' +
       (sub ? '<span class="correcao__sub">' + sub + '</span>' : '') + '</div>';
     container.appendChild(div);
+    return div;
+  }
+
+  /* Correções que são uma adivinhação (categoria), não uma certeza
+     (ao contrário da correção de "Nigh Out", que é só um erro
+     ortográfico, ou da repartição do Spotify, que é só uma conta):
+     deixam o utilizador escolher, por correção, entre aceitar ou
+     rejeitar. Rejeitar marca essas despesas como incompletas (ver
+     js/importar-excel.js: aplicarCorrecao) para irem para Avisos em
+     vez de ficarem com uma categoria que pode estar errada. */
+  function linhaCorrecaoOpcional(container, itens, tituloAceite, subAceite, tituloRejeitado, subRejeitado) {
+    var div = linhaCorrecao(container, tituloAceite, subAceite);
+    div.classList.add('correcao--opcional');
+
+    var opcoes = document.createElement('div');
+    opcoes.className = 'correcao__opcoes';
+    opcoes.innerHTML =
+      '<button type="button" class="is-active" data-valor="aceitar">Aceitar</button>' +
+      '<button type="button" data-valor="rejeitar">Rejeitar</button>';
+    div.appendChild(opcoes);
+
+    var titulo = div.querySelector('.correcao__titulo');
+    var sub = div.querySelector('.correcao__sub');
+
+    opcoes.addEventListener('click', function (evento) {
+      var botao = evento.target.closest('button');
+      if (!botao) return;
+      var aceitar = botao.getAttribute('data-valor') === 'aceitar';
+      opcoes.querySelectorAll('button').forEach(function (b) { b.classList.toggle('is-active', b === botao); });
+
+      PennyImportarExcel.aplicarCorrecao(itens, aceitar);
+      titulo.textContent = aceitar ? tituloAceite : tituloRejeitado;
+      if (sub) sub.textContent = aceitar ? subAceite : subRejeitado;
+
+      if (resultado && resultado.mesesImportados) {
+        resultado.totalPennyWise = PennyImportarExcel.recalcularTotalPennyWise(resultado.movimentos, resultado.mesesImportados);
+        document.getElementById('total-pw').textContent = PennyMoeda.formatar(resultado.totalPennyWise);
+      }
+    });
   }
 
   function mostrarResultado(nomeFicheiro, r) {
@@ -40,15 +79,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var lista = document.getElementById('lista-correcoes');
     lista.innerHTML = '';
-    if (r.correcoes.feriasTransportes > 0) {
-      linhaCorrecao(lista, PennyMoeda.formatar(r.correcoes.feriasTransportes) + ' marcados como Férias passam para Transportes');
+    if (r.correcoes.feriasTransportes.contagem > 0) {
+      linhaCorrecaoOpcional(lista, r.correcoes.feriasTransportes.itens,
+        PennyMoeda.formatar(r.correcoes.feriasTransportes.total) + ' marcados como Férias passam para Transportes', null,
+        r.correcoes.feriasTransportes.contagem + (r.correcoes.feriasTransportes.contagem === 1 ? ' despesa marcada como Férias vai para Avisos' : ' despesas marcadas como Férias vão para Avisos'),
+        'Para escolheres a categoria certa de cada uma');
     }
     if (r.correcoes.nighOut > 0) {
       linhaCorrecao(lista, '"Nigh Out" passa a "Saídas à Noite"');
     }
     if (r.correcoes.semPeriodicidade.contagem > 0) {
-      linhaCorrecao(lista, r.correcoes.semPeriodicidade.contagem + ' movimentos sem categoria ou periodicidade passam a contar',
-        PennyMoeda.formatar(r.correcoes.semPeriodicidade.total) + ' que o Excel não somava');
+      linhaCorrecaoOpcional(lista, r.correcoes.semPeriodicidade.itens,
+        r.correcoes.semPeriodicidade.contagem + ' movimentos sem categoria ou periodicidade passam a contar',
+        PennyMoeda.formatar(r.correcoes.semPeriodicidade.total) + ' que o Excel não somava',
+        r.correcoes.semPeriodicidade.contagem + (r.correcoes.semPeriodicidade.contagem === 1 ? ' movimento sem categoria vai para Avisos' : ' movimentos sem categoria vão para Avisos'),
+        'Para escolheres a categoria certa de cada um');
     }
     if (r.correcoes.spotify) {
       linhaCorrecao(lista, 'Spotify anual repartido por 12 meses',
@@ -211,17 +256,36 @@ document.addEventListener('DOMContentLoaded', function () {
       movimentosParaGuardar.length ? PennyDB.guardarVarios(movimentosParaGuardar) : Promise.resolve([]),
       rascunhos.length ? PennyDB.guardarVarios(rascunhos) : Promise.resolve([])
     ]).then(function (resultados) {
+      var movimentosGuardados = resultados[0];
       var movimentosRascunho = resultados[1];
+      var avisos = [];
+
+      /* Correções de categoria que rejeitaste (ver js/importar-excel.js:
+         aplicarCorrecao) chegam aqui já marcadas como incompletas, com
+         um valor real por guardar na mesma — por isso só pedem um
+         Aviso, nunca se perdem como os rascunhos sem valor abaixo. */
+      movimentosGuardados.forEach(function (m) {
+        if (!m.incompleto) return;
+        avisos.push({
+          tipo: 'categoria-por-confirmar',
+          titulo: m.descricao,
+          detalhe: m.nota || 'Categoria por confirmar',
+          movimentoId: m.id
+        });
+      });
+
       if (movimentosRascunho.length) {
-        PennyAvisos.adicionar(movimentosRascunho.map(function (m) {
-          return {
+        movimentosRascunho.forEach(function (m) {
+          avisos.push({
             tipo: 'movimento-incompleto',
             titulo: m.descricao,
             detalhe: m.categoria + ' · falta o valor',
             movimentoId: m.id
-          };
-        }));
+          });
+        });
       }
+
+      if (avisos.length) PennyAvisos.adicionar(avisos);
       window.location.href = 'inicio.html';
     }).catch(function (e) {
       console.error('Erro a guardar os movimentos importados:', e);

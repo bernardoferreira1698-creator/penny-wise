@@ -306,6 +306,11 @@ document.addEventListener('DOMContentLoaded', function () {
     campoValor.definirValor(Math.abs(m.valor));
 
     construirCategorias(grupoCategorias(tipoLabel), m.categoria).then(function () {
+      /* Sem categoria nem periodicidade guardadas (uma correção de
+         importação que rejeitaste, ver js/importar-excel.js): deixa
+         o que construirCategorias já escolheu por defeito, em vez de
+         tentar marcar "null" e ficar sem nada selecionado. */
+      if (!m.periodicidade) return;
       estado.periodicidade = m.periodicidade;
       segPeriodicidade.querySelectorAll('.seg__item').forEach(function (b) {
         var ativa = b.getAttribute('data-valor') === m.periodicidade;

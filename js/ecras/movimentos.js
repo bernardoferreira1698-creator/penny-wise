@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var linha = document.createElement('a');
         linha.href = 'registo.html?id=' + encodeURIComponent(m.id);
         linha.className = 'glass-rows__row';
-        var subtitulo = m.tipo === 'poupanca' ? 'Poupança' : (m.categoria + ' · ' + m.periodicidade);
+        var subtitulo = m.tipo === 'poupanca' ? 'Poupança' : (m.incompleto ? 'Por confirmar' : (m.categoria + ' · ' + m.periodicidade));
         linha.innerHTML =
           '<div class="glass-rows__label"><span class="glass-rows__title">' + m.descricao + '</span>' +
           '<span class="glass-rows__sub">' + subtitulo + '</span></div>' +

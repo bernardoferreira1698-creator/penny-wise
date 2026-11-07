@@ -41,10 +41,15 @@
     return expandido;
   }
 
-  /* Indicadores de um mês (ver tabela "Por mês" do prompt). */
+  /* Indicadores de um mês (ver tabela "Por mês" do prompt). Movimentos
+     incompletos (sem valor, ou com a categoria ainda por confirmar
+     depois de uma importação — ver js/importar-excel.js) ficam de
+     fora de todas as contas até seres tu a confirmá-los em Avisos,
+     para nunca entrarem com um valor a mais nem com uma categoria que
+     ainda não escolheste. */
   function calcularMes(movimentos, ano, mes) {
     var chave = mesReferenciaDe(ano, mes);
-    var doMes = expandirRepartidos(movimentos).filter(function (m) { return m.mesReferencia === chave; });
+    var doMes = expandirRepartidos(movimentos).filter(function (m) { return m.mesReferencia === chave && !m.incompleto; });
 
     var rendimentos = doMes.filter(function (m) { return m.tipo === 'rendimento'; });
     var despesas = doMes.filter(function (m) { return m.tipo === 'despesa'; });

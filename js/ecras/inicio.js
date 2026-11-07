@@ -78,8 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
       var linha = document.createElement('div');
       linha.className = 'mov-linha';
       var rotuloData = m.data.getDate() + ' ' + MESES_ABREV[m.data.getMonth()];
+      var categoriaRotulo = m.incompleto ? 'Por confirmar' : m.categoria;
       linha.innerHTML =
-        '<div class="mov-linha__nome"><span>' + m.descricao + '</span><span>' + m.categoria + ' · ' + rotuloData + '</span></div>' +
+        '<div class="mov-linha__nome"><span>' + m.descricao + '</span><span>' + categoriaRotulo + ' · ' + rotuloData + '</span></div>' +
         '<span class="mov-linha__valor">' + PennyMoeda.formatar(m.valor) + '</span>';
       listaMovimentos.appendChild(linha);
     });

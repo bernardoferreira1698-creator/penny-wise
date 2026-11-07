@@ -81,12 +81,12 @@
   function processarLinha(mesReferencia, data, descricao, valorBruto, categoriaBruta, periodicidadeBruta, formula, correcoes) {
     var valor = Number(valorBruto);
     var categoria, tipo, periodicidade;
+    var semCategoriaOriginal = !categoriaBruta;
+    var eraFerias = categoriaBruta === 'Férias';
 
     if (!categoriaBruta) {
       categoria = categoriaDespesaPorDescricao(descricao);
       tipo = 'despesa';
-      correcoes.semPeriodicidade.contagem++;
-      correcoes.semPeriodicidade.total += Math.abs(valor);
     } else if (categoriaBruta === 'Rendimento') {
       tipo = 'rendimento';
       categoria = rendimentoPorDescricao(descricao).categoria;
@@ -94,12 +94,14 @@
       categoria = 'Saídas à Noite';
       tipo = 'despesa';
       correcoes.nighOut++;
-    } else if (categoriaBruta === 'Férias') {
+    } else if (eraFerias) {
       // Nas folhas mensais a categoria já vem como Transportes; isto é
-      // só uma rede de segurança caso apareça "Férias" numa delas.
+      // só uma rede de segurança caso apareça "Férias" numa delas. Fica
+      // marcada como correção opcional (ver correcoes.feriasTransportes
+      // abaixo): o ecrã de Importar deixa o utilizador recusar esta
+      // categoria concreta, caso não faça sentido para aquela despesa.
       categoria = 'Transportes';
       tipo = 'despesa';
-      correcoes.feriasTransportes += Math.abs(valor);
     } else {
       categoria = categoriaBruta;
       tipo = 'despesa';
@@ -119,7 +121,7 @@
     var ehSpotifyAnual = /spotify/i.test(descricao) && /anual/i.test(descricao);
     if (ehSpotifyAnual) correcoes.spotify = { descricao: descricao, valor: Math.abs(valor), parcela: Math.round((Math.abs(valor) / 12) * 100) / 100 };
 
-    return {
+    var movimento = {
       data: data, mesReferencia: mesReferencia, descricao: descricao, categoria: categoria,
       subcategoria: subcategoria, periodicidade: periodicidade,
       valor: tipo === 'rendimento' ? Math.abs(valor) : -Math.abs(valor),
@@ -127,6 +129,48 @@
       nota: formula || '',
       repartirMeses: ehSpotifyAnual ? 12 : 1
     };
+
+    /* Guarda a categoria/periodicidade adivinhadas à parte (em vez de
+       recalcular tudo outra vez), para o ecrã de Importar poder
+       desfazer a correção num clique (ver aplicarCorrecao() abaixo),
+       sem teres de reler o ficheiro. */
+    if (semCategoriaOriginal) {
+      correcoes.semPeriodicidade.contagem++;
+      correcoes.semPeriodicidade.total += Math.abs(valor);
+      movimento._correcaoAplicada = { categoria: categoria, periodicidade: periodicidade, nota: movimento.nota, origem: 'Sem categoria no Excel' };
+      correcoes.semPeriodicidade.itens.push(movimento);
+    }
+    if (eraFerias) {
+      correcoes.feriasTransportes.contagem++;
+      correcoes.feriasTransportes.total += Math.abs(valor);
+      movimento._correcaoAplicada = { categoria: categoria, periodicidade: periodicidade, nota: movimento.nota, origem: 'Férias' };
+      correcoes.feriasTransportes.itens.push(movimento);
+    }
+
+    return movimento;
+  }
+
+  /* Aceitar (de volta) ou rejeitar uma correção de categoria: ao
+     rejeitar, o movimento passa a incompleto (sem categoria definida)
+     e fica marcado para o ecrã criar um Aviso a pedir para escolheres
+     a categoria certa, em vez de ficar com uma categoria que pode
+     estar errada. Os objetos em "itens" são os mesmos que já estão em
+     resultado.movimentos (mesma referência), por isso mudar aqui
+     já reflete tudo. */
+  function aplicarCorrecao(itens, aceitar) {
+    itens.forEach(function (m) {
+      if (aceitar) {
+        m.categoria = m._correcaoAplicada.categoria;
+        m.periodicidade = m._correcaoAplicada.periodicidade;
+        m.incompleto = false;
+        m.nota = m._correcaoAplicada.nota || '';
+      } else {
+        m.categoria = null;
+        m.periodicidade = null;
+        m.incompleto = true;
+        m.nota = 'Categoria por confirmar (no Excel: ' + m._correcaoAplicada.origem + ').';
+      }
+    });
   }
 
   /* O ano de cada folha não vem escrito em lado nenhum (só "01
@@ -170,7 +214,12 @@
     var anoPorOmissao = new Date().getFullYear();
     var wb = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
 
-    var correcoes = { nighOut: 0, feriasTransportes: 0, semPeriodicidade: { contagem: 0, total: 0 }, spotify: null };
+    var correcoes = {
+      nighOut: 0,
+      feriasTransportes: { contagem: 0, total: 0, itens: [] },
+      semPeriodicidade: { contagem: 0, total: 0, itens: [] },
+      spotify: null
+    };
     var movimentos = [];
     var paraRever = [];
     var mesesImportados = []; // chaves "AAAA-MM" das folhas que tinham dados a sério
@@ -250,10 +299,22 @@
       movimentos: movimentos,
       paraRever: paraRever,
       correcoes: correcoes,
+      mesesImportados: mesesImportados,
       totalExcel: Math.round(totalExcel * 100) / 100,
       totalPennyWise: Math.round(totalPennyWise * 100) / 100
     };
   }
 
-  window.PennyImportarExcel = { importar: importar };
+  /* Volta a somar "o que sobrou" (ver nota acima) depois de aceitares
+     ou rejeitares uma correção, já que isso muda quais movimentos
+     contam (os rejeitados ficam incompletos, ver aplicarCorrecao()
+     acima, e js/calculos.js deixa de os somar até os confirmares). */
+  function recalcularTotalPennyWise(movimentos, mesesImportados) {
+    var total = mesesImportados.reduce(function (soma, m) {
+      return soma + window.PennyCalculos.calcularMes(movimentos, m.ano, m.mes).sobrou;
+    }, 0);
+    return Math.round(total * 100) / 100;
+  }
+
+  window.PennyImportarExcel = { importar: importar, aplicarCorrecao: aplicarCorrecao, recalcularTotalPennyWise: recalcularTotalPennyWise };
 })();
