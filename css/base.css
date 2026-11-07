@@ -106,7 +106,7 @@ svg { display: block; }
 .app__content {
   position: relative;
   z-index: 1;
-  padding: 56px 20px 32px;
+  padding: 72px 20px 32px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -301,7 +301,7 @@ html[data-modo="claro"] .bar-track { background: rgba(0,0,0,0.08); }
   flex: none;
   display: flex;
   justify-content: center;
-  padding: 10px 0 50px;
+  padding: 10px 0 34px;
   background: linear-gradient(to top, var(--bg) 55%, var(--bg0));
   position: relative;
   z-index: 2;
