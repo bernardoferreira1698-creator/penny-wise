@@ -35,8 +35,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var todasSubcategorias = habitacao ? habitacao.subcategorias : [];
     var presentes = detalhes.subcategorias.map(function (s) { return s.nome; });
     var emFalta = todasSubcategorias.filter(function (n) { return presentes.indexOf(n) < 0; });
+    var listaEmFalta = emFalta.length > 1
+      ? emFalta.slice(0, -1).join(', ') + ' e ' + emFalta[emFalta.length - 1]
+      : emFalta.join('');
     document.getElementById('nota-sem-registos').textContent = emFalta.length
-      ? (emFalta.join(' e ') + ' sem registos em ' + nomeMes + '.')
+      ? (listaEmFalta + ' sem registos em ' + nomeMes + '.')
       : '';
 
     /* Gráfico com os 12 meses do ano corrente. */
