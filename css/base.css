@@ -54,6 +54,30 @@ svg { display: block; }
   color: var(--ink);
 }
 
+/* Ecrãs com a barra de navegação flutuante (Início, Movimentos,
+   Análise, Mais): em vez de "position:fixed" (que, numa app instalada
+   no ecrã principal do iPhone, fica agarrado às medidas do ecrã
+   visível, e essas medidas podem demorar vários fotogramas a
+   estabilizar ao abrir — fazendo a barra "deslizar" visivelmente), a
+   página passa a ter sempre exatamente a altura do ecrã, sem scroll
+   próprio, com uma zona interna (.app__scroll) a tratar do scroll do
+   conteúdo. A barra deixa de estar "presa ao ecrã": é só mais um
+   elemento normal, sempre no fundo, porque é o resto da página à
+   volta dela que nunca se mexe. */
+.app--com-nav {
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.app__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
 /* "fixed" (não "absolute") para o fundo nunca acompanhar o scroll do
    conteúdo — fica sempre encostado aos limites do ecrã, não a uma
    posição em pixéis, por isso continua correto em qualquer
@@ -88,14 +112,6 @@ svg { display: block; }
   gap: 14px;
 }
 
-/* 144px: cobre a folga da barra flutuante (50px do fundo + 72px de
-   altura) mais uns 20px de respiro, para nunca tapar a última linha.
-   Valor fixo de propósito — ver nota junto de .nav-bottom.
-   min-height garante que este conteúdo é sempre um pouco mais alto do
-   que o ecrã, mesmo em ecrãs com pouca informação (ex.: "Mais"): é
-   essa falta de scroll real que parece fazer a pílula nascer na
-   posição errada nesses ecrãs em particular. */
-.app__content--nav { padding-bottom: 144px; min-height: calc(100dvh + 1px); }
 .app__content--cta { padding-bottom: 100px; }
 
 /* ---------- Tipografia ---------- */
@@ -276,36 +292,28 @@ html[data-modo="claro"] .bar-track { background: rgba(0,0,0,0.08); }
 
 /* ---------- Navegação inferior flutuante ---------- */
 
-.nav-fade {
-  position: fixed; left: 0; right: 0; bottom: 0; height: 150px;
+/* Faixa fixa no fundo da "casca" (.app--com-nav), fora da zona de
+   scroll — por isso nunca precisa de "position:fixed" nem de nenhum
+   valor calculado a partir do ecrã visível (ver nota em .app--com-nav
+   mais acima). O gradiente substitui o antigo .nav-fade, que deixou
+   de ser preciso: o conteúdo já não passa por trás da barra. */
+.app__nav-footer {
+  flex: none;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 50px;
   background: linear-gradient(to top, var(--bg) 55%, var(--bg0));
-  pointer-events: none; z-index: 2;
-  max-width: 480px; margin: 0 auto;
-  animation: pw-nav-entrada .25s ease .25s both;
+  position: relative;
+  z-index: 2;
 }
 
-/* O WebKit do iPhone, ao abrir cada ecrã (app instalada), por vezes
-   só estabiliza a altura real do ecrã um instante depois do primeiro
-   desenho — e isso faz os elementos fixos "deslizarem" até ao sítio
-   certo em vez de já lá nascerem. Não há como evitar esse instante,
-   mas dá para escondê-lo: a barra só aparece (com um esbatimento
-   suave) depois de, na prática, já estar sempre estabilizada. */
-@keyframes pw-nav-entrada { from { opacity: 0 } to { opacity: 1 } }
-
-/* Valor fixo em pixéis, de propósito: o equivalente com
-   env(safe-area-inset-bottom) mostrou-se inconsistente entre ecrãs
-   na app instalada no ecrã principal do iPhone (a pílula aparecia em
-   posições diferentes consoante o ecrã). Um número fixo comporta-se
-   sempre da mesma forma, em qualquer ecrã e em qualquer momento. */
 .nav-bottom {
-  position: fixed; left: 50%; transform: translateX(-50%);
-  bottom: 50px; width: calc(100% - 48px); max-width: 432px;
+  width: calc(100% - 48px); max-width: 432px;
   height: 72px; border-radius: 36px;
   background: var(--nav); border: 1px solid rgba(255,255,255,0.1);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,0.5);
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 14px; z-index: 3;
-  animation: pw-nav-entrada .25s ease .25s both;
+  padding: 0 14px;
 }
 .nav-item {
   width: 48px; height: 44px; border: 0; background: transparent;

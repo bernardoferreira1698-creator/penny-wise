@@ -37,13 +37,14 @@
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app app--com-nav">
   <div class="app__blobs">
     <span class="blob" style="top:-170px; left:-190px; width:420px; height:380px; background:var(--glow3); opacity:.7"></span>
   </div>
   <svg class="grain" aria-hidden="true"><filter id="grao-me"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-me)"></rect></svg>
 
-  <div class="app__content app__content--nav">
+  <div class="app__scroll">
+  <div class="app__content">
     <div class="tabs">
       <button type="button" class="tabs__item is-active">Mês</button>
       <a href="ano.html" class="tabs__item">Ano</a>
@@ -71,9 +72,11 @@
     <span style="font-size:15px; font-weight:500; padding-top:6px">Por categoria <span class="muted">· % do rendimento</span></span>
     <div class="stack stack--lg" id="lista-categorias"></div>
   </div>
+  </div>
 
-  <div id="app-nav-fade" class="nav-fade"></div>
-  <div id="app-nav" class="nav-bottom"></div>
+  <div class="app__nav-footer">
+    <div id="app-nav" class="nav-bottom"></div>
+  </div>
 
   <div id="sheet-detalhe-categoria" class="sheet-fundo" hidden>
     <div class="sheet-corpo">

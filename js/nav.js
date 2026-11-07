@@ -27,10 +27,8 @@
       path + '</svg>';
   }
 
-  /* As classes nav-bottom/nav-fade já vêm no HTML (não à espera deste
-     script), para a barra nascer já fixa ao fundo do ecrã, sem um
-     instante a aparecer encaixada no fim do conteúdo antes de o
-     JavaScript correr. Aqui só se preenche o conteúdo (ícones). */
+  /* A classe nav-bottom e a faixa app__nav-footer já vêm no HTML (não
+     à espera deste script); aqui só se preenche o conteúdo (ícones). */
   function mountBottomNav(ativo) {
     var el = document.getElementById('app-nav');
     if (!el) return;

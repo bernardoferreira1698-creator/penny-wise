@@ -52,13 +52,14 @@
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app app--com-nav">
   <div class="app__blobs">
     <span class="blob" style="top:-230px; right:-210px; width:440px; height:440px; background:var(--glow1); opacity:.8"></span>
   </div>
   <svg class="grain" aria-hidden="true"><filter id="grao-mv"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-mv)"></rect></svg>
 
-  <div class="app__content app__content--nav">
+  <div class="app__scroll">
+  <div class="app__content">
     <p class="display"><span class="muted" id="movimentos-mes-nome">Mês,</span><br><span id="total-movimentos">0 movimentos</span></p>
 
     <div class="seletor-mes">
@@ -87,9 +88,11 @@
     <div id="lista-movimentos" class="stack"></div>
     <p id="sem-resultados" class="muted" style="text-align:center; padding:24px 0" hidden>Nenhum movimento corresponde aos filtros escolhidos.</p>
   </div>
+  </div>
 
-  <div id="app-nav-fade" class="nav-fade"></div>
-  <div id="app-nav" class="nav-bottom"></div>
+  <div class="app__nav-footer">
+    <div id="app-nav" class="nav-bottom"></div>
+  </div>
 
   <div id="sheet-categoria" class="sheet-fundo" hidden>
     <div class="sheet-corpo">

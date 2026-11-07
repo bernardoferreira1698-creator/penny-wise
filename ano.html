@@ -52,13 +52,14 @@
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app app--com-nav">
   <div class="app__blobs">
     <span class="blob" style="bottom:40px; right:-200px; width:520px; height:420px; background:var(--glow3); filter:blur(36px); opacity:.65"></span>
   </div>
   <svg class="grain" aria-hidden="true"><filter id="grao-an"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-an)"></rect></svg>
 
-  <div class="app__content app__content--nav">
+  <div class="app__scroll">
+  <div class="app__content">
     <div class="tabs">
       <a href="mes.html" class="tabs__item">Mês</a>
       <button type="button" class="tabs__item is-active">Ano</button>
@@ -86,10 +87,12 @@
 
     <div class="split-pill" id="melhor-pior-mes"></div>
   </div>
+  </div>
 
   <span class="ano-fundo" aria-hidden="true" id="ano-fundo">2026</span>
-  <div id="app-nav-fade" class="nav-fade"></div>
-  <div id="app-nav" class="nav-bottom"></div>
+  <div class="app__nav-footer">
+    <div id="app-nav" class="nav-bottom"></div>
+  </div>
 </div>
 <script src="js/paleta.js" defer></script>
 <script src="js/nav.js" defer></script>
