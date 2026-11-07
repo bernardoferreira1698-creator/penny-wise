@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    var modoPref = localStorage.getItem('pw_modo') || 'automatico';
+    var modo = modoPref === 'automatico'
+      ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'claro' : 'escuro')
+      : modoPref;
+    document.documentElement.setAttribute('data-paleta', pal);
+    document.documentElement.setAttribute('data-modo', modo);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+    document.documentElement.setAttribute('data-modo', 'escuro');
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF6A1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Análise do ano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .grafico-ano { display:flex; gap:6px }
+  .grafico-ano__coluna { flex:1; display:flex; flex-direction:column; align-items:center }
+  .grafico-ano__cima { height:110px; width:100%; display:flex; align-items:flex-end; justify-content:center; border-bottom:1px solid var(--linha) }
+  .grafico-ano__baixo { height:12px; width:100%; display:flex; align-items:flex-start; justify-content:center }
+  .grafico-ano__barra { width:100%; max-width:16px; border-radius:8px 8px 3px 3px; border:0; padding:0; cursor:pointer; font-family:inherit }
+  .grafico-ano__barra--baixo { border-radius:3px 3px 8px 8px }
+  .grafico-ano__bolha {
+    position:absolute; transform:translate(-50%, -100%); margin-top:-6px;
+    background:var(--sheet-bg); color:var(--sheet-ink); font-size:12px; font-weight:600;
+    padding:5px 10px; border-radius:999px; white-space:nowrap; pointer-events:none; z-index:2;
+    box-shadow:0 6px 16px rgba(0,0,0,0.25);
+  }
+  .ano-fundo {
+    position:absolute; left:0; right:0; bottom:110px; text-align:center;
+    font-size:132px; line-height:.9; font-weight:600; letter-spacing:-7px; color:var(--text);
+    opacity:.9; pointer-events:none; z-index:0;
+  }
+</style>
+</head>
+<body>
+<div class="app app--com-nav">
+  <div class="app__blobs">
+    <span class="blob" style="bottom:40px; right:-200px; width:520px; height:420px; background:var(--glow3); filter:blur(36px); opacity:.65"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-an"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-an)"></rect></svg>
+
+  <div class="app__scroll">
+  <div class="app__content">
+    <div class="tabs">
+      <a href="mes.html" class="tabs__item">Mês</a>
+      <button type="button" class="tabs__item is-active">Ano</button>
+    </div>
+
+    <div class="seletor-mes">
+      <button type="button" id="ano-anterior" aria-label="Ano anterior">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <span id="ano-titulo" style="font-size:16px; font-weight:500">2026</span>
+      <button type="button" id="ano-seguinte" aria-label="Ano seguinte">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <p class="display display--xl" style="font-size:40px; letter-spacing:-1.6px" id="frase-poupado"></p>
+    <div class="chips" id="chips-ano"></div>
+
+    <div class="glass" style="padding:18px 18px 14px; display:flex; flex-direction:column; gap:10px; position:relative">
+      <div style="display:flex; justify-content:space-between; font-size:13px">
+        <span class="muted2">O que sobrou, mês a mês (toca numa barra)</span>
+      </div>
+      <div class="grafico-ano" id="grafico-ano"></div>
+    </div>
+
+    <div class="split-pill" id="melhor-pior-mes"></div>
+  </div>
+  </div>
+
+  <span class="ano-fundo" aria-hidden="true" id="ano-fundo">2026</span>
+  <div class="app__nav-footer">
+    <div id="app-nav" class="nav-bottom"></div>
+  </div>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="js/nav.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/dados-mock.js" defer></script>
+<script src="js/moeda.js" defer></script>
+<script src="js/ecras/ano.js" defer></script>
+<script defer>document.addEventListener('DOMContentLoaded', function () { PennyNav.mountBottomNav('analise'); });</script>
+</body>
+</html>

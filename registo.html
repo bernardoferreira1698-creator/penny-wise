@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    document.documentElement.setAttribute('data-paleta', pal);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+  }
+  /* O ecrã de Registo é sempre claro, nos dois modos: fundo e cartões
+     claros, com pílulas escuras de contraste (campos, "Guardar").
+     Os tokens claro/escuro de paletas.json trocam "ink"/"text" entre
+     si para o cartão de destaque dos outros ecrãs; aqui precisamos
+     sempre do par "ink escuro / texto claro", por isso fixamos
+     data-modo="escuro" e só o fundo geral é sobreposto a claro
+     (classe .app--claro-fixo). */
+  document.documentElement.setAttribute('data-modo', 'escuro');
+  document.documentElement.setAttribute('data-cor-clara-fixa', '1');
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F2F0ED">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Novo movimento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .registo-fecho {
+    width:44px; height:44px; border-radius:22px; background:var(--ink);
+    display:flex; align-items:center; justify-content:center; border:0;
+  }
+  .folha-calendario {
+    position:fixed; inset:0; background:rgba(20,18,16,0.45);
+    display:flex; flex-direction:column; justify-content:flex-end; z-index:5;
+  }
+  .folha-calendario__corpo {
+    background:var(--card2); border-radius:32px 32px 0 0; padding:22px 20px 32px;
+    display:flex; flex-direction:column; gap:14px; max-width:480px; margin:0 auto; width:100%;
+  }
+  .cal-grid { display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:4px }
+  /* Altura fixa: reserva sempre 6 linhas, alinhadas ao topo, para o
+     calendário não "saltar" de altura entre meses com 5 ou 6 semanas. */
+  #cal-dias { grid-template-rows: repeat(6, 40px); align-content: start; }
+  .cal-cabecalho { text-align:center; font-size:12px; font-weight:600; color:var(--card-muted2) }
+  .cal-dia {
+    height:40px; border-radius:20px; font-size:15px; font-weight:400; cursor:pointer;
+    border:0; background:transparent; color:var(--ink); font-family:inherit;
+  }
+  .cal-dia.vazio { visibility:hidden; cursor:default }
+  .cal-dia.hoje { border:1px solid var(--ink); font-weight:600 }
+  .cal-dia.selecionado { background:var(--btn); font-weight:600; border:0 }
+  [hidden] { display:none !important; }
+
+  /* Segmento com deslize suave (Fixa/Variável). */
+  .seg--deslizante { position:relative; }
+  .seg--deslizante .seg__thumb {
+    position:absolute; top:4px; bottom:4px; left:4px; width:0;
+    background:var(--text); border-radius:999px; z-index:0;
+    transition: left .25s cubic-bezier(.4,0,.2,1), width .25s cubic-bezier(.4,0,.2,1);
+  }
+  .seg--deslizante .seg__item { position:relative; z-index:1; background:transparent; transition:color .2s; }
+  .seg--deslizante .seg__item.is-active { color:var(--ink); }
+
+  .cat-pill--mais {
+    border:1px solid var(--line-light); background:transparent; color:var(--ink);
+  }
+</style>
+</head>
+<body>
+<div class="app app--claro-fixo">
+  <div class="app__blobs">
+    <span class="blob" style="top:250px; left:-40px; width:470px; height:420px; background:var(--blob-reg); filter:blur(34px); opacity:.55"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-re"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-re)"></rect></svg>
+
+  <form class="app__content" id="form-registo" style="gap:12px; padding-bottom:76px; min-height:100dvh">
+    <div class="topbar">
+      <p class="display" style="font-size:30px; letter-spacing:-1.2px; margin:0"><span class="dim" style="color:var(--card-muted)" id="registo-titulo-prefixo">Novo</span> <span id="registo-titulo-sufixo">movimento</span></p>
+      <a href="inicio.html" class="registo-fecho" aria-label="Fechar" id="registo-fechar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12 M18 6L6 18"/></svg>
+      </a>
+    </div>
+
+    <div class="seg" id="seg-tipo" role="radiogroup" aria-label="Tipo de movimento">
+      <button type="button" class="seg__item is-active" data-valor="Despesa">Despesa</button>
+      <button type="button" class="seg__item" data-valor="Rendimento">Rendimento</button>
+      <button type="button" class="seg__item" data-valor="Poupança">Poupança</button>
+    </div>
+
+    <button type="button" id="btn-abrir-calendario" class="field" style="height:54px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--prim-solid)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4z M4 10h16 M8 3v4 M16 3v4"/></svg>
+      <span style="flex:1; font-size:16px; font-weight:500; text-align:left; color:var(--text)" id="data-escolhida"></span>
+      <span style="font-size:13px; color:var(--muted)">Alterar</span>
+    </button>
+
+    <div id="bloco-mes-conta" hidden>
+      <span class="field__label" style="display:block; margin-bottom:6px">A que mês conta este rendimento</span>
+      <div class="seg" id="seg-mes-conta" role="radiogroup" aria-label="A que mês conta">
+        <button type="button" class="seg__item is-active" data-valor="atual">Este mês</button>
+        <button type="button" class="seg__item" data-valor="seguinte">Mês seguinte</button>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="field">
+        <label for="descricao" class="field__label">Descrição</label>
+        <input id="descricao" class="field__input" placeholder="Ex.: Almoço" autocomplete="off">
+      </div>
+      <div class="suggestions" id="sugestoes-descricao" hidden></div>
+    </div>
+
+    <div class="field field--xl">
+      <label for="valor" class="field__label">Valor</label>
+      <input id="valor" class="field__value" inputmode="numeric" placeholder="0,00" autocomplete="off">
+      <span class="field__suffix">€</span>
+    </div>
+
+    <div class="cat-row" id="cat-row"></div>
+
+    <div style="display:flex; gap:8px; align-items:center">
+      <div class="seg seg--deslizante" id="seg-periodicidade" style="flex:1" role="radiogroup" aria-label="Periodicidade">
+        <span class="seg__thumb" id="seg-periodicidade-thumb"></span>
+        <button type="button" class="seg__item is-active" data-valor="Variável">Variável</button>
+        <button type="button" class="seg__item" data-valor="Fixa">Fixa</button>
+      </div>
+      <label class="checkbox-pill">
+        <input type="checkbox" id="inesperada">
+        Inesperada
+      </label>
+    </div>
+
+    <div class="field-plain">
+      <label for="notas" class="field__label" style="color:var(--card-muted2)">Notas</label>
+      <input id="notas" class="field-plain__input" placeholder="Opcional">
+    </div>
+
+    <button type="submit" class="save-row">
+      <span id="registo-botao-texto">Guardar</span>
+      <span class="save-row__icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>
+      </span>
+    </button>
+
+    <button type="button" id="btn-apagar-movimento" class="btn-outline" hidden>Apagar movimento</button>
+  </form>
+
+  <div id="folha-calendario" class="folha-calendario" hidden>
+    <div class="folha-calendario__corpo">
+      <div class="topbar">
+        <button type="button" id="cal-mes-anterior" aria-label="Mês anterior" style="width:44px; height:44px; border-radius:22px; border:0; background:var(--ink); display:flex; align-items:center; justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <span id="cal-titulo" style="font-size:22px; font-weight:500; letter-spacing:-0.6px">Novembro 2026</span>
+        <button type="button" id="cal-mes-seguinte" aria-label="Mês seguinte" style="width:44px; height:44px; border-radius:22px; border:0; background:var(--ink); display:flex; align-items:center; justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="cal-grid">
+        <span class="cal-cabecalho">S</span><span class="cal-cabecalho">T</span><span class="cal-cabecalho">Q</span>
+        <span class="cal-cabecalho">Q</span><span class="cal-cabecalho">S</span><span class="cal-cabecalho">S</span><span class="cal-cabecalho">D</span>
+      </div>
+      <div class="cal-grid" id="cal-dias"></div>
+      <div style="display:flex; gap:10px">
+        <button type="button" id="cal-hoje" style="font-family:inherit; flex:1; height:50px; border-radius:999px; border:1px solid var(--line-light); background:transparent; color:var(--ink); font-size:15px; font-weight:500">Hoje</button>
+        <button type="button" id="cal-fechar" style="font-family:inherit; flex:1; height:50px; border-radius:999px; border:0; background:var(--ink); color:var(--text); font-size:15px; font-weight:500">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/dados-mock.js" defer></script>
+<script src="js/moeda.js" defer></script>
+<script src="js/ecras/registo.js" defer></script>
+</body>
+</html>

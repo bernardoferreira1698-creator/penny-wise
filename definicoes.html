@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    var modoPref = localStorage.getItem('pw_modo') || 'automatico';
+    var modo = modoPref === 'automatico'
+      ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'claro' : 'escuro')
+      : modoPref;
+    document.documentElement.setAttribute('data-paleta', pal);
+    document.documentElement.setAttribute('data-modo', modo);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+    document.documentElement.setAttribute('data-modo', 'escuro');
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF6A1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Definições</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .linha-toggle { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--linha) }
+  .glass-rows > .linha-toggle:last-child { border-bottom:0 }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="app__blobs">
+    <span class="blob" style="top:-230px; right:-210px; width:440px; height:440px; background:var(--glow1); opacity:.8"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-de"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-de)"></rect></svg>
+
+  <div class="app__content" style="gap:10px">
+    <div class="topbar"><div id="app-back"></div></div>
+    <p class="display">Definições</p>
+
+    <span class="eyebrow">Aparência</span>
+    <div class="glass" style="padding:16px 18px; display:flex; flex-direction:column; gap:14px">
+      <span style="font-size:15px; font-weight:500">Paleta de cores</span>
+      <div class="pal-grid" id="pal-grid" role="radiogroup" aria-label="Paleta de cores">
+        <button type="button" class="pal-btn" data-paleta="A" aria-label="Paleta A, Laranja"><span class="pal-btn__dot" style="background:#FF6A1F"></span><span class="pal-btn__label">A</span></button>
+        <button type="button" class="pal-btn" data-paleta="B" aria-label="Paleta B, Lima e menta"><span class="pal-btn__dot" style="background:#C8F53A"></span><span class="pal-btn__label">B</span></button>
+        <button type="button" class="pal-btn" data-paleta="C" aria-label="Paleta C, Azul tecnológico"><span class="pal-btn__dot" style="background:#3DB8FF"></span><span class="pal-btn__label">C</span></button>
+        <button type="button" class="pal-btn" data-paleta="D" aria-label="Paleta D, Rosa tecnológico"><span class="pal-btn__dot" style="background:#FF3EA5"></span><span class="pal-btn__label">D</span></button>
+      </div>
+      <span style="font-size:15px; font-weight:500; padding-top:4px">Modo</span>
+      <div class="seg" id="seg-modo" role="radiogroup" aria-label="Modo">
+        <button type="button" class="seg__item" data-modo="automatico">Automático</button>
+        <button type="button" class="seg__item" data-modo="claro">Claro</button>
+        <button type="button" class="seg__item" data-modo="escuro">Escuro</button>
+      </div>
+    </div>
+
+    <span class="eyebrow">Finanças</span>
+    <div class="glass glass-rows">
+      <a href="categorias.html" class="glass-rows__row">
+        <div class="glass-rows__label"><span class="glass-rows__title">Categorias</span><span class="glass-rows__sub">13 de despesa, 5 de rendimento</span></div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <span class="eyebrow">Dicas e notificações</span>
+    <div class="glass" style="padding:2px 20px 0; display:flex; flex-direction:column">
+      <div class="linha-toggle">
+        <div style="display:flex; flex-direction:column; gap:2px"><span style="font-size:15px; font-weight:500">Resumo mensal no dia 1</span><span class="muted2" style="font-size:12px">Notificação no iPhone</span></div>
+        <button type="button" role="switch" id="toggle-resumo" class="switch" aria-label="Resumo mensal no dia 1"><span class="switch__knob"></span></button>
+      </div>
+      <div class="linha-toggle">
+        <div style="display:flex; flex-direction:column; gap:2px"><span style="font-size:15px; font-weight:500">IA do Claude</span><span class="muted2" style="font-size:12px">Precisa de uma chave da API, paga à parte</span></div>
+        <button type="button" role="switch" id="toggle-ia" class="switch" aria-label="IA do Claude"><span class="switch__knob"></span></button>
+      </div>
+    </div>
+
+    <span class="eyebrow">Dados</span>
+    <div class="glass glass-rows">
+      <button type="button" class="glass-rows__row" id="btn-exportar">
+        <div class="glass-rows__label"><span class="glass-rows__title">Exportar dados</span><span class="glass-rows__sub">Todos os movimentos, em Excel ou CSV</span></div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <a href="importar.html" class="glass-rows__row">
+        <div class="glass-rows__label"><span class="glass-rows__title">Importar Excel</span><span class="glass-rows__sub">Carregar um ficheiro .xlsx</span></div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="glass glass-rows" id="bloco-sincronizacao" hidden>
+      <div class="glass-rows__row" style="cursor:default">
+        <div class="glass-rows__label"><span class="glass-rows__title">Sincronização</span><span class="glass-rows__sub" id="texto-sincronizacao">A verificar...</span></div>
+      </div>
+    </div>
+
+    <a href="entrar.html" class="btn-outline" id="btn-terminar-sessao">Terminar sessão</a>
+  </div>
+
+  <div id="sheet-exportar" class="sheet-fundo" hidden>
+    <div class="sheet-corpo">
+      <div class="sheet-cabecalho">
+        <span class="sheet-titulo">Exportar dados</span>
+        <button type="button" class="sheet-fechar" id="btn-x-exportar" aria-label="Fechar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12 M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="sheet-corpo-conteudo">
+        <span class="muted2" style="font-size:13px">Uma cópia de todos os movimentos, para guardares ou abrires noutro programa.</span>
+        <button type="button" class="glass-rows__row" id="btn-exportar-xlsx" style="background:rgba(0,0,0,0.05); border-radius:16px; padding:0 16px">
+          <div class="glass-rows__label"><span class="glass-rows__title">Excel (.xlsx)</span></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--sheet-muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <button type="button" class="glass-rows__row" id="btn-exportar-csv" style="background:rgba(0,0,0,0.05); border-radius:16px; padding:0 16px">
+          <div class="glass-rows__label"><span class="glass-rows__title">CSV</span></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--sheet-muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="js/nav.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/push-config.js" defer></script>
+<script src="js/push.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+<script src="js/exportar.js" defer></script>
+<script src="js/ecras/definicoes.js" defer></script>
+<script defer>document.addEventListener('DOMContentLoaded', function () { PennyNav.mountBackButton('Mais', 'mais.html'); });</script>
+</body>
+</html>

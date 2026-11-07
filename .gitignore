@@ -1,0 +1,9 @@
+.DS_Store
+.claude/
+design/
+supabase/
+PROMPT-penny-wise.md
+
+# Ficheiro real de despesas usado para testar a importação: dados
+# pessoais, nunca deve ir para o Git nem para o site publicado.
+dados/Financas_2026.xlsx

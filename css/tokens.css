@@ -1,0 +1,301 @@
+/* Gerado a partir de design/paletas.json. Nao editar os valores a mao: 
+   voltar a correr o gerador se paletas.json mudar. */
+
+html[data-paleta="A"][data-modo="escuro"] {
+  --bg: #0B0B0B;
+  --bg0: rgba(11,11,11,0);
+  --text: #F5F2EE;
+  --muted: #C9C2B9;
+  --muted2: #DCD6CE;
+  --glass: rgba(38,36,34,0.85);
+  --nav: rgba(32,30,28,0.92);
+  --warn: #FF9356;
+  --warn-tint: rgba(255,106,31,0.16);
+  --warn-line: rgba(255,106,31,0.4);
+  --dot: #FF6A1F;
+  --glow1: radial-gradient(circle at 40% 45%, #FFC37A 0%, #FF6A1F 32%, #D9260B 58%, rgba(217,38,11,0) 72%);
+  --glow2: radial-gradient(circle, rgba(255,106,31,0.35) 0%, rgba(255,106,31,0) 70%);
+  --glow3: radial-gradient(circle at 55% 50%, #FFB15C 0%, #FF5A1F 35%, #B81C05 58%, rgba(184,28,5,0) 72%);
+  --coin: radial-gradient(circle at 35% 30%, #FFD9A8 0%, #FF6A1F 45%, #C51F06 100%);
+  --btn: #FF6A1F;
+  --prim-solid: #FF6A1F;
+  --card: #F4F1EC;
+  --card2: #F7F5F2;
+  --ink: #141210;
+  --card-muted: #857E75;
+  --card-muted2: #6F6A63;
+  --blob-card: radial-gradient(circle, #FF7A2E 0%, #FFB15C 40%, rgba(255,177,92,0) 72%);
+  --light-bg: #F2F0ED;
+  --blob-reg: radial-gradient(circle at 50% 50%, #FF5A1F 0%, #FF8A3D 30%, #FFD39A 55%, rgba(255,240,220,0) 72%);
+  --line-light: #D4CEC5;
+  --bar-h: linear-gradient(90deg, #C51F06, #FF6A1F);
+  --bar-h2: linear-gradient(90deg, #C51F06, #FF6A1F, #FFB15C);
+  --bar-v: linear-gradient(180deg, #FFB15C 0%, #FF5A1F 50%, #B81C05 100%);
+  --linha: rgba(255,255,255,0.08);
+}
+
+html[data-paleta="A"][data-modo="claro"] {
+  --bg: #F2F0ED;
+  --bg0: rgba(255,255,255,0);
+  --text: #141210;
+  --muted: #6F6A63;
+  --muted2: #6F6A63;
+  --glass: rgba(255,255,255,0.72);
+  --nav: rgba(255,255,255,0.92);
+  --warn: #C2410C;
+  --warn-tint: rgba(255,106,31,0.16);
+  --warn-line: rgba(255,106,31,0.4);
+  --dot: #FF6A1F;
+  --glow1: radial-gradient(circle at 40% 45%, #FFC37A 0%, #FF6A1F 32%, #D9260B 58%, rgba(217,38,11,0) 72%);
+  --glow2: radial-gradient(circle, rgba(255,106,31,0.35) 0%, rgba(255,106,31,0) 70%);
+  --glow3: radial-gradient(circle at 55% 50%, #FFB15C 0%, #FF5A1F 35%, #B81C05 58%, rgba(184,28,5,0) 72%);
+  --coin: radial-gradient(circle at 35% 30%, #FFD9A8 0%, #FF6A1F 45%, #C51F06 100%);
+  --btn: #FF6A1F;
+  --prim-solid: #FF6A1F;
+  --card: #141210;
+  --card2: #F7F5F2;
+  --ink: #F4F1EC;
+  --card-muted: #C9C2B9;
+  --card-muted2: #DCD6CE;
+  --blob-card: radial-gradient(circle, #FF7A2E 0%, #FFB15C 40%, rgba(255,177,92,0) 72%);
+  --light-bg: #F2F0ED;
+  --blob-reg: radial-gradient(circle at 50% 50%, #FF5A1F 0%, #FF8A3D 30%, #FFD39A 55%, rgba(255,240,220,0) 72%);
+  --line-light: #D4CEC5;
+  --bar-h: linear-gradient(90deg, #C51F06, #FF6A1F);
+  --bar-h2: linear-gradient(90deg, #C51F06, #FF6A1F, #FFB15C);
+  --bar-v: linear-gradient(180deg, #FFB15C 0%, #FF5A1F 50%, #B81C05 100%);
+  --linha: rgba(0,0,0,0.08);
+}
+
+html[data-paleta="B"][data-modo="escuro"] {
+  --bg: #0D0E0B;
+  --bg0: rgba(13,14,11,0);
+  --text: #F3F4EE;
+  --muted: #C4C8B8;
+  --muted2: #DADDD0;
+  --glass: rgba(39,42,34,0.85);
+  --nav: rgba(34,37,30,0.94);
+  --warn: #5EF0B8;
+  --warn-tint: rgba(47,227,160,0.14);
+  --warn-line: rgba(47,227,160,0.45);
+  --dot: #C8F53A;
+  --glow1: radial-gradient(circle at 40% 45%, #EFFFA8 0%, #C8F53A 30%, #1FB57E 60%, rgba(31,181,126,0) 72%);
+  --glow2: radial-gradient(circle, rgba(47,227,160,0.28) 0%, rgba(47,227,160,0) 70%);
+  --glow3: radial-gradient(circle at 50% 50%, #E2FF7A 0%, #C8F53A 30%, #1FB57E 56%, rgba(31,181,126,0) 72%);
+  --coin: radial-gradient(circle at 35% 30%, #F2FFC2 0%, #C8F53A 45%, #7FA80F 100%);
+  --btn: #C8F53A;
+  --prim-solid: #C8F53A;
+  --card: #F3F4EE;
+  --card2: #F7F7F2;
+  --ink: #15170F;
+  --card-muted: #7E8274;
+  --card-muted2: #5C6052;
+  --blob-card: radial-gradient(circle, #C8F53A 0%, #2FE3A0 45%, rgba(47,227,160,0) 72%);
+  --light-bg: #F1F2EC;
+  --blob-reg: radial-gradient(circle at 50% 50%, #C8F53A 0%, #E2F79A 30%, #9FF0CF 55%, rgba(159,240,207,0) 72%);
+  --line-light: #D5D7CC;
+  --bar-h: linear-gradient(90deg, #12976A, #2FE3A0);
+  --bar-h2: linear-gradient(90deg, #2FE3A0, #C8F53A);
+  --bar-v: linear-gradient(180deg, #EFFFA8 0%, #C8F53A 50%, #7FA80F 100%);
+  --linha: rgba(255,255,255,0.08);
+}
+
+html[data-paleta="B"][data-modo="claro"] {
+  --bg: #F1F2EC;
+  --bg0: rgba(255,255,255,0);
+  --text: #15170F;
+  --muted: #5C6052;
+  --muted2: #5C6052;
+  --glass: rgba(255,255,255,0.72);
+  --nav: rgba(255,255,255,0.92);
+  --warn: #0E8F62;
+  --warn-tint: rgba(47,227,160,0.14);
+  --warn-line: rgba(47,227,160,0.45);
+  --dot: #C8F53A;
+  --glow1: radial-gradient(circle at 40% 45%, #EFFFA8 0%, #C8F53A 30%, #1FB57E 60%, rgba(31,181,126,0) 72%);
+  --glow2: radial-gradient(circle, rgba(47,227,160,0.28) 0%, rgba(47,227,160,0) 70%);
+  --glow3: radial-gradient(circle at 50% 50%, #E2FF7A 0%, #C8F53A 30%, #1FB57E 56%, rgba(31,181,126,0) 72%);
+  --coin: radial-gradient(circle at 35% 30%, #F2FFC2 0%, #C8F53A 45%, #7FA80F 100%);
+  --btn: #C8F53A;
+  --prim-solid: #C8F53A;
+  --card: #15170F;
+  --card2: #F7F7F2;
+  --ink: #F3F4EE;
+  --card-muted: #C4C8B8;
+  --card-muted2: #DADDD0;
+  --blob-card: radial-gradient(circle, #C8F53A 0%, #2FE3A0 45%, rgba(47,227,160,0) 72%);
+  --light-bg: #F1F2EC;
+  --blob-reg: radial-gradient(circle at 50% 50%, #C8F53A 0%, #E2F79A 30%, #9FF0CF 55%, rgba(159,240,207,0) 72%);
+  --line-light: #D5D7CC;
+  --bar-h: linear-gradient(90deg, #12976A, #2FE3A0);
+  --bar-h2: linear-gradient(90deg, #2FE3A0, #C8F53A);
+  --bar-v: linear-gradient(180deg, #EFFFA8 0%, #C8F53A 50%, #7FA80F 100%);
+  --linha: rgba(0,0,0,0.08);
+}
+
+html[data-paleta="C"][data-modo="escuro"] {
+  --bg: #090B0D;
+  --bg0: rgba(9,11,13,0);
+  --text: #F2F5F7;
+  --muted: #C3CAD0;
+  --muted2: #DCE2E6;
+  --glass: rgba(30,36,42,0.85);
+  --nav: rgba(24,29,34,0.92);
+  --warn: #7FD3FF;
+  --warn-tint: rgba(61,184,255,0.16);
+  --warn-line: rgba(61,184,255,0.45);
+  --dot: #869DAC;
+  --glow1: radial-gradient(circle at 40% 45%, #C9F1FF 0%, #3DB8FF 32%, #1557D6 58%, rgba(21,87,214,0) 72%);
+  --glow2: radial-gradient(circle, rgba(61,184,255,0.35) 0%, rgba(61,184,255,0) 70%);
+  --glow3: radial-gradient(circle at 55% 50%, #A8E6FF 0%, #3DB8FF 35%, #1246B8 58%, rgba(18,70,184,0) 72%);
+  --coin: radial-gradient(circle at 35% 30%, #D6F4FF 0%, #3DB8FF 45%, #1557D6 100%);
+  --btn: #869DAC;
+  --prim-solid: #869DAC;
+  --card: #F0F3F5;
+  --card2: #F5F7F9;
+  --ink: #0E1216;
+  --card-muted: #7A838B;
+  --card-muted2: #5E666E;
+  --blob-card: radial-gradient(circle, #3DB8FF 0%, #A8E6FF 40%, rgba(168,230,255,0) 72%);
+  --light-bg: #EEF1F4;
+  --blob-reg: radial-gradient(circle at 50% 50%, #3DB8FF 0%, #7FD3FF 30%, #CDEFFF 55%, rgba(220,244,255,0) 72%);
+  --line-light: #CBD3DA;
+  --bar-h: linear-gradient(90deg, #1557D6, #3DB8FF);
+  --bar-h2: linear-gradient(90deg, #1557D6, #3DB8FF, #A8E6FF);
+  --bar-v: linear-gradient(180deg, #A8E6FF 0%, #3DB8FF 50%, #1246B8 100%);
+  --linha: rgba(255,255,255,0.08);
+}
+
+html[data-paleta="C"][data-modo="claro"] {
+  --bg: #EEF1F4;
+  --bg0: rgba(255,255,255,0);
+  --text: #0E1216;
+  --muted: #5E666E;
+  --muted2: #5E666E;
+  --glass: rgba(255,255,255,0.72);
+  --nav: rgba(255,255,255,0.92);
+  --warn: #0B6FB8;
+  --warn-tint: rgba(61,184,255,0.16);
+  --warn-line: rgba(61,184,255,0.45);
+  --dot: #869DAC;
+  --glow1: radial-gradient(circle at 40% 45%, #C9F1FF 0%, #3DB8FF 32%, #1557D6 58%, rgba(21,87,214,0) 72%);
+  --glow2: radial-gradient(circle, rgba(61,184,255,0.35) 0%, rgba(61,184,255,0) 70%);
+  --glow3: radial-gradient(circle at 55% 50%, #A8E6FF 0%, #3DB8FF 35%, #1246B8 58%, rgba(18,70,184,0) 72%);
+  --coin: radial-gradient(circle at 35% 30%, #D6F4FF 0%, #3DB8FF 45%, #1557D6 100%);
+  --btn: #869DAC;
+  --prim-solid: #869DAC;
+  --card: #0E1216;
+  --card2: #F5F7F9;
+  --ink: #F0F3F5;
+  --card-muted: #C3CAD0;
+  --card-muted2: #DCE2E6;
+  --blob-card: radial-gradient(circle, #3DB8FF 0%, #A8E6FF 40%, rgba(168,230,255,0) 72%);
+  --light-bg: #EEF1F4;
+  --blob-reg: radial-gradient(circle at 50% 50%, #3DB8FF 0%, #7FD3FF 30%, #CDEFFF 55%, rgba(220,244,255,0) 72%);
+  --line-light: #CBD3DA;
+  --bar-h: linear-gradient(90deg, #1557D6, #3DB8FF);
+  --bar-h2: linear-gradient(90deg, #1557D6, #3DB8FF, #A8E6FF);
+  --bar-v: linear-gradient(180deg, #A8E6FF 0%, #3DB8FF 50%, #1246B8 100%);
+  --linha: rgba(0,0,0,0.08);
+}
+
+html[data-paleta="D"][data-modo="escuro"] {
+  --bg: #0B0B0B;
+  --bg0: rgba(11,11,11,0);
+  --text: #F5F2EE;
+  --muted: #CBC1C6;
+  --muted2: #E0D8DC;
+  --glass: rgba(40,32,37,0.85);
+  --nav: rgba(33,27,31,0.92);
+  --warn: #FF8CCB;
+  --warn-tint: rgba(255,62,165,0.16);
+  --warn-line: rgba(255,62,165,0.45);
+  --dot: #FF3EA5;
+  --glow1: radial-gradient(circle at 40% 45%, #FFC6E4 0%, #FF3EA5 32%, #B0127A 58%, rgba(176,18,122,0) 72%);
+  --glow2: radial-gradient(circle, rgba(255,62,165,0.35) 0%, rgba(255,62,165,0) 70%);
+  --glow3: radial-gradient(circle at 55% 50%, #FFB3DA 0%, #FF3EA5 35%, #A3106F 58%, rgba(163,16,111,0) 72%);
+  --coin: radial-gradient(circle at 35% 30%, #FFD6EC 0%, #FF3EA5 45%, #B0127A 100%);
+  --btn: #FF3EA5;
+  --prim-solid: #FF3EA5;
+  --card: #F6F1F3;
+  --card2: #F8F4F6;
+  --ink: #151013;
+  --card-muted: #867A80;
+  --card-muted2: #6C6167;
+  --blob-card: radial-gradient(circle, #FF3EA5 0%, #FFB3DA 40%, rgba(255,179,218,0) 72%);
+  --light-bg: #F4EFF1;
+  --blob-reg: radial-gradient(circle at 50% 50%, #FF3EA5 0%, #FF8CCB 30%, #FFD3EA 55%, rgba(255,230,242,0) 72%);
+  --line-light: #D9CCD2;
+  --bar-h: linear-gradient(90deg, #B0127A, #FF3EA5);
+  --bar-h2: linear-gradient(90deg, #B0127A, #FF3EA5, #FFB3DA);
+  --bar-v: linear-gradient(180deg, #FFB3DA 0%, #FF3EA5 50%, #A3106F 100%);
+  --linha: rgba(255,255,255,0.08);
+}
+
+html[data-paleta="D"][data-modo="claro"] {
+  --bg: #F4EFF1;
+  --bg0: rgba(255,255,255,0);
+  --text: #151013;
+  --muted: #6C6167;
+  --muted2: #6C6167;
+  --glass: rgba(255,255,255,0.72);
+  --nav: rgba(255,255,255,0.92);
+  --warn: #C0186F;
+  --warn-tint: rgba(255,62,165,0.16);
+  --warn-line: rgba(255,62,165,0.45);
+  --dot: #FF3EA5;
+  --glow1: radial-gradient(circle at 40% 45%, #FFC6E4 0%, #FF3EA5 32%, #B0127A 58%, rgba(176,18,122,0) 72%);
+  --glow2: radial-gradient(circle, rgba(255,62,165,0.35) 0%, rgba(255,62,165,0) 70%);
+  --glow3: radial-gradient(circle at 55% 50%, #FFB3DA 0%, #FF3EA5 35%, #A3106F 58%, rgba(163,16,111,0) 72%);
+  --coin: radial-gradient(circle at 35% 30%, #FFD6EC 0%, #FF3EA5 45%, #B0127A 100%);
+  --btn: #FF3EA5;
+  --prim-solid: #FF3EA5;
+  --card: #151013;
+  --card2: #F8F4F6;
+  --ink: #F6F1F3;
+  --card-muted: #CBC1C6;
+  --card-muted2: #E0D8DC;
+  --blob-card: radial-gradient(circle, #FF3EA5 0%, #FFB3DA 40%, rgba(255,179,218,0) 72%);
+  --light-bg: #F4EFF1;
+  --blob-reg: radial-gradient(circle at 50% 50%, #FF3EA5 0%, #FF8CCB 30%, #FFD3EA 55%, rgba(255,230,242,0) 72%);
+  --line-light: #D9CCD2;
+  --bar-h: linear-gradient(90deg, #B0127A, #FF3EA5);
+  --bar-h2: linear-gradient(90deg, #B0127A, #FF3EA5, #FFB3DA);
+  --bar-v: linear-gradient(180deg, #FFB3DA 0%, #FF3EA5 50%, #A3106F 100%);
+  --linha: rgba(0,0,0,0.08);
+}
+
+/* Tokens de "folha": paineis sempre claros (calendario, filtros, 
+   menus de edicao), independentes do modo escuro/claro. */
+html[data-paleta="A"] {
+  --sheet-bg: #F7F5F2;
+  --sheet-ink: #141210;
+  --sheet-muted: #857E75;
+  --sheet-muted2: #6F6A63;
+  --sheet-linha: #D4CEC5;
+}
+
+html[data-paleta="B"] {
+  --sheet-bg: #F7F7F2;
+  --sheet-ink: #15170F;
+  --sheet-muted: #7E8274;
+  --sheet-muted2: #5C6052;
+  --sheet-linha: #D5D7CC;
+}
+
+html[data-paleta="C"] {
+  --sheet-bg: #F5F7F9;
+  --sheet-ink: #0E1216;
+  --sheet-muted: #7A838B;
+  --sheet-muted2: #5E666E;
+  --sheet-linha: #CBD3DA;
+}
+
+html[data-paleta="D"] {
+  --sheet-bg: #F8F4F6;
+  --sheet-ink: #151013;
+  --sheet-muted: #867A80;
+  --sheet-muted2: #6C6167;
+  --sheet-linha: #D9CCD2;
+}
+

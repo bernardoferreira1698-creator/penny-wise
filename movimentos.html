@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    var modoPref = localStorage.getItem('pw_modo') || 'automatico';
+    var modo = modoPref === 'automatico'
+      ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'claro' : 'escuro')
+      : modoPref;
+    document.documentElement.setAttribute('data-paleta', pal);
+    document.documentElement.setAttribute('data-modo', modo);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+    document.documentElement.setAttribute('data-modo', 'escuro');
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF6A1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Movimentos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .pesquisa {
+    height:52px; border-radius:999px; background:var(--glass); border:1px solid var(--linha);
+    display:flex; align-items:center; gap:10px; padding:0 20px;
+  }
+  .pesquisa input { flex:1; min-width:0; border:0; background:transparent; color:var(--text); font-family:inherit; font-size:15px; outline:none }
+  .filtros { display:flex; gap:6px; flex-wrap:wrap }
+  .filtro {
+    font-family:inherit; height:38px; padding:0 14px; border-radius:999px; font-size:13px; font-weight:500; cursor:pointer;
+    border:1px solid rgba(255,255,255,0.12); background:var(--glass); color:var(--text);
+  }
+  html[data-modo="claro"] .filtro { border-color: rgba(0,0,0,0.12) }
+  .filtro.is-active { border:0; background:var(--text); color:var(--bg) }
+  .filtro-limpar {
+    font-family:inherit; height:38px; padding:0 4px; border:0; background:none; cursor:pointer;
+    font-size:13px; font-weight:600; color:var(--muted); text-decoration:underline; text-underline-offset:3px;
+  }
+  .dia-cabecalho { display:flex; justify-content:space-between; align-items:baseline; padding:4px 4px 0 }
+</style>
+</head>
+<body>
+<div class="app app--com-nav">
+  <div class="app__blobs">
+    <span class="blob" style="top:-230px; right:-210px; width:440px; height:440px; background:var(--glow1); opacity:.8"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-mv"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-mv)"></rect></svg>
+
+  <div class="app__scroll">
+  <div class="app__content">
+    <p class="display"><span class="muted" id="movimentos-mes-nome">Mês,</span><br><span id="total-movimentos">0 movimentos</span></p>
+
+    <div class="seletor-mes">
+      <button type="button" id="movimentos-mes-anterior" aria-label="Mês anterior">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <span id="movimentos-mes-titulo" style="font-size:16px; font-weight:500">Mês de 2026</span>
+      <button type="button" id="movimentos-mes-seguinte" aria-label="Mês seguinte">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <div class="pesquisa">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M20 20l-4-4"/></svg>
+      <label for="busca" class="sr-only">Procurar</label>
+      <input id="busca" placeholder="Procurar movimentos">
+    </div>
+
+    <div class="filtros">
+      <button type="button" class="filtro" id="btn-filtro-categoria">Categoria</button>
+      <button type="button" class="filtro" id="btn-filtro-periodicidade">Fixa ou Variável</button>
+      <button type="button" class="filtro" id="btn-filtro-inesperadas">Inesperadas</button>
+      <button type="button" class="filtro-limpar" id="btn-limpar-filtros">Limpar</button>
+    </div>
+
+    <div id="lista-movimentos" class="stack"></div>
+    <p id="sem-resultados" class="muted" style="text-align:center; padding:24px 0" hidden>Nenhum movimento corresponde aos filtros escolhidos.</p>
+  </div>
+  </div>
+
+  <div class="app__nav-footer">
+    <div id="app-nav" class="nav-bottom"></div>
+  </div>
+
+  <div id="sheet-categoria" class="sheet-fundo" hidden>
+    <div class="sheet-corpo">
+      <div class="sheet-cabecalho">
+        <span class="sheet-titulo">Categorias</span>
+        <button type="button" class="sheet-fechar" id="btn-fechar-categoria" aria-label="Fechar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12 M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="sheet-corpo-scroll"><div id="opcoes-categoria"></div></div>
+      <div class="sheet-rodape">
+        <button type="button" class="sheet-botao sheet-botao--limpar" id="btn-limpar-categoria">Limpar</button>
+        <button type="button" class="sheet-botao sheet-botao--guardar" id="btn-guardar-categoria">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="sheet-periodicidade" class="sheet-fundo" hidden>
+    <div class="sheet-corpo">
+      <div class="sheet-cabecalho">
+        <span class="sheet-titulo">Fixa ou Variável</span>
+        <button type="button" class="sheet-fechar" id="btn-fechar-periodicidade" aria-label="Fechar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12 M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="sheet-corpo-scroll"><div id="opcoes-periodicidade"></div></div>
+      <div class="sheet-rodape">
+        <button type="button" class="sheet-botao sheet-botao--limpar" id="btn-limpar-periodicidade">Limpar</button>
+        <button type="button" class="sheet-botao sheet-botao--guardar" id="btn-guardar-periodicidade">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="js/nav.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/dados-mock.js" defer></script>
+<script src="js/moeda.js" defer></script>
+<script src="js/ecras/movimentos.js" defer></script>
+<script defer>document.addEventListener('DOMContentLoaded', function () { PennyNav.mountBottomNav('movimentos'); });</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    var modoPref = localStorage.getItem('pw_modo') || 'automatico';
+    var modo = modoPref === 'automatico'
+      ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'claro' : 'escuro')
+      : modoPref;
+    document.documentElement.setAttribute('data-paleta', pal);
+    document.documentElement.setAttribute('data-modo', modo);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+    document.documentElement.setAttribute('data-modo', 'escuro');
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF6A1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Entrar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .entrar-topo { position: relative; z-index: 1; padding: 64px 24px 0; }
+  .entrar-base {
+    position: relative; z-index: 1; padding: 24px 24px 40px; margin-top: auto;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .app--entrar { display: flex; flex-direction: column; min-height: 100dvh; }
+  .codigo-grid { display: grid; grid-template-columns: repeat(8, minmax(0,1fr)); gap: 6px; }
+  .codigo-caixa {
+    height: 54px; border-radius: 16px; background: var(--glass); border: 1px solid var(--linha);
+    color: var(--text); font-size: 19px; font-weight: 600; text-align: center;
+    font-family: inherit;
+  }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="app app--entrar">
+  <div class="app__blobs">
+    <span class="blob" style="top:120px; left:-120px; width:620px; height:620px; background:var(--glow1); opacity:.85"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-en"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-en)"></rect></svg>
+
+  <div class="entrar-topo">
+    <div class="logo">
+      <div class="logo__coin">P</div>
+      <span style="font-size:16px; font-weight:500">Penny Wise</span>
+    </div>
+  </div>
+
+  <section id="passo-email" class="entrar-base">
+    <p class="display display--huge"><span class="muted">O teu dinheiro,</span><br>sem complicações.</p>
+    <div class="glass glass--pill" style="height:58px; display:flex; align-items:center; padding:0 24px; gap:10px">
+      <label for="email" class="sr-only">Email</label>
+      <span style="font-size:13px; color:var(--muted)">Email</span>
+      <input id="email" type="email" placeholder="nome@exemplo.pt" autocomplete="email" inputmode="email"
+        style="flex:1; min-width:0; border:0; background:transparent; color:var(--text); font-family:inherit; font-size:16px; outline:none">
+    </div>
+    <button type="button" id="btn-enviar-codigo" class="btn-solid">Enviar código</button>
+    <span style="font-size:13px; line-height:1.4; color:var(--muted2); text-align:center">
+      Enviamos um código de 8 dígitos para o teu email. Sem palavras passe para decorar.
+    </span>
+    <span id="erro-email" class="warn-text" style="font-size:13px; text-align:center" hidden></span>
+  </section>
+
+  <section id="passo-codigo" class="entrar-base" hidden>
+    <p class="display"><span class="muted">Introduz o código</span><br>que te enviámos.</p>
+    <p class="muted2" id="email-confirmacao" style="margin:0; font-size:14px"></p>
+    <div class="codigo-grid">
+      <input class="codigo-caixa" inputmode="numeric" maxlength="1" aria-label="1º dígito">
+      <input class="codigo-caixa" inputmode="numeric" maxlength="1" aria-label="2º dígito">
+      <input class="codigo-caixa" inputmode="numeric" maxlength="1" aria-label="3º dígito">
+      <input class="codigo-caixa" inputmode="numeric" maxlength="1" aria-label="4º dígito">
+      <input class="codigo-caixa" inputmode="numeric" maxlength="1" aria-label="5º dígito">
+      <input class="codigo-caixa" inputmode="numeric" maxlength="1" aria-label="6º dígito">
+      <input class="codigo-caixa" inputmode="numeric" maxlength="1" aria-label="7º dígito">
+      <input class="codigo-caixa" inputmode="numeric" maxlength="1" aria-label="8º dígito">
+    </div>
+    <button type="button" id="btn-confirmar-codigo" class="btn-solid">Confirmar código</button>
+    <span id="erro-codigo" class="warn-text" style="font-size:13px; text-align:center" hidden></span>
+    <button type="button" id="btn-voltar-email" class="btn-dashed" style="border:0; color:var(--muted2)">Usar outro email</button>
+  </section>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/ecras/entrar.js" defer></script>
+</body>
+</html>

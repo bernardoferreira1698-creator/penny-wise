@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    var modoPref = localStorage.getItem('pw_modo') || 'automatico';
+    var modo = modoPref === 'automatico'
+      ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'claro' : 'escuro')
+      : modoPref;
+    document.documentElement.setAttribute('data-paleta', pal);
+    document.documentElement.setAttribute('data-modo', modo);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+    document.documentElement.setAttribute('data-modo', 'escuro');
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF6A1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Mais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .lista-mais { display:flex; flex-direction:column; gap:10px }
+  .mais-item {
+    height:66px; border-radius:999px; background:var(--glass); border:1px solid var(--linha);
+    display:flex; align-items:center; gap:14px; padding:0 20px 0 12px; text-decoration:none; color:inherit;
+  }
+  .mais-item__icone {
+    width:44px; height:44px; border-radius:22px; background:rgba(255,255,255,0.06);
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  html[data-modo="claro"] .mais-item__icone { background: rgba(0,0,0,0.04) }
+  .mais-item__texto { flex:1; display:flex; flex-direction:column; gap:2px; min-width:0 }
+  .mais-item__titulo { font-size:15px; font-weight:500 }
+  .mais-item__sub { font-size:12px; color:var(--muted2) }
+</style>
+</head>
+<body>
+<div class="app app--com-nav">
+  <div class="app__blobs">
+    <span class="blob" style="bottom:-160px; left:-200px; width:440px; height:420px; background:var(--glow3); opacity:.55"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-ma"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-ma)"></rect></svg>
+
+  <div class="app__scroll">
+  <div class="app__content">
+    <p class="display"><span class="muted">Tudo o resto,</span><br>num só sítio.</p>
+
+    <div class="lista-mais">
+      <a href="avisos.html" class="mais-item">
+        <span class="mais-item__icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4 M12 17h.01 M10.3 3.9L2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>
+        <span class="mais-item__texto"><span class="mais-item__titulo">Avisos</span><span class="mais-item__sub" id="mais-avisos-sub">Situações por rever</span></span>
+        <span class="dot" id="mais-avisos-dot" hidden></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="dicas.html" class="mais-item">
+        <span class="mais-item__icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6 M10 21h4 M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></span>
+        <span class="mais-item__texto"><span class="mais-item__titulo">Dicas</span><span class="mais-item__sub">Biblioteca de cerca de 150 dicas</span></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="orcamentos.html" class="mais-item">
+        <span class="mais-item__icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10 M10 20V4 M16 20v-8 M22 20H2"/></svg></span>
+        <span class="mais-item__texto"><span class="mais-item__titulo">Orçamentos</span><span class="mais-item__sub">4 categorias acima do limite</span></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="resumo.html" class="mais-item">
+        <span class="mais-item__icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18H6z M9 8h6 M9 12h6 M9 16h4"/></svg></span>
+        <span class="mais-item__texto"><span class="mais-item__titulo">Resumos mensais</span><span class="mais-item__sub">Outubro pronto desde 1 de novembro</span></span>
+        <span class="dot"></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="recorrentes.html" class="mais-item">
+        <span class="mais-item__icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3 M20 4v4h-4 M20 12a8 8 0 0 1-14 5.3 M4 20v-4h4"/></svg></span>
+        <span class="mais-item__texto"><span class="mais-item__titulo">Recorrentes</span><span class="mais-item__sub" id="mais-recorrentes-sub">Por confirmar e próximas despesas</span></span>
+        <span class="dot" id="mais-recorrentes-dot" hidden></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="objetivos.html" class="mais-item">
+        <span class="mais-item__icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></span>
+        <span class="mais-item__texto"><span class="mais-item__titulo">Objetivos</span><span class="mais-item__sub">Fundo de emergência sugerido</span></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="casa.html" class="mais-item">
+        <span class="mais-item__icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7 M6 9.5V20h12V9.5"/></svg></span>
+        <span class="mais-item__texto"><span class="mais-item__titulo">Contas da casa</span><span class="mais-item__sub">623,85 € em outubro</span></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="definicoes.html" class="mais-item">
+        <span class="mais-item__icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.3 3h-4l-.4 2.5a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5a7 7 0 0 0 0 2.4l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.5h4l.4-2.5a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>
+        <span class="mais-item__texto"><span class="mais-item__titulo">Definições</span><span class="mais-item__sub">Paleta, categorias e dados</span></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+  </div>
+
+  <div class="app__nav-footer">
+    <div id="app-nav" class="nav-bottom"></div>
+  </div>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="js/nav.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/dados-mock.js" defer></script>
+<script src="js/ecras/mais.js" defer></script>
+<script defer>document.addEventListener('DOMContentLoaded', function () { PennyNav.mountBottomNav('mais'); });</script>
+</body>
+</html>

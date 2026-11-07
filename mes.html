@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script>
+(function () {
+  try {
+    var pal = localStorage.getItem('pw_paleta') || 'A';
+    var modoPref = localStorage.getItem('pw_modo') || 'automatico';
+    var modo = modoPref === 'automatico'
+      ? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'claro' : 'escuro')
+      : modoPref;
+    document.documentElement.setAttribute('data-paleta', pal);
+    document.documentElement.setAttribute('data-modo', modo);
+  } catch (e) {
+    document.documentElement.setAttribute('data-paleta', 'A');
+    document.documentElement.setAttribute('data-modo', 'escuro');
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FF6A1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penny Wise">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>Penny Wise: Análise do mês</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<style>
+  .bar-split { display:flex; height:10px; border-radius:5px; overflow:hidden; gap:3px }
+  .bar-split > div { transition: width .7s cubic-bezier(.16,.8,.3,1); }
+</style>
+</head>
+<body>
+<div class="app app--com-nav">
+  <div class="app__blobs">
+    <span class="blob" style="top:-170px; left:-190px; width:420px; height:380px; background:var(--glow3); opacity:.7"></span>
+  </div>
+  <svg class="grain" aria-hidden="true"><filter id="grao-me"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-me)"></rect></svg>
+
+  <div class="app__scroll">
+  <div class="app__content">
+    <div class="tabs">
+      <button type="button" class="tabs__item is-active">Mês</button>
+      <a href="ano.html" class="tabs__item">Ano</a>
+    </div>
+
+    <div class="seletor-mes">
+      <button type="button" id="mes-anterior" aria-label="Mês anterior">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:2px">
+        <span style="font-size:22px; font-weight:500; letter-spacing:-0.6px" id="mes-titulo">Outubro 2026</span>
+      </div>
+      <button type="button" id="mes-seguinte" aria-label="Mês seguinte">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <p class="display" id="frase-principal"></p>
+
+    <div class="stack">
+      <div class="bar-split" id="barra-fixas-variaveis"></div>
+      <div style="display:flex; justify-content:space-between; font-size:13px" id="legenda-fixas-variaveis"></div>
+    </div>
+
+    <span style="font-size:15px; font-weight:500; padding-top:6px">Por categoria <span class="muted">· % do rendimento</span></span>
+    <div class="stack stack--lg" id="lista-categorias"></div>
+  </div>
+  </div>
+
+  <div class="app__nav-footer">
+    <div id="app-nav" class="nav-bottom"></div>
+  </div>
+
+  <div id="sheet-detalhe-categoria" class="sheet-fundo" hidden>
+    <div class="sheet-corpo">
+      <div class="sheet-cabecalho">
+        <span class="sheet-titulo" id="titulo-detalhe-categoria">Categoria</span>
+        <button type="button" class="sheet-fechar" id="btn-fechar-detalhe-categoria" aria-label="Fechar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12 M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="sheet-corpo-scroll">
+        <span class="muted2" style="font-size:13px" id="resumo-detalhe-categoria"></span>
+        <div id="lista-detalhe-categoria" style="display:flex; flex-direction:column; gap:10px; margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/paleta.js" defer></script>
+<script src="js/nav.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase-config.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/db.js" defer></script>
+<script src="js/sync.js" defer></script>
+<script src="js/calculos.js" defer></script>
+<script src="js/avisos.js" defer></script>
+<script src="js/recorrentes.js" defer></script>
+<script src="js/alerta.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/dados-mock.js" defer></script>
+<script src="js/moeda.js" defer></script>
+<script src="js/ecras/mes.js" defer></script>
+<script defer>document.addEventListener('DOMContentLoaded', function () { PennyNav.mountBottomNav('analise'); });</script>
+</body>
+</html>
