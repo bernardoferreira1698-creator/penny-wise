@@ -13,6 +13,19 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+/* Correção para um bug conhecido do Safari/iOS: ao abrir a página, a
+   barra de ferramentas do browser ainda não recolheu, o que faz os
+   elementos de posição fixa (navegação flutuante, fundo) nascerem
+   desalinhados até ao primeiro gesto de scroll do utilizador. Um
+   scroll impercetível e automático, já ao abrir, força o Safari a
+   corrigir a posição de imediato, sem depender desse gesto. */
+window.addEventListener('load', function () {
+  requestAnimationFrame(function () {
+    window.scrollTo(0, 1);
+    requestAnimationFrame(function () { window.scrollTo(0, 0); });
+  });
+});
+
 (function () {
   var PAGINAS_PUBLICAS = ['entrar.html', 'index.html', ''];
   var pagina = window.location.pathname.split('/').pop();
