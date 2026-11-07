@@ -272,8 +272,7 @@ html[data-modo="claro"] .bar-track { background: rgba(0,0,0,0.08); }
 /* ---------- Navegação inferior flutuante ---------- */
 
 .nav-fade {
-  position: fixed; left: 0; right: 0;
-  bottom: var(--desvio-barra-safari, 0px); height: 178px;
+  position: fixed; left: 0; right: 0; bottom: 0; height: 178px;
   background: linear-gradient(to top, var(--bg) 55%, var(--bg0));
   pointer-events: none; z-index: 2;
   max-width: 480px; margin: 0 auto;
@@ -285,7 +284,7 @@ html[data-modo="claro"] .bar-track { background: rgba(0,0,0,0.08); }
    tapava o ícone mais à direita desta barra. */
 .nav-bottom {
   position: fixed; left: 50%; transform: translateX(-50%);
-  bottom: calc(76px + var(--desvio-barra-safari, 0px)); width: calc(100% - 48px); max-width: 432px;
+  bottom: 76px; width: calc(100% - 48px); max-width: 432px;
   height: 72px; border-radius: 36px;
   background: var(--nav); border: 1px solid rgba(255,255,255,0.1);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,0.5);
