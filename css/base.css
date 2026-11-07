@@ -90,8 +90,12 @@ svg { display: block; }
 
 /* 144px: cobre a folga da barra flutuante (50px do fundo + 72px de
    altura) mais uns 20px de respiro, para nunca tapar a última linha.
-   Valor fixo de propósito — ver nota junto de .nav-bottom. */
-.app__content--nav { padding-bottom: 144px; }
+   Valor fixo de propósito — ver nota junto de .nav-bottom.
+   min-height garante que este conteúdo é sempre um pouco mais alto do
+   que o ecrã, mesmo em ecrãs com pouca informação (ex.: "Mais"): é
+   essa falta de scroll real que parece fazer a pílula nascer na
+   posição errada nesses ecrãs em particular. */
+.app__content--nav { padding-bottom: 144px; min-height: calc(100dvh + 1px); }
 .app__content--cta { padding-bottom: 100px; }
 
 /* ---------- Tipografia ---------- */
