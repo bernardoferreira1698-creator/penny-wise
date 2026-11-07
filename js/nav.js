@@ -27,10 +27,13 @@
       path + '</svg>';
   }
 
+  /* As classes nav-bottom/nav-fade já vêm no HTML (não à espera deste
+     script), para a barra nascer já fixa ao fundo do ecrã, sem um
+     instante a aparecer encaixada no fim do conteúdo antes de o
+     JavaScript correr. Aqui só se preenche o conteúdo (ícones). */
   function mountBottomNav(ativo) {
     var el = document.getElementById('app-nav');
     if (!el) return;
-    el.className = 'nav-bottom';
     el.innerHTML = ITEMS.map(function (item) {
       if (item.central) {
         return '<a class="nav-add" href="' + item.href + '" aria-label="' + item.rotulo + '">' +
@@ -42,9 +45,6 @@
       var fecho = ativoAgora ? '</button>' : '</a>';
       return abertura + svg(item.icon, 1.6) + (ativoAgora ? '<span class="nav-item__dot"></span>' : '') + fecho;
     }).join('');
-
-    var fade = document.getElementById('app-nav-fade');
-    if (fade) fade.className = 'nav-fade';
   }
 
   function mountBackButton(rotulo, href) {

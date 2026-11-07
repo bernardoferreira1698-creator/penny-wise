@@ -151,9 +151,14 @@ document.addEventListener('DOMContentLoaded', function () {
       d.getDate() + ' de ' + MESES[d.getMonth()] + sufixoAno;
   }
 
+  function podeAvancarCalendario() {
+    return (estado.anoCalendario * 12 + estado.mesCalendario) < (hoje.getFullYear() * 12 + hoje.getMonth());
+  }
+
   function renderCalendario() {
     document.getElementById('cal-titulo').textContent =
       MESES[estado.mesCalendario].charAt(0).toUpperCase() + MESES[estado.mesCalendario].slice(1) + ' ' + estado.anoCalendario;
+    document.getElementById('cal-mes-seguinte').style.visibility = podeAvancarCalendario() ? 'visible' : 'hidden';
 
     var container = document.getElementById('cal-dias');
     container.innerHTML = '';
@@ -219,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
     renderCalendario();
   });
   document.getElementById('cal-mes-seguinte').addEventListener('click', function () {
+    if (!podeAvancarCalendario()) return;
     estado.mesCalendario++;
     if (estado.mesCalendario > 11) { estado.mesCalendario = 0; estado.anoCalendario++; }
     renderCalendario();

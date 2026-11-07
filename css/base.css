@@ -54,13 +54,24 @@ svg { display: block; }
   color: var(--ink);
 }
 
-.app__blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+/* "fixed" (não "absolute") para o fundo nunca acompanhar o scroll do
+   conteúdo — fica sempre encostado aos limites do ecrã, não a uma
+   posição em pixéis, por isso continua correto em qualquer
+   dispositivo. left:50%+transform mantém isto alinhado com a mesma
+   coluna central (.app, até 480px) que o resto da app, em vez de
+   esticar de ponta a ponta num ecrã largo. */
+.app__blobs {
+  position: fixed; top: 0; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
+  overflow: hidden; pointer-events: none; z-index: 0;
+}
 
 .blob { position: absolute; border-radius: 50%; filter: blur(30px); }
 
 .grain {
-  position: absolute;
-  inset: 0;
+  position: fixed;
+  top: 0; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
   opacity: .16;
   mix-blend-mode: overlay;
   pointer-events: none;
@@ -170,6 +181,14 @@ html[data-modo="claro"] .glass { box-shadow: inset 0 1px 0 rgba(255,255,255,0.4)
   display: flex;
   flex-direction: column;
   gap: 10px;
+  /* O Safari às vezes ignora "overflow: hidden" para um filho com
+     filter:blur() (o brilho do canto, ver .card-light__blob), e deixa
+     esse brilho sair para fora do cantos arredondados. Isto força o
+     recorte a sério: cria a sua própria camada de composição, e o
+     mask (só no WebKit) repete o recorte por outra via, como rede de
+     segurança. */
+  transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 .card-light__blob {
   position: absolute; width: 230px; height: 200px; border-radius: 50%;

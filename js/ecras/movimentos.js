@@ -43,12 +43,16 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!limiteAntigo) return false;
     return (mesSelecionado.ano * 12 + mesSelecionado.mes) > (limiteAntigo.ano * 12 + limiteAntigo.mes);
   }
+  function podeAvancarMes() {
+    return (mesSelecionado.ano * 12 + mesSelecionado.mes) < (hoje.getFullYear() * 12 + hoje.getMonth());
+  }
 
   function atualizarCabecalhoMes() {
     var nomeMes = D.MESES[mesSelecionado.mes];
     document.getElementById('movimentos-mes-nome').textContent = nomeMes.charAt(0).toUpperCase() + nomeMes.slice(1) + ',';
     document.getElementById('movimentos-mes-titulo').textContent = D.mesAnoLabel(mesSelecionado.ano, mesSelecionado.mes);
     document.getElementById('movimentos-mes-anterior').style.visibility = podeRecuarMes() ? 'visible' : 'hidden';
+    document.getElementById('movimentos-mes-seguinte').style.visibility = podeAvancarMes() ? 'visible' : 'hidden';
   }
 
   document.getElementById('movimentos-mes-anterior').addEventListener('click', function () {
@@ -59,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
     render();
   });
   document.getElementById('movimentos-mes-seguinte').addEventListener('click', function () {
+    if (!podeAvancarMes()) return;
     mesSelecionado.mes++;
     if (mesSelecionado.mes > 11) { mesSelecionado.mes = 0; mesSelecionado.ano++; }
     atualizarCabecalhoMes();
