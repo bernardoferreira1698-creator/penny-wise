@@ -465,12 +465,15 @@ html[data-modo="escuro"] .app--claro-fixo .field-plain { background: rgba(255,25
   position: fixed; inset: 0; background: rgba(20,18,16,0.55); z-index: 50;
   display: flex; align-items: center; justify-content: center; padding: 20px;
   overflow-y: auto; -webkit-overflow-scrolling: touch;
-}
-.modal-corpo {
-  position: relative; background: var(--sheet-bg); color: var(--sheet-ink);
-  border-radius: 28px; max-width: 440px; width: 100%; max-height: 88vh;
-  box-sizing: border-box; overflow-y: auto; -webkit-overflow-scrolling: touch;
-  padding: 22px 20px 28px; display: flex; flex-direction: column; gap: 12px; margin: auto;
+  /* Aqui (não em .modal-corpo), para a folha do calendário — um irmão
+     de .modal-corpo, não um descendente — também herdar estas cores
+     "sempre claras". Sem isto, o calendário ficava com o texto da
+     página por trás (claro, em modo escuro) sobre o seu próprio fundo
+     claro, quase ilegível. A declaração "color" é necessária à parte
+     das variáveis: texto sem cor própria (ex.: o título do calendário)
+     herda sempre a cor já calculada do elemento acima, não lê de novo
+     a variável — por isso tem de ser fixada logo aqui. */
+  color: var(--ink);
   --ink: var(--sheet-ink);
   --text: var(--sheet-texto);
   --muted: var(--sheet-muted-clara);
@@ -479,6 +482,12 @@ html[data-modo="escuro"] .app--claro-fixo .field-plain { background: rgba(255,25
   --card-muted: var(--sheet-muted);
   --card-muted2: var(--sheet-muted2);
   --warn: var(--sheet-warn);
+}
+.modal-corpo {
+  position: relative; background: var(--sheet-bg); color: var(--sheet-ink);
+  border-radius: 28px; max-width: 440px; width: 100%; max-height: 88vh;
+  box-sizing: border-box; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 22px 20px 28px; display: flex; flex-direction: column; gap: 12px; margin: auto;
 }
 
 /* ---------- Interruptores (toggles) ---------- */
