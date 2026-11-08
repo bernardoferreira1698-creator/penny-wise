@@ -34,47 +34,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
-<style>
-  .registo-fecho {
-    width:44px; height:44px; border-radius:22px; background:var(--ink);
-    display:flex; align-items:center; justify-content:center; border:0;
-  }
-  .folha-calendario {
-    position:fixed; inset:0; background:rgba(20,18,16,0.45);
-    display:flex; flex-direction:column; justify-content:flex-end; z-index:5;
-  }
-  .folha-calendario__corpo {
-    background:var(--card2); border-radius:32px 32px 0 0; padding:22px 20px 32px;
-    display:flex; flex-direction:column; gap:14px; max-width:480px; margin:0 auto; width:100%;
-  }
-  .cal-grid { display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:4px }
-  /* Altura fixa: reserva sempre 6 linhas, alinhadas ao topo, para o
-     calendário não "saltar" de altura entre meses com 5 ou 6 semanas. */
-  #cal-dias { grid-template-rows: repeat(6, 40px); align-content: start; }
-  .cal-cabecalho { text-align:center; font-size:12px; font-weight:600; color:var(--card-muted2) }
-  .cal-dia {
-    height:40px; border-radius:20px; font-size:15px; font-weight:400; cursor:pointer;
-    border:0; background:transparent; color:var(--ink); font-family:inherit;
-  }
-  .cal-dia.vazio { visibility:hidden; cursor:default }
-  .cal-dia.hoje { border:1px solid var(--ink); font-weight:600 }
-  .cal-dia.selecionado { background:var(--btn); font-weight:600; border:0 }
-  [hidden] { display:none !important; }
-
-  /* Segmento com deslize suave (Fixa/Variável). */
-  .seg--deslizante { position:relative; }
-  .seg--deslizante .seg__thumb {
-    position:absolute; top:4px; bottom:4px; left:4px; width:0;
-    background:var(--text); border-radius:999px; z-index:0;
-    transition: left .25s cubic-bezier(.4,0,.2,1), width .25s cubic-bezier(.4,0,.2,1);
-  }
-  .seg--deslizante .seg__item { position:relative; z-index:1; background:transparent; transition:color .2s; }
-  .seg--deslizante .seg__item.is-active { color:var(--ink); }
-
-  .cat-pill--mais {
-    border:1px solid var(--line-light); background:transparent; color:var(--ink);
-  }
-</style>
 </head>
 <body>
 <div class="app app--claro-fixo">

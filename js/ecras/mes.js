@@ -156,11 +156,19 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   atualizarTitulo();
 
-  Promise.all([PennyDB.todos(), PennyDB.primeiroMesComDados()]).then(function (resultados) {
-    TODOS_MOVIMENTOS = resultados[0];
-    limiteAntigo = resultados[1];
-    atualizarTitulo();
-    render();
+  /* Também chamada depois de gravar/apagar um movimento no popup de
+     Registo, para atualizar este mês sem recarregar a página. */
+  function carregarDados() {
+    return Promise.all([PennyDB.todos(), PennyDB.primeiroMesComDados()]).then(function (resultados) {
+      TODOS_MOVIMENTOS = resultados[0];
+      limiteAntigo = resultados[1];
+      atualizarTitulo();
+      render();
+    });
+  }
+  window.PennyAoRegistar = carregarDados;
+
+  carregarDados().then(function () {
     if (window.pwPronto) window.pwPronto(1)();
   });
 });

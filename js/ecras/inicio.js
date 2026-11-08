@@ -11,8 +11,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var pronto = window.pwPronto ? window.pwPronto(2) : function () {};
 
   /* Cabeçalho ("Este mês sobraram X€", rendimento/despesas, % e
-     variação), calculado a partir dos movimentos reais. */
-  PennyDB.todos().then(function (movimentos) {
+     variação), calculado a partir dos movimentos reais. Também chamada
+     depois de gravar/apagar um movimento no popup de Registo (ver
+     window.PennyAoRegistar, no fundo do ficheiro), por isso limpa
+     sempre os contentores antes de os voltar a preencher. */
+  function recarregarCabecalhoEOrcamentos() {
+    return PennyDB.todos().then(function (movimentos) {
+    document.getElementById('resumo-orcamentos').innerHTML = '';
     var atual = PennyCalculos.calcularMes(movimentos, hoje.getFullYear(), hoje.getMonth());
     var dataAnterior = new Date(hoje.getFullYear(), hoje.getMonth() - 1, 1);
     var anterior = PennyCalculos.calcularMes(movimentos, dataAnterior.getFullYear(), dataAnterior.getMonth());
@@ -64,11 +69,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     PennyMoeda.animarBarras(container);
     pronto();
-  });
+    });
+  }
+  recarregarCabecalhoEOrcamentos();
 
-  /* Últimos movimentos (5 mais recentes). */
+  /* Últimos movimentos (5 mais recentes). Também chamada a partir de
+     window.PennyAoRegistar — limpa a lista antes de a preencher. */
   var listaMovimentos = document.getElementById('lista-ultimos-movimentos');
-  PennyDB.ultimosMovimentos(5).then(function (lista) {
+  function recarregarUltimosMovimentos() {
+    return PennyDB.ultimosMovimentos(5).then(function (lista) {
+    listaMovimentos.innerHTML = '';
     if (!lista.length) {
       var vazio = document.createElement('p');
       vazio.className = 'muted';
@@ -89,7 +99,14 @@ document.addEventListener('DOMContentLoaded', function () {
       listaMovimentos.appendChild(linha);
     });
     pronto();
-  });
+    });
+  }
+  recarregarUltimosMovimentos();
+
+  window.PennyAoRegistar = function () {
+    recarregarCabecalhoEOrcamentos();
+    recarregarUltimosMovimentos();
+  };
 
   /* Dica do dia: muda uma vez por dia, não repete em 30 dias, segue a
      mesma ordem de prioridade de gatilhos do ecrã Dicas. */

@@ -56,6 +56,24 @@
       return abertura + svg(item.icon, 1.6) + (ativoAgora ? '<span class="nav-item__dot"></span>' : '') + fecho;
     }).join('');
     el.querySelectorAll('a[href]').forEach(function (link) {
+      if (link.classList.contains('nav-add')) {
+        link.addEventListener('click', function (evento) {
+          /* Abre o formulário como popup, em vez de navegar para
+             registo.html — assim quem estava a ver, por ex., um mês
+             já passado em Movimentos continua lá depois de gravar. Se
+             o popup não estiver disponível por algum motivo, o link
+             segue normalmente para registo.html (mesmo href de sempre). */
+          if (!window.PennyRegistoPopup) return;
+          evento.preventDefault();
+          window.PennyRegistoPopup.abrir({
+            aoGuardar: function () {
+              if (window.PennyAoRegistar) window.PennyAoRegistar();
+              else window.location.reload();
+            }
+          });
+        });
+        return;
+      }
       link.addEventListener('click', function (evento) { navegarComEsperaDeEscritas(evento, link.getAttribute('href')); });
     });
   }

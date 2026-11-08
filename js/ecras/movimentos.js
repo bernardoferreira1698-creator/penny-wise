@@ -125,6 +125,14 @@ document.addEventListener('DOMContentLoaded', function () {
           '<div class="glass-rows__label"><span class="glass-rows__title">' + m.descricao + '</span>' +
           '<span class="glass-rows__sub">' + subtitulo + '</span></div>' +
           '<span class="glass-rows__value">' + PennyMoeda.formatar(m.valor) + '</span>';
+        /* Popup em vez de navegar para registo.html: ao gravar ou
+           apagar, fica-se no mesmo mês que se estava a ver (em vez de
+           voltar sempre ao mês atual, como acontecia antes). */
+        linha.addEventListener('click', function (evento) {
+          if (!window.PennyRegistoPopup) return;
+          evento.preventDefault();
+          window.PennyRegistoPopup.abrir({ id: m.id, aoGuardar: carregarDados, aoApagar: carregarDados });
+        });
         caixa.appendChild(linha);
       });
       lista.appendChild(caixa);
@@ -235,11 +243,20 @@ document.addEventListener('DOMContentLoaded', function () {
     render();
   });
 
-  Promise.all([PennyDB.todos(), PennyDB.primeiroMesComDados()]).then(function (resultados) {
-    TODOS_MOVIMENTOS = resultados[0];
-    limiteAntigo = resultados[1];
-    atualizarCabecalhoMes();
-    render();
+  /* Também chamada depois de gravar/apagar um movimento no popup de
+     Registo, para atualizar a lista sem recarregar a página (e sem
+     por isso perder o mês selecionado). */
+  function carregarDados() {
+    return Promise.all([PennyDB.todos(), PennyDB.primeiroMesComDados()]).then(function (resultados) {
+      TODOS_MOVIMENTOS = resultados[0];
+      limiteAntigo = resultados[1];
+      atualizarCabecalhoMes();
+      render();
+    });
+  }
+  window.PennyAoRegistar = carregarDados;
+
+  carregarDados().then(function () {
     if (window.pwPronto) window.pwPronto(1)();
   });
 });

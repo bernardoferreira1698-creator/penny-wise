@@ -273,6 +273,9 @@ html[data-paleta="A"] {
   --sheet-muted: #857E75;
   --sheet-muted2: #6F6A63;
   --sheet-linha: #D4CEC5;
+  --sheet-texto: #F5F2EE;
+  --sheet-muted-clara: #C9C2B9;
+  --sheet-warn: #C2410C;
 }
 
 html[data-paleta="B"] {
@@ -281,6 +284,9 @@ html[data-paleta="B"] {
   --sheet-muted: #7E8274;
   --sheet-muted2: #5C6052;
   --sheet-linha: #D5D7CC;
+  --sheet-texto: #F3F4EE;
+  --sheet-muted-clara: #C4C8B8;
+  --sheet-warn: #0E8F62;
 }
 
 html[data-paleta="C"] {
@@ -289,6 +295,9 @@ html[data-paleta="C"] {
   --sheet-muted: #7A838B;
   --sheet-muted2: #5E666E;
   --sheet-linha: #CBD3DA;
+  --sheet-texto: #F2F5F7;
+  --sheet-muted-clara: #C3CAD0;
+  --sheet-warn: #0B6FB8;
 }
 
 html[data-paleta="D"] {
@@ -297,5 +306,8 @@ html[data-paleta="D"] {
   --sheet-muted: #867A80;
   --sheet-muted2: #6C6167;
   --sheet-linha: #D9CCD2;
+  --sheet-texto: #F5F2EE;
+  --sheet-muted-clara: #CBC1C6;
+  --sheet-warn: #C0186F;
 }
 

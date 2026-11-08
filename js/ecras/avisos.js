@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var card = document.createElement('div');
       card.className = 'aviso-card';
       var botaoEditar = aviso.movimentoId
-        ? '<a href="registo.html?id=' + encodeURIComponent(aviso.movimentoId) + '" class="aviso-card__editar">Editar</a>'
+        ? '<a href="registo.html?id=' + encodeURIComponent(aviso.movimentoId) + '" data-id="' + aviso.movimentoId + '" class="aviso-card__editar">Editar</a>'
         : '';
       card.innerHTML =
         '<svg class="aviso-card__icone" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4 M12 17h.01 M10.3 3.9L2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>' +
@@ -30,10 +30,22 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   lista.addEventListener('click', function (evento) {
-    var botao = evento.target.closest('.aviso-card__dispensar');
-    if (!botao) return;
-    botao.disabled = true;
-    PennyAvisos.remover(botao.getAttribute('data-id')).then(render);
+    var botaoDispensar = evento.target.closest('.aviso-card__dispensar');
+    if (botaoDispensar) {
+      botaoDispensar.disabled = true;
+      PennyAvisos.remover(botaoDispensar.getAttribute('data-id')).then(render);
+      return;
+    }
+
+    var botaoEditar = evento.target.closest('.aviso-card__editar');
+    if (botaoEditar && window.PennyRegistoPopup) {
+      evento.preventDefault();
+      window.PennyRegistoPopup.abrir({
+        id: botaoEditar.getAttribute('data-id'),
+        aoGuardar: render,
+        aoApagar: render
+      });
+    }
   });
 
   render();

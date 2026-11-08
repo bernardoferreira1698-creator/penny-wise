@@ -44,10 +44,17 @@
     padding:5px 10px; border-radius:999px; white-space:nowrap; pointer-events:none; z-index:2;
     box-shadow:0 6px 16px rgba(0,0,0,0.25);
   }
+  /* "2026" em fundo: um elemento normal do conteúdo (não sobreposto a
+     mais nada), empurrado para o fundo do ecrã com margin-top:auto
+     quando o resto do conteúdo não o preenche todo (por isso
+     .app__content tem de ocupar pelo menos a altura visível), e a
+     seguir ao resto do conteúdo, com o espaçamento normal, quando este
+     já é suficiente para encher o ecrã. */
+  .app__content { min-height: 100%; }
   .ano-fundo {
-    position:absolute; left:0; right:0; bottom:110px; text-align:center;
+    margin-top: auto; text-align:center;
     font-size:132px; line-height:.9; font-weight:600; letter-spacing:-7px; color:var(--text);
-    opacity:.9; pointer-events:none; z-index:0;
+    opacity:.9; pointer-events:none;
   }
 </style>
 </head>
@@ -108,6 +115,7 @@
 <script src="js/app.js" defer></script>
 <script src="js/dados-mock.js" defer></script>
 <script src="js/moeda.js" defer></script>
+<script src="js/registo-popup.js" defer></script>
 <script src="js/ecras/ano.js" defer></script>
 <script defer>document.addEventListener('DOMContentLoaded', function () { PennyNav.mountBottomNav('analise'); });</script>
 </body>

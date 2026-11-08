@@ -414,6 +414,73 @@ html[data-modo="escuro"] .app--claro-fixo .field-plain { background: rgba(255,25
   display: flex; align-items: center; justify-content: center; color: var(--ink);
 }
 
+.registo-fecho {
+  width: 44px; height: 44px; border-radius: 22px; background: var(--ink);
+  display: flex; align-items: center; justify-content: center; border: 0; cursor: pointer;
+}
+
+/* Calendário (seletor de data do Registo): folha sempre clara, igual
+   às outras folhas da app. */
+.folha-calendario {
+  position: fixed; inset: 0; background: rgba(20,18,16,0.45);
+  display: flex; flex-direction: column; justify-content: flex-end; z-index: 55;
+}
+.folha-calendario__corpo {
+  background: var(--card2); border-radius: 32px 32px 0 0; padding: 22px 20px 32px;
+  display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 0 auto; width: 100%;
+}
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 4px; }
+/* Altura fixa: reserva sempre 6 linhas, alinhadas ao topo, para o
+   calendário não "saltar" de altura entre meses com 5 ou 6 semanas. */
+#cal-dias, #rp-cal-dias { grid-template-rows: repeat(6, 40px); align-content: start; }
+.cal-cabecalho { text-align: center; font-size: 12px; font-weight: 600; color: var(--card-muted2); }
+.cal-dia {
+  height: 40px; border-radius: 20px; font-size: 15px; font-weight: 400; cursor: pointer;
+  border: 0; background: transparent; color: var(--ink); font-family: inherit;
+}
+.cal-dia.vazio { visibility: hidden; cursor: default; }
+.cal-dia.hoje { border: 1px solid var(--ink); font-weight: 600; }
+.cal-dia.selecionado { background: var(--btn); font-weight: 600; border: 0; }
+
+/* Segmento com deslize suave (Fixa/Variável). */
+.seg--deslizante { position: relative; }
+.seg--deslizante .seg__thumb {
+  position: absolute; top: 4px; bottom: 4px; left: 4px; width: 0;
+  background: var(--text); border-radius: 999px; z-index: 0;
+  transition: left .25s cubic-bezier(.4,0,.2,1), width .25s cubic-bezier(.4,0,.2,1);
+}
+.seg--deslizante .seg__item { position: relative; z-index: 1; background: transparent; transition: color .2s; }
+.seg--deslizante .seg__item.is-active { color: var(--ink); }
+
+.cat-pill--mais { border: 1px solid var(--line-light); background: transparent; color: var(--ink); }
+
+/* ---------- Popup flutuante (Registo: novo/editar movimento) ---------- */
+/* Mesmo conceito das "folhas" (sempre claras, independentes do modo
+   escuro/claro da página por baixo), mas centrado no ecrã em vez de
+   preso ao fundo, e injetado por js/registo-popup.js em qualquer
+   ecrã — por isso usa sempre os tokens --sheet-* (ou equivalentes
+   "trancados" no par claro/escuro certo), nunca os tokens --card/--ink
+   normais, que dependem do modo da página onde o popup é aberto. */
+.modal-fundo {
+  position: fixed; inset: 0; background: rgba(20,18,16,0.55); z-index: 50;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+}
+.modal-corpo {
+  position: relative; background: var(--sheet-bg); color: var(--sheet-ink);
+  border-radius: 28px; max-width: 440px; width: 100%; max-height: 88vh;
+  box-sizing: border-box; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 22px 20px 28px; display: flex; flex-direction: column; gap: 12px; margin: auto;
+  --ink: var(--sheet-ink);
+  --text: var(--sheet-texto);
+  --muted: var(--sheet-muted-clara);
+  --card: var(--sheet-bg);
+  --card2: var(--sheet-bg);
+  --card-muted: var(--sheet-muted);
+  --card-muted2: var(--sheet-muted2);
+  --warn: var(--sheet-warn);
+}
+
 /* ---------- Interruptores (toggles) ---------- */
 
 .switch {

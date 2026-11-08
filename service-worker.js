@@ -8,7 +8,7 @@
    a cache do browser), para nunca mostrares uma versão antiga por
    engano. Só usa a cópia guardada quando não há rede. */
 
-var CACHE = 'penny-wise-v39';
+var CACHE = 'penny-wise-v40';
 
 var FICHEIROS_BASE = [
   'inicio.html',
@@ -41,6 +41,7 @@ var FICHEIROS_BASE = [
   'js/supabase.js',
   'js/db.js',
   'js/sync.js',
+  'js/registo-popup.js',
   'js/calculos.js',
   'js/avisos.js',
   'js/recorrentes.js',
