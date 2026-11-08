@@ -31,17 +31,39 @@ document.addEventListener('DOMContentLoaded', function () {
     return prefixoMes + r.diaPrevisto;
   }
 
-  function linhaLista(r) {
+  /* Estado deste mês para uma despesa fixa que já não está em "Por
+     confirmar" — ou já foi tratada (confirmada/dispensada), ou ainda
+     não chegou o dia previsto. Mostra sempre algo, para a lista de
+     "Despesas fixas" dar sempre a noção de todas as despesas fixas que
+     existem, não só das que ainda faltam tratar este mês. */
+  function subtituloDespesaFixa(r) {
+    var confirmacao = PennyRecorrentes.estadoConfirmacao(r.id, mesReferencia);
+    if (confirmacao && confirmacao.estado === 'confirmado') return r.categoria + ' · confirmada este mês';
+    if (confirmacao && confirmacao.estado === 'ignorado') return r.categoria + ' · dispensada este mês';
+    return r.categoria + ' · previsto a ' + diaTexto(r);
+  }
+
+  function linhaLista(r, subtitulo) {
     var linha = document.createElement('a');
     linha.href = '#';
     linha.className = 'glass-rows__row';
     linha.setAttribute('data-id', r.id);
     linha.innerHTML =
       '<div class="glass-rows__label"><span class="glass-rows__title">' + r.descricao + '</span>' +
-      '<span class="glass-rows__sub">' + r.categoria + ' · ' + diaTexto(r) + '</span></div>' +
+      '<span class="glass-rows__sub">' + (subtitulo || (r.categoria + ' · ' + diaTexto(r))) + '</span></div>' +
       '<span class="glass-rows__value">' + formatarComSinal(r) + '</span>';
     linha.addEventListener('click', function (evento) { evento.preventDefault(); abrirEdicao(r); });
     return linha;
+  }
+
+  /* Um registo com dados inesperados (ex.: vindo de uma sincronização
+     antiga) nunca deve impedir o resto da lista de aparecer — por isso
+     cada item é construído à parte, e se um falhar, fica de fora em
+     vez de travar tudo (ver também a nota em cada forEach abaixo). */
+  function paraCadaComSeguranca(lista, fazer) {
+    lista.forEach(function (r) {
+      try { fazer(r); } catch (erro) { console.warn('Recorrente com dados inválidos, ignorado na lista:', r, erro); }
+    });
   }
 
   function render() {
@@ -52,15 +74,16 @@ document.addEventListener('DOMContentLoaded', function () {
     var porConfirmar = despesasDoMes.filter(function (r) {
       return !PennyRecorrentes.estadoConfirmacao(r.id, mesReferencia) && estaDevido(r);
     });
-    var proximas = despesasDoMes.filter(function (r) {
-      return !PennyRecorrentes.estadoConfirmacao(r.id, mesReferencia) && !estaDevido(r);
-    });
+    /* Tudo o resto das despesas fixas deste mês: já confirmadas, já
+       dispensadas, ou ainda não chegou o dia — para esta lista mostrar
+       sempre TODAS as despesas fixas, não só as que estão por tratar. */
+    var outrasDespesas = despesasDoMes.filter(function (r) { return porConfirmar.indexOf(r) < 0; });
     var rendimentosMensais = ativos.filter(function (r) { return r.tipo === 'rendimento' && r.frequencia === 'mensal'; });
     var anuais = ativos.filter(function (r) { return r.frequencia === 'anual'; });
 
     document.getElementById('bloco-por-confirmar').hidden = porConfirmar.length === 0;
     listaPorConfirmar.innerHTML = '';
-    porConfirmar.forEach(function (r) {
+    paraCadaComSeguranca(porConfirmar, function (r) {
       var card = document.createElement('div');
       card.className = 'card-light recorrente-pendente';
       card.innerHTML =
@@ -84,18 +107,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     listaProximas.innerHTML = '';
-    document.getElementById('sem-despesas').hidden = proximas.length > 0;
-    proximas.forEach(function (r) { listaProximas.appendChild(linhaLista(r)); });
+    document.getElementById('sem-despesas').hidden = outrasDespesas.length > 0;
+    paraCadaComSeguranca(outrasDespesas, function (r) { listaProximas.appendChild(linhaLista(r, subtituloDespesaFixa(r))); });
     document.getElementById('total-proximas-despesas').textContent =
-      PennyMoeda.formatar(proximas.reduce(function (s, r) { return s + Math.abs(r.valorPrevisto); }, 0));
+      PennyMoeda.formatar(despesasDoMes.reduce(function (s, r) { return s + Math.abs(r.valorPrevisto); }, 0));
 
     listaRendimentos.innerHTML = '';
     document.getElementById('sem-rendimentos').hidden = rendimentosMensais.length > 0;
-    rendimentosMensais.forEach(function (r) { listaRendimentos.appendChild(linhaLista(r)); });
+    paraCadaComSeguranca(rendimentosMensais, function (r) { listaRendimentos.appendChild(linhaLista(r)); });
 
     listaAnuais.innerHTML = '';
     document.getElementById('sem-anuais').hidden = anuais.length > 0;
-    anuais.forEach(function (r) { listaAnuais.appendChild(linhaLista(r)); });
+    paraCadaComSeguranca(anuais, function (r) { listaAnuais.appendChild(linhaLista(r)); });
   }
 
   listaPorConfirmar.addEventListener('click', function (evento) {
