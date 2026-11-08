@@ -53,9 +53,10 @@
   </div>
   <svg class="grain" aria-hidden="true"><filter id="grao-rc"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-rc)"></rect></svg>
 
-  <div class="app__content">
+  <div class="app__content app__content--cta">
     <div class="topbar"><div id="app-back"></div></div>
-    <p class="display"><span class="muted">Recorrentes de</span><br><span id="recorrentes-mes">novembro</span></p>
+    <p class="display">Recorrentes</p>
+    <p class="muted2" style="font-size:13px; margin:0">Rendimentos e despesas fixas</p>
 
     <div id="bloco-sugestoes" hidden>
       <span class="eyebrow">Sugestões (repetem-se em vários meses)</span>
@@ -67,17 +68,17 @@
       <div id="lista-por-confirmar"></div>
     </div>
 
-    <div class="topbar"><span class="eyebrow" style="padding:0">Despesas fixas</span><span class="muted2" style="font-size:13px" id="total-proximas-despesas">0,00 €</span></div>
-    <div class="glass glass-rows" id="lista-proximas-despesas"></div>
-    <p id="sem-despesas" class="muted" style="text-align:center; padding:12px 0; font-size:14px" hidden>Sem despesas recorrentes.</p>
-
-    <span class="eyebrow">Rendimentos</span>
+    <div class="topbar"><span class="eyebrow" style="padding:0">Rendimentos</span><span class="muted2" style="font-size:13px" id="total-rendimentos">0,00 €</span></div>
     <div class="glass glass-rows" id="lista-rendimentos"></div>
     <p id="sem-rendimentos" class="muted" style="text-align:center; padding:12px 0; font-size:14px" hidden>Sem rendimentos recorrentes.</p>
 
-    <span class="eyebrow">Anuais</span>
-    <div class="glass glass-rows" id="lista-anuais"></div>
-    <p id="sem-anuais" class="muted" style="text-align:center; padding:12px 0; font-size:14px" hidden>Sem recorrentes anuais.</p>
+    <div class="topbar"><span class="eyebrow" style="padding:0">Despesas fixas</span><span class="muted2" style="font-size:13px" id="total-despesas-fixas">0,00 €</span></div>
+    <div class="glass glass-rows" id="lista-despesas-fixas"></div>
+    <p id="sem-despesas" class="muted" style="text-align:center; padding:12px 0; font-size:14px" hidden>Sem despesas recorrentes.</p>
+
+    <div class="topbar"><span class="eyebrow" style="padding:0">Subscrições anuais</span><span class="muted2" style="font-size:13px" id="media-subscricoes-anuais">0,00 €/mês</span></div>
+    <div class="glass glass-rows" id="lista-subscricoes-anuais"></div>
+    <p id="sem-anuais" class="muted" style="text-align:center; padding:12px 0; font-size:14px" hidden>Sem subscrições anuais.</p>
   </div>
 
   <a href="#" id="btn-novo-recorrente" class="btn-solid" style="position:fixed; left:20px; right:20px; bottom:50px; max-width:440px; margin:0 auto; z-index:3">Novo recorrente</a>

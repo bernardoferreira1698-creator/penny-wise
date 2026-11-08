@@ -10,16 +10,19 @@ document.addEventListener('DOMContentLoaded', function () {
   var anoAtual = hoje.getFullYear(), mesAtual = hoje.getMonth();
   var mesReferencia = anoAtual + '-' + String(mesAtual + 1).padStart(2, '0');
 
-  document.getElementById('recorrentes-mes').textContent = D.MESES[mesAtual];
-
   var listaPorConfirmar = document.getElementById('lista-por-confirmar');
-  var listaProximas = document.getElementById('lista-proximas-despesas');
+  var listaProximas = document.getElementById('lista-despesas-fixas');
   var listaRendimentos = document.getElementById('lista-rendimentos');
-  var listaAnuais = document.getElementById('lista-anuais');
+  var listaAnuais = document.getElementById('lista-subscricoes-anuais');
 
-  function formatarComSinal(r) {
-    return PennyMoeda.formatar(r.tipo === 'rendimento' ? Math.abs(r.valorPrevisto) : -Math.abs(r.valorPrevisto));
+  /* Neste ecrã mostra-se sempre o valor positivo, mesmo para despesas
+     (que na app, fora daqui, aparecem sempre a sair, com "−"): aqui o
+     objetivo é dar uma noção geral dos valores fixos, não um extrato. */
+  function formatarValor(r) {
+    return PennyMoeda.formatar(Math.abs(r.valorPrevisto));
   }
+
+  function porValorCrescente(a, b) { return Math.abs(a.valorPrevisto) - Math.abs(b.valorPrevisto); }
 
   function estaDevido(r) {
     return !r.diaPrevisto || r.diaPrevisto <= hoje.getDate();
@@ -43,6 +46,10 @@ document.addEventListener('DOMContentLoaded', function () {
     return r.categoria + ' · previsto a ' + diaTexto(r);
   }
 
+  function subtituloAnual(r) {
+    return r.categoria + ' · Renova em ' + D.MESES[r.mesPrevisto];
+  }
+
   function linhaLista(r, subtitulo) {
     var linha = document.createElement('a');
     linha.href = '#';
@@ -51,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
     linha.innerHTML =
       '<div class="glass-rows__label"><span class="glass-rows__title">' + r.descricao + '</span>' +
       '<span class="glass-rows__sub">' + (subtitulo || (r.categoria + ' · ' + diaTexto(r))) + '</span></div>' +
-      '<span class="glass-rows__value">' + formatarComSinal(r) + '</span>';
+      '<span class="glass-rows__value">' + formatarValor(r) + '</span>';
     linha.addEventListener('click', function (evento) { evento.preventDefault(); abrirEdicao(r); });
     return linha;
   }
@@ -93,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         '    <span style="font-size:12px; color:var(--card-muted2)">' + r.categoria + ' · ' + r.periodicidade + ' · previsto a ' + diaTexto(r) + '</span>' +
         '  </div>' +
         '  <div style="display:flex; align-items:center; gap:8px">' +
-        '    <span style="font-size:20px; font-weight:600">' + formatarComSinal(r) + '</span>' +
+        '    <span style="font-size:20px; font-weight:600">' + formatarValor(r) + '</span>' +
         '    <button type="button" class="btn-lapis" data-acao="editar" data-id="' + r.id + '" aria-label="Editar">' +
         '      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9 M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg>' +
         '    </button>' +
@@ -106,19 +113,23 @@ document.addEventListener('DOMContentLoaded', function () {
       listaPorConfirmar.appendChild(card);
     });
 
-    listaProximas.innerHTML = '';
-    document.getElementById('sem-despesas').hidden = outrasDespesas.length > 0;
-    paraCadaComSeguranca(outrasDespesas, function (r) { listaProximas.appendChild(linhaLista(r, subtituloDespesaFixa(r))); });
-    document.getElementById('total-proximas-despesas').textContent =
-      PennyMoeda.formatar(despesasDoMes.reduce(function (s, r) { return s + Math.abs(r.valorPrevisto); }, 0));
-
     listaRendimentos.innerHTML = '';
     document.getElementById('sem-rendimentos').hidden = rendimentosMensais.length > 0;
-    paraCadaComSeguranca(rendimentosMensais, function (r) { listaRendimentos.appendChild(linhaLista(r)); });
+    paraCadaComSeguranca(rendimentosMensais.slice().sort(porValorCrescente), function (r) { listaRendimentos.appendChild(linhaLista(r)); });
+    document.getElementById('total-rendimentos').textContent =
+      PennyMoeda.formatar(rendimentosMensais.reduce(function (s, r) { return s + Math.abs(r.valorPrevisto); }, 0));
+
+    listaProximas.innerHTML = '';
+    document.getElementById('sem-despesas').hidden = outrasDespesas.length > 0;
+    paraCadaComSeguranca(outrasDespesas.slice().sort(porValorCrescente), function (r) { listaProximas.appendChild(linhaLista(r, subtituloDespesaFixa(r))); });
+    document.getElementById('total-despesas-fixas').textContent =
+      PennyMoeda.formatar(despesasDoMes.reduce(function (s, r) { return s + Math.abs(r.valorPrevisto); }, 0));
 
     listaAnuais.innerHTML = '';
     document.getElementById('sem-anuais').hidden = anuais.length > 0;
-    paraCadaComSeguranca(anuais, function (r) { listaAnuais.appendChild(linhaLista(r)); });
+    paraCadaComSeguranca(anuais.slice().sort(porValorCrescente), function (r) { listaAnuais.appendChild(linhaLista(r, subtituloAnual(r))); });
+    document.getElementById('media-subscricoes-anuais').textContent =
+      PennyMoeda.formatar(anuais.reduce(function (s, r) { return s + Math.abs(r.valorPrevisto); }, 0) / 12) + '/mês';
   }
 
   listaPorConfirmar.addEventListener('click', function (evento) {
