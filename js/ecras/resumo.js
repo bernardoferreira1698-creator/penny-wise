@@ -98,6 +98,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var hoje = D.hoje();
     var limiteRecente = mesAnteriorDe(hoje.getFullYear(), hoje.getMonth()); // o resumo é sempre de um mês já fechado
+
+    /* Marca este resumo (o mais recente disponível) como visto, para
+       a bolinha de aviso em Mais desaparecer — só volta a aparecer
+       quando passar a existir um resumo mais recente do que este. */
+    localStorage.setItem('pw_resumo_visto', limiteRecente.ano + '-' + String(limiteRecente.mes + 1).padStart(2, '0'));
+
     var limiteAntigo = resultados[2] || limiteRecente;
     if (limiteAntigo.ano * 12 + limiteAntigo.mes > limiteRecente.ano * 12 + limiteRecente.mes) limiteAntigo = limiteRecente;
 

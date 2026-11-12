@@ -31,6 +31,13 @@ document.addEventListener('DOMContentLoaded', function () {
     var chipVariacao = document.getElementById('chip-variacao');
     if (variacao === null) {
       chipVariacao.hidden = true;
+    } else if (anterior.sobrou < 0) {
+      /* "Percentagem de variação" não tem leitura sensata quando se
+         parte de um mês com défice (dividir por um valor negativo
+         inverte o sinal, dando algo como "-2094%" para uma melhoria
+         real): mostra-se antes a diferença em euros. */
+      var diferenca = atual.sobrou - anterior.sobrou;
+      chipVariacao.textContent = (diferenca < 0 ? '−' : '+') + PennyMoeda.formatar(Math.abs(diferenca)) + ' vs ' + D.MESES[dataAnterior.getMonth()];
     } else {
       var pctVariacao = PennyMoeda.arredondarPct(Math.abs(variacao));
       chipVariacao.textContent = (variacao < 0 ? '−' : '+') + pctVariacao + '% vs ' + D.MESES[dataAnterior.getMonth()];
