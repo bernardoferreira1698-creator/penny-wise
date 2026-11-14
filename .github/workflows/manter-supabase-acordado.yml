@@ -1,0 +1,42 @@
+# Penny Wise: o projeto Supabase do plano gratuito pausa-se sozinho
+# ao fim de cerca de 7 dias sem atividade na base de dados. A app já
+# costuma "acordá-lo" sozinha sempre que é aberta (ver js/sync.js),
+# mas isso só acontece se nesse momento houver rede e uma sessão
+# válida — e nem sempre isso coincide com os 7 dias.
+#
+# Este workflow faz, de 3 em 3 dias, um pedido leve e inofensivo à
+# base de dados (só lê, nunca escreve), suficiente para contar como
+# atividade e evitar a pausa automática. Não precisa de nenhuma
+# chave secreta: usa a chave pública "anon" (a mesma já usada em
+# js/supabase-config.js, feita para estar visível no browser — quem
+# protege os dados é o RLS das tabelas, que bloqueia sempre o acesso
+# sem sessão).
+#
+# Se o pedido alguma vez falhar (ex.: o projeto ter ficado pausado à
+# mesma, ou a chave ter mudado), este workflow fica vermelho na aba
+# "Actions" do GitHub e o GitHub manda um email a avisar — é esse o
+# sinal de que é preciso reativar o projeto à mão no painel do
+# Supabase.
+
+name: Manter o Supabase acordado
+
+on:
+  schedule:
+    - cron: '0 8 */3 * *' # às 8h (UTC), de 3 em 3 dias
+  workflow_dispatch: # permite correr manualmente a partir da aba "Actions"
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pedido leve (só leitura) ao Supabase
+        run: |
+          codigo=$(curl -sS -o resposta.txt -w "%{http_code}" \
+            "https://sqlsnsbkgvsekszhzfad.supabase.co/rest/v1/categorias?select=id&limit=1" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxbHNuc2JrZ3ZzZWtzemh6ZmFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM4MjUwMDksImV4cCI6MjEwOTQwMTAwOX0.RfSnzRAzNz3eQEVuMxcHDYK3VAavWgdKdT_PNwaCyhI")
+          echo "Código HTTP: $codigo"
+          cat resposta.txt
+          if [ "$codigo" != "200" ]; then
+            echo "O pedido ao Supabase não teve sucesso (código $codigo) — o projeto pode estar pausado."
+            exit 1
+          fi
