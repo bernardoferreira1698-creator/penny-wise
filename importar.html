@@ -26,7 +26,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" href="icons/icon-192.png">
-<title>Penny Wise: Importar Excel</title>
+<title>Penny Wise: Importar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css">
@@ -56,18 +56,62 @@
   <svg class="grain" aria-hidden="true"><filter id="grao-im"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grao-im)"></rect></svg>
 
   <div class="app__content app__content--cta">
-    <p class="display"><span class="muted">Importar o</span><br>teu Excel</p>
+    <p class="display"><span class="muted">Importar</span><br>ficheiro</p>
 
-    <input type="file" id="campo-ficheiro" accept=".xlsx" hidden>
+    <input type="file" id="campo-ficheiro" accept=".xlsx,.xls,.csv" hidden>
     <button type="button" id="botao-escolher-ficheiro" class="glass glass--pill" style="height:64px; display:flex; align-items:center; gap:12px; padding:0 18px 0 10px; width:100%; cursor:pointer; font-family:inherit; text-align:left">
       <span style="width:44px; height:44px; border-radius:22px; background:var(--btn); display:flex; align-items:center; justify-content:center; flex:none">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bg)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z M14 3v4h4 M9 13l2 2 4-4"/></svg>
       </span>
       <span style="flex:1; display:flex; flex-direction:column; gap:2px">
-        <span style="font-size:15px; font-weight:500" id="nome-ficheiro">Escolher ficheiro .xlsx</span>
-        <span class="muted2" style="font-size:12px" id="resumo-ficheiro">Ex.: Financas_2026.xlsx</span>
+        <span style="font-size:15px; font-weight:500" id="nome-ficheiro">Escolher ficheiro</span>
+        <span class="muted2" style="font-size:12px" id="resumo-ficheiro">Financas_2026.xlsx, ou um .csv/.xlsx de outra app</span>
       </span>
     </button>
+
+    <div id="bloco-mapeamento" hidden>
+      <span class="eyebrow">Este ficheiro não é o teu Excel de sempre — confirma as colunas</span>
+      <div class="glass" style="padding:16px; display:flex; flex-direction:column; gap:12px">
+        <div class="field-plain">
+          <label for="mapa-data" class="field__label">Data</label>
+          <select id="mapa-data" class="field-plain__input"></select>
+        </div>
+        <div class="field-plain">
+          <label for="mapa-descricao" class="field__label">Descrição</label>
+          <select id="mapa-descricao" class="field-plain__input"></select>
+        </div>
+        <div class="field-plain">
+          <label for="mapa-valor-despesa" class="field__label">Valor da despesa</label>
+          <select id="mapa-valor-despesa" class="field-plain__input"></select>
+        </div>
+        <div class="field-plain">
+          <label for="mapa-valor-rendimento" class="field__label">Valor do rendimento</label>
+          <select id="mapa-valor-rendimento" class="field-plain__input"></select>
+        </div>
+        <div class="field-plain">
+          <label for="mapa-categoria" class="field__label">Categoria</label>
+          <select id="mapa-categoria" class="field-plain__input"></select>
+        </div>
+      </div>
+      <button type="button" id="botao-confirmar-mapeamento" class="btn-solid" style="margin-top:12px; height:56px">Confirmar e pré-visualizar</button>
+    </div>
+
+    <div id="bloco-resultado-generico" hidden>
+      <span class="eyebrow">Categorias novas a criar</span>
+      <div class="glass glass-rows" id="lista-categorias-novas"></div>
+      <p id="sem-categorias-novas" class="muted" style="text-align:center; padding:12px 0; font-size:14px" hidden>Todas as categorias já existem na tua conta.</p>
+
+      <div id="bloco-ignoradas-generico" hidden>
+        <span class="eyebrow">Ignoradas (sem data, descrição ou valor)</span>
+        <p class="muted2" id="resumo-ignoradas-generico" style="font-size:13px; padding:0 4px"></p>
+      </div>
+
+      <span class="eyebrow">Total a importar</span>
+      <div class="stat-pill">
+        <span class="stat-pill__label">Valor líquido (rendimentos − despesas)</span>
+        <span class="stat-pill__value warn-text" id="total-generico"></span>
+      </div>
+    </div>
 
     <div id="bloco-resultado" hidden>
       <span class="eyebrow">Correções automáticas</span>
@@ -136,9 +180,11 @@
 <script src="js/recorrentes.js" defer></script>
 <script src="js/alerta.js" defer></script>
 <script src="js/app.js" defer></script>
+<script src="js/dados-mock.js" defer></script>
 <script src="js/moeda.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
 <script src="js/importar-excel.js" defer></script>
+<script src="js/importar-generico.js" defer></script>
 <script src="js/ecras/importar.js" defer></script>
 </body>
 </html>

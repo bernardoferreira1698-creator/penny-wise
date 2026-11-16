@@ -316,5 +316,8 @@
     return Math.round(total * 100) / 100;
   }
 
-  window.PennyImportarExcel = { importar: importar, aplicarCorrecao: aplicarCorrecao, recalcularTotalPennyWise: recalcularTotalPennyWise };
+  window.PennyImportarExcel = {
+    importar: importar, aplicarCorrecao: aplicarCorrecao, recalcularTotalPennyWise: recalcularTotalPennyWise,
+    NOMES_FOLHAS_MES: NOMES_FOLHAS_MES
+  };
 })();

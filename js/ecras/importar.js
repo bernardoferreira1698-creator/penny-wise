@@ -3,6 +3,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   var resultado = null;
+  var deteccaoGenerica = null; // colunas detetadas, à espera de confirmação (ver iniciarMapeamentoGenerico)
 
   var campoFicheiro = document.getElementById('campo-ficheiro');
   var botaoEscolher = document.getElementById('botao-escolher-ficheiro');
@@ -11,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var nomeFicheiroEl = document.getElementById('nome-ficheiro');
   var resumoFicheiroEl = document.getElementById('resumo-ficheiro');
   var botaoComecarDoZero = document.getElementById('botao-comecar-do-zero');
+  var blocoMapeamento = document.getElementById('bloco-mapeamento');
+  var blocoResultadoGenerico = document.getElementById('bloco-resultado-generico');
 
   /* Quem está a começar a gerir as finanças pela primeira vez não tem
      nenhum Excel para importar — não deve ser obrigado a arranjar um
@@ -22,11 +25,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function mostrarErro(mensagem) {
-    nomeFicheiroEl.textContent = 'Escolher ficheiro .xlsx';
-    resumoFicheiroEl.textContent = 'Ex.: Financas_2026.xlsx';
+    nomeFicheiroEl.textContent = 'Escolher ficheiro';
+    resumoFicheiroEl.textContent = 'Financas_2026.xlsx, ou um .csv/.xlsx de outra app';
     erro.textContent = mensagem;
     erro.hidden = false;
     document.getElementById('bloco-resultado').hidden = true;
+    blocoResultadoGenerico.hidden = true;
+    blocoMapeamento.hidden = true;
     botaoImportar.disabled = true;
     botaoImportar.textContent = 'Escolhe um ficheiro primeiro';
   }
@@ -132,6 +137,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   botaoEscolher.addEventListener('click', function () { campoFicheiro.click(); });
 
+  /* Um ficheiro só: se tiver alguma das folhas "01 janeiro" a "12
+     dezembro", é o formato específico do Finanças_2026.xlsx (ver
+     js/importar-excel.js); senão, é uma tabela qualquer de outra app
+     (CSV ou Excel de uma folha só), e segue o importador genérico
+     (ver js/importar-generico.js). Um botão só, a app decide sozinha. */
   campoFicheiro.addEventListener('change', function () {
     var ficheiro = campoFicheiro.files[0];
     if (!ficheiro) return;
@@ -140,23 +150,151 @@ document.addEventListener('DOMContentLoaded', function () {
     nomeFicheiroEl.textContent = 'A processar...';
     resumoFicheiroEl.textContent = ficheiro.name;
     document.getElementById('bloco-resultado').hidden = true;
+    blocoResultadoGenerico.hidden = true;
+    blocoMapeamento.hidden = true;
     botaoImportar.disabled = true;
     botaoImportar.textContent = 'A processar...';
 
+    /* Um .csv é texto simples (normalmente em UTF-8) — lê-lo como
+       ArrayBuffer e deixar o SheetJS interpretar os bytes em bruto
+       troca os acentos (ex.: "Café" vira "CafÃ©"). Um .xlsx/.xls é um
+       ficheiro binário à parte, onde isso não acontece. */
+    var ehCsv = /\.csv$/i.test(ficheiro.name);
     var leitor = new FileReader();
     leitor.onload = function () {
       try {
-        resultado = PennyImportarExcel.importar(leitor.result);
-        mostrarResultado(ficheiro.name, resultado);
+        var wb = ehCsv
+          ? XLSX.read(leitor.result, { type: 'string', cellDates: true })
+          : XLSX.read(leitor.result, { type: 'array', cellDates: true });
+        var ehFormatoEspecifico = !ehCsv && PennyImportarExcel.NOMES_FOLHAS_MES.some(function (nome) {
+          return wb.SheetNames.indexOf(nome) >= 0;
+        });
+
+        if (ehFormatoEspecifico) {
+          resultado = PennyImportarExcel.importar(leitor.result);
+          mostrarResultado(ficheiro.name, resultado);
+        } else {
+          resultado = null;
+          iniciarMapeamentoGenerico(ficheiro.name, wb);
+        }
       } catch (e) {
-        console.error('Erro a importar o Excel:', e);
+        console.error('Erro a importar o ficheiro:', e);
         resultado = null;
-        mostrarErro('Não consegui ler este ficheiro. Confirma que é um .xlsx com as folhas "01 janeiro" a "12 dezembro", como o Financas_2026.xlsx.');
+        mostrarErro('Não consegui ler este ficheiro. Confirma que é um .xlsx, .xls ou .csv com uma tabela de movimentos.');
       }
     };
     leitor.onerror = function () { mostrarErro('Não consegui abrir este ficheiro.'); };
-    leitor.readAsArrayBuffer(ficheiro);
+    if (ehCsv) leitor.readAsText(ficheiro, 'UTF-8'); else leitor.readAsArrayBuffer(ficheiro);
   });
+
+  /* Mostra o passo de confirmar colunas, já com as melhores adivinhas
+     escolhidas a partir dos nomes das colunas do ficheiro (ver
+     js/importar-generico.js: melhorColuna). */
+  function iniciarMapeamentoGenerico(nomeFicheiro, wb) {
+    var deteccao = PennyImportarGenerico.detetar(wb);
+    if (!deteccao.linhasDados.length) {
+      mostrarErro('Não encontrei nenhuma linha de dados neste ficheiro.');
+      return;
+    }
+    deteccaoGenerica = deteccao;
+
+    function preencherSelect(id, incluirNenhuma, valorSugerido) {
+      var select = document.getElementById(id);
+      select.innerHTML = '';
+      if (incluirNenhuma) {
+        var optNenhuma = document.createElement('option');
+        optNenhuma.value = '';
+        optNenhuma.textContent = 'Nenhuma';
+        select.appendChild(optNenhuma);
+      }
+      deteccao.cabecalhos.forEach(function (cabecalho, indice) {
+        var opt = document.createElement('option');
+        opt.value = String(indice);
+        opt.textContent = cabecalho || ('Coluna ' + (indice + 1));
+        select.appendChild(opt);
+      });
+      select.value = (valorSugerido !== null && valorSugerido !== undefined) ? String(valorSugerido) : '';
+    }
+
+    preencherSelect('mapa-data', false, deteccao.sugestao.data || 0);
+    preencherSelect('mapa-descricao', false, deteccao.sugestao.descricao || 0);
+    preencherSelect('mapa-valor-despesa', true, deteccao.sugestao.valorDespesa);
+    preencherSelect('mapa-valor-rendimento', true, deteccao.sugestao.valorRendimento);
+    preencherSelect('mapa-categoria', true, deteccao.sugestao.categoria);
+
+    nomeFicheiroEl.textContent = nomeFicheiro;
+    resumoFicheiroEl.textContent = deteccao.linhasDados.length + ' linhas encontradas';
+    blocoMapeamento.hidden = false;
+    botaoImportar.textContent = 'Escolhe um ficheiro primeiro';
+  }
+
+  function valorDoMapa(id) {
+    var valor = document.getElementById(id).value;
+    return valor === '' ? null : Number(valor);
+  }
+
+  document.getElementById('botao-confirmar-mapeamento').addEventListener('click', function () {
+    var mapeamento = {
+      data: valorDoMapa('mapa-data'),
+      descricao: valorDoMapa('mapa-descricao'),
+      valorDespesa: valorDoMapa('mapa-valor-despesa'),
+      valorRendimento: valorDoMapa('mapa-valor-rendimento'),
+      categoria: valorDoMapa('mapa-categoria')
+    };
+
+    if (mapeamento.valorDespesa === null && mapeamento.valorRendimento === null) {
+      mostrarErro('Escolhe pelo menos uma coluna de valor (despesa ou rendimento).');
+      return;
+    }
+
+    /* Categorias já existentes na conta (sem distinguir acentos ou
+       maiúsculas), para reaproveitar em vez de criar outra vez. */
+    var D = window.PennyDados;
+    var categoriasConhecidas = { despesas: {}, rendimentos: {} };
+    D.categoriasDespesa().forEach(function (c) { categoriasConhecidas.despesas[PennyImportarGenerico.normalizar(c.nome)] = c.nome; });
+    D.categoriasRendimento().forEach(function (c) { categoriasConhecidas.rendimentos[PennyImportarGenerico.normalizar(c.nome)] = c.nome; });
+
+    resultado = PennyImportarGenerico.importar(deteccaoGenerica.linhasDados, mapeamento, categoriasConhecidas);
+    mostrarResultadoGenerico(resultado);
+  });
+
+  function mostrarResultadoGenerico(r) {
+    erro.hidden = true;
+    blocoMapeamento.hidden = true;
+    resumoFicheiroEl.textContent = r.movimentos.length + ' movimentos a importar';
+
+    var listaCategoriasNovas = document.getElementById('lista-categorias-novas');
+    listaCategoriasNovas.innerHTML = '';
+    document.getElementById('sem-categorias-novas').hidden = r.novasCategorias.length > 0;
+    r.novasCategorias.forEach(function (nc) {
+      var linha = document.createElement('div');
+      linha.className = 'glass-rows__row';
+      linha.innerHTML =
+        '<div class="glass-rows__label"><span class="glass-rows__title">' + nc.nome + '</span>' +
+        '<span class="glass-rows__sub">' + (nc.tipo === 'despesa' ? 'Despesa' : 'Rendimento') + ' · categoria nova</span></div>';
+      listaCategoriasNovas.appendChild(linha);
+    });
+
+    var blocoIgnoradas = document.getElementById('bloco-ignoradas-generico');
+    if (r.paraRever.length) {
+      document.getElementById('resumo-ignoradas-generico').textContent =
+        r.paraRever.length + (r.paraRever.length === 1 ? ' linha ignorada.' : ' linhas ignoradas.');
+      blocoIgnoradas.hidden = false;
+    } else {
+      blocoIgnoradas.hidden = true;
+    }
+
+    document.getElementById('total-generico').textContent = PennyMoeda.formatar(r.total);
+    blocoResultadoGenerico.hidden = false;
+
+    if (r.movimentos.length) {
+      botaoImportar.disabled = false;
+      botaoImportar.textContent = 'Importar e começar';
+    } else {
+      botaoImportar.disabled = true;
+      botaoImportar.textContent = 'Nenhum movimento para importar';
+    }
+  }
 
   /* Duplicados: mesma data (dia/mês/ano), descrição e valor que um
      movimento já guardado. Serve tanto para importares o mesmo
@@ -239,28 +377,44 @@ document.addEventListener('DOMContentLoaded', function () {
     botaoImportar.disabled = true;
     botaoImportar.textContent = 'A importar...';
 
-    /* As linhas sem valor ficam gravadas como movimentos incompletos
-       (valor 0, já com a categoria do Excel), para dares em Avisos →
-       Editar e só faltar preencher o valor — em vez de se perderem.
-       Aqui não há valor para comparar, por isso evita-se duplicar só
-       pela mesma data + descrição (ex.: importar o mesmo ficheiro
-       duas vezes não deve criar o mesmo "por rever" outra vez). */
-    var chavesExistentes = {};
-    (existentes || []).forEach(function (m) {
-      chavesExistentes[[m.data.getFullYear(), m.data.getMonth(), m.data.getDate(), m.descricao.trim().toLowerCase()].join('|')] = true;
-    });
-    var rascunhos = resultado.paraRever.filter(function (item) {
-      var chave = [item.data.getFullYear(), item.data.getMonth(), item.data.getDate(), item.descricao.trim().toLowerCase()].join('|');
-      return !chavesExistentes[chave];
-    }).map(function (item) {
-      return {
-        data: item.data, mesReferencia: item.mesReferencia, descricao: item.descricao,
-        categoria: item.categoria, periodicidade: item.periodicidade,
-        valor: 0, tipo: 'despesa', inesperada: false,
-        nota: 'Importado de ' + item.folha.replace(/^\d+\s/, '') + ', sem valor no ficheiro.',
-        incompleto: true
-      };
-    });
+    /* Importação genérica (ver js/importar-generico.js): cria agora as
+       categorias novas que o ficheiro trazia — só agora, ao confirmar
+       mesmo a importação, para não ficarem categorias vazias criadas
+       se o utilizador tivesse desistido a meio. As linhas sem data,
+       descrição ou valor já foram só contadas e ignoradas (mostrarResultadoGenerico),
+       não há rascunhos para criar aqui. */
+    if (resultado.generico) {
+      (resultado.novasCategorias || []).forEach(function (nc) {
+        window.PennyDados.criarCategoria(nc.tipo === 'despesa' ? 'despesas' : 'rendimentos', { nome: nc.nome, periodicidade: 'Variável' });
+      });
+    }
+
+    /* As linhas sem valor do Excel específico ficam gravadas como
+       movimentos incompletos (valor 0, já com a categoria do Excel),
+       para dares em Avisos → Editar e só faltar preencher o valor —
+       em vez de se perderem. Aqui não há valor para comparar, por
+       isso evita-se duplicar só pela mesma data + descrição (ex.:
+       importar o mesmo ficheiro duas vezes não deve criar o mesmo
+       "por rever" outra vez). */
+    var rascunhos = [];
+    if (!resultado.generico) {
+      var chavesExistentes = {};
+      (existentes || []).forEach(function (m) {
+        chavesExistentes[[m.data.getFullYear(), m.data.getMonth(), m.data.getDate(), m.descricao.trim().toLowerCase()].join('|')] = true;
+      });
+      rascunhos = resultado.paraRever.filter(function (item) {
+        var chave = [item.data.getFullYear(), item.data.getMonth(), item.data.getDate(), item.descricao.trim().toLowerCase()].join('|');
+        return !chavesExistentes[chave];
+      }).map(function (item) {
+        return {
+          data: item.data, mesReferencia: item.mesReferencia, descricao: item.descricao,
+          categoria: item.categoria, periodicidade: item.periodicidade,
+          valor: 0, tipo: 'despesa', inesperada: false,
+          nota: 'Importado de ' + item.folha.replace(/^\d+\s/, '') + ', sem valor no ficheiro.',
+          incompleto: true
+        };
+      });
+    }
 
     Promise.all([
       movimentosParaGuardar.length ? PennyDB.guardarVarios(movimentosParaGuardar) : Promise.resolve([]),
